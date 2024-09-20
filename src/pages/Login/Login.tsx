@@ -1,8 +1,9 @@
-import "./Login.css";
+import "../../Styles/Styles.css";
 import Logo_Tlaxcala from "../../assets/Tlaxcala.png";
 import Icono_Usuario from "../../assets/Usuario.png";
 import Icono_Correo from "../../assets/Correo.png";
 import Icono_Contraseña from "../../assets/Contraseña.png";
+import { Boton } from "../../components/Botones/Botones";
 
 export function Login() {
   return (
@@ -30,9 +31,7 @@ export function Login() {
         </div>
       </div>
 
-      <div className="Contenedor_Entrar_Plataforma">
-        <div className="Entrar">Entrar</div>
-      </div>
+      <Boton>Entrar </Boton>
     </div>
   );
 }

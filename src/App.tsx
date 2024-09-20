@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./pages/Login/Login";
-import { Botones } from "./components/Botones/Botones";
+import { Boton } from "./components/Botones/Botones";
+import { Principal } from "./pages/Principal/Principal";
 
 export default function App() {
   return (
@@ -8,7 +9,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Botones" element={<Botones />} />
+        <Route path="/Boton" element={<Boton />} />
+        <Route path="/Principal" element={<Principal />} />
       </Routes>
     </BrowserRouter>
   );

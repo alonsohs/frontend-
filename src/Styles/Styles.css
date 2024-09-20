@@ -1,3 +1,4 @@
+/*-------------------------------------------Estilos de Login------------------------------------------------*/
 /* Fuente global serif */
 * {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -89,30 +90,6 @@
   font-size: 19px;
 }
 
-/* Contenedor del botón de entrar a la plataforma  */
-.Contenedor_Entrar_Plataforma {
-  display: flex;
-  gap: 30px;
-  margin: 60px auto;
-}
-
-/* Estilo del botón Entrar */
-
-.Entrar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 500px; /* Limitar el tamaño máximo del botón*/
-  height: 50px;
-  color: #fff;
-  background: #441853;
-  border-radius: 50px;
-  font-size: 19px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 /* Media queries para pantallas pequeñas */
 @media (max-width: 768px) {
   .Contenedor_Login {
@@ -126,7 +103,32 @@
   .Input {
     width: 100%; /* Asegurarse de que los inputs ocupen todo el ancho */
   }
+}
 
+/*--------------------------------------------------------------------Estilos de botones--------------------------------*/
+
+.Contenedor_Boton {
+  display: flex;
+  gap: 100px;
+  margin: 60px auto;
+}
+
+.Boton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  max-width: 500px; /* Limitar el tamaño máximo del botón */
+  height: 50px;
+  color: #fff;
+  background: #441853;
+  border-radius: 50px;
+  font-size: 19px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
   .Entrar {
     width: 100%; /* Asegurarse de que el botón ocupe todo el ancho */
   }
