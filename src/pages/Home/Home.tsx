@@ -1,3 +1,3 @@
-export function Principal() {
+export function Home() {
   return <div>Kirby </div>;
 }
