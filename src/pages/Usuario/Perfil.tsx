@@ -81,23 +81,14 @@ export function Usuario() {
               <span className="info">Kirby Alondra Lima Zamudio</span>
             </li>
 
-            <li className="phone">
-              <h1 className="label">Telefono:</h1>
-              <span className="info">+11 234 567 890</span>
-            </li>
-
-            <li className="address">
-              <h1 className="label">Direccion:</h1>
-              <span className="info">S34 E 65th Street <br /> New York, NY 10651-78 156-187-60</span>
-            </li>
-
             <li className="email">
               <h1 className="label">Correo Electronico:</h1>
               <span className="info">hello@rsmarquetech.com</span>
             </li>
           </ul>
-
-          <a href=""><Boton>Regresar</Boton></a>
+        </div>
+        <div className="Btn">
+        <a href="/Home" className="Regresar"><Boton>Regresar</Boton></a>
         </div>
       </section>
     </div>

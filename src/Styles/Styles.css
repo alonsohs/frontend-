@@ -414,6 +414,12 @@
 .timeline_about .contact_info ul .site span {
   color: var(--f5-color);
 }
+
+/*Boton de regresar*/
+.Btn{
+  margin-top: 20px;
+  margin-left: 20px;
+}
 @media (max-width: 768px) {
   .Entrar {
     width: 100%; /* Asegurarse de que el botón ocupe todo el ancho */
