@@ -74,7 +74,7 @@ const LinksArray = [
   {
     label: "Mi Perfil ",
     icon: <AiOutlineUser />,
-    to: "/Perfil",
+    to: "/Usuario",
   },
   {
     label: "Crear Expediente ",
