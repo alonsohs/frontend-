@@ -232,7 +232,8 @@
   color: rgba(0, 0, 0, 0.6);
   text-transform: uppercase;
   margin-bottom: var(--m-1-5);
-  margin-left: 10px;
+  margin-top: 10px;
+  margin-left: 20px;
 }
 
 .work_skills .work .heading::before,
@@ -249,7 +250,8 @@
 .work_skills .work .Primary,
 .work_skills .work .secondary{
   position: relative;
-  margin-left: 10px;
+  margin-top: 10px;
+  margin-left: 30px;
 }
 
 .work_skills .work .Primary h1,
@@ -257,7 +259,6 @@
   font-size: var(--l-fs);
   color: var(--f3-color);
   margin-bottom: var(--m-0-6);
-  margin-left: 10px;
 }
 
 .work_skills .work .Primary p,
@@ -266,6 +267,8 @@
   font-size: var(--m-fs);
   color: rgba(0, 0, 0, 0.6);
   line-height: 1.6rem;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 /*User Details*/
@@ -408,11 +411,13 @@
 .timeline_about .contact_info ul li span{
   font-size: var(--m-fs);
 }
-
-.timeline_about .contact_info ul .phone span,
+.timeline_about .contact_info ul .nombre_usuario h1,
+.timeline_about .contact_info ul .email h1{
+  margin-top: 10px;
+}
 .timeline_about .contact_info ul .email span,
-.timeline_about .contact_info ul .site span {
-  color: var(--f5-color);
+.timeline_about .contact_info ul .nombre_usuario span{
+  margin-top: 10px;
 }
 
 /*Boton de regresar*/
