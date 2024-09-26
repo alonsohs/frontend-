@@ -30,7 +30,9 @@ export function Login() {
           <input type="password" placeholder="Contraseña" />
         </div>
       </div>
-      <a href="../Principal" style={{marginLeft: 150}}><Boton>Entrar</Boton></a>
+      <a href="../Home" style={{ marginLeft: 150 }}>
+        <Boton>Entrar</Boton>
+      </a>
     </div>
   );
 }
