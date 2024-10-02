@@ -1,3 +1,8 @@
+
 export function Expediente() {
-  return <div>Kirby </div>;
+  return(
+    <div>
+      <p>Hola mundo</p>
+    </div>
+  )
 }
