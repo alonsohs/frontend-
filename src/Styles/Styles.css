@@ -13,12 +13,14 @@
   display: flex;
   flex-direction: column;
   margin: 20px auto; /* Centramos y ajustamos el margen en pantallas más pequeñas */
-  max-width: 500px; /* Limitar el ancho en pantallas grandes */
+  max-width: 700px; /* Limitar el ancho en pantallas grandes */
+  min-height: 300px;
+  max-height: 700px;
   background: #fff;
   border-radius: 50px;
   box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.2);
   margin-top: 50px; /* Ajustamos el margen superior */
-  padding: 50px 20px; /* Reducimos el padding */
+  padding: 30px 90px; /* Reducimos el padding */
 }
 
 /* Estilo del logo */
@@ -112,6 +114,7 @@
 
 .Contenedor_Boton {
   display: flex;
+  justify-content: center; /* Centra el botón horizontalmente */
   gap: 100px;
   margin: 60px auto;
 }
@@ -130,9 +133,13 @@
   font-weight: 900;
   cursor: pointer;
 }
+.Boton:hover {
+  background: #65257b; /* Cambia el color de fondo al pasar el ratón */
+}
+
 /*---------------------------------------------- Estilo de Perfil de usuario -------------------------------------------*/
 /*Main-Container*/
-.container{
+.container {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -148,27 +155,29 @@
   padding: var(--p-1-5);
   margin-left: 100px;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 25px rgba(0, 0, 0, 0.08);
+  padding-top: 30px;
+  font-family: inherit;
 }
 /*Container Cards*/
-.Logo_img{
+.Logo_img {
   grid-area: header;
   margin-left: 350px;
 }
-.userProfile{
+.userProfile {
   grid-area: userProfile;
 }
-.work_skills{
+.work_skills {
   grid-area: work_skills;
 }
-.userDetails{
+.userDetails {
   grid-area: userDetails;
 }
-.timeline_about{
+.timeline_about {
   grid-area: timeline_about;
 }
 
 /*Container Cards*/
-.container .card{
+.container .card {
   background: var(--glass-bg);
   backdrop-filter: blur(3rem);
   border-radius: 0.5rem;
@@ -177,28 +186,28 @@
 }
 
 /*Container Header*/
-.container header{
+.container header {
   padding: 0 var(--p-2-5);
 }
 
-.container header .Logo_img{
+.container header .Logo_img {
   display: flex;
   align-items: center;
 }
 
-.container header .Logo_img figure img{
+.container header .Logo_img figure img {
   width: 3.5rem;
   height: 3.5rem;
 }
 
-.container header .Logo_img span{
+.container header .Logo_img span {
   font-size: var(--xl-fs);
   font-weight: 700;
   margin-left: var(--m-0-5);
 }
 
 /*User Main-Profile*/
-.container .userProfile{
+.container .userProfile {
   position: relative;
   display: flex;
   justify-content: center;
@@ -209,24 +218,24 @@
   box-shadow: none;
 }
 
-.container .Logo_img .profile img{
+.container .Logo_img .profile img {
   width: 18rem;
   height: 18rem;
   border-radius: 50%;
 }
-.container .userProfile .profile figure img{
+.container .userProfile .profile figure img {
   width: 18rem;
   height: 18rem;
   border-radius: 50%;
 }
 
 /*Work & Skills*/
-.container .work_skills{
+.container .work_skills {
   padding: var(--p-1-5);
 }
 
 .work_skills .work .heading,
-.work_skills .skills .heading{
+.work_skills .skills .heading {
   position: relative;
   font-size: var(--xs-fs);
   color: rgba(0, 0, 0, 0.6);
@@ -237,7 +246,7 @@
 }
 
 .work_skills .work .heading::before,
-.work_skills .skills .heading::before{
+.work_skills .skills .heading::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -248,21 +257,21 @@
 }
 
 .work_skills .work .Primary,
-.work_skills .work .secondary{
+.work_skills .work .secondary {
   position: relative;
   margin-top: 10px;
   margin-left: 30px;
 }
 
 .work_skills .work .Primary h1,
-.work_skills .work .secondary h1{
+.work_skills .work .secondary h1 {
   font-size: var(--l-fs);
   color: var(--f3-color);
   margin-bottom: var(--m-0-6);
 }
 
 .work_skills .work .Primary p,
-.work_skills .work .secondary p{
+.work_skills .work .secondary p {
   margin-bottom: var(--m-1-8);
   font-size: var(--m-fs);
   color: rgba(0, 0, 0, 0.6);
@@ -272,42 +281,42 @@
 }
 
 /*User Details*/
-.userDetails{
+.userDetails {
   position: relative;
   padding: var(--p-1-5) var(--p-2-5);
 }
 
-.userDetails .userName{
+.userDetails .userName {
   margin-left: 20px;
   margin-top: 30px;
 }
-.userDetails .userName h1{
+.userDetails .userName h1 {
   font-size: x-large;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.userDetails .userName p{
+.userDetails .userName p {
   font-size: var(--m-fs);
   font-weight: 700;
-  color: #006699;
+  color: #441853;
   margin-bottom: var(--m-1-8);
 }
 
-.userDetails .rank{
+.userDetails .rank {
   position: relative;
   margin-left: 20px;
-  margin-top: 30px; 
+  margin-top: 30px;
 }
 
-.userDetails .rank .heading{
+.userDetails .rank .heading {
   font-size: small;
   color: gray;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
 
-.userDetails .btns{
+.userDetails .btns {
   margin-left: 10px;
   margin-top: 30px;
 }
@@ -319,14 +328,14 @@
   margin-left: 10px;
 }
 
-.userDetails .btns ul li a{
+.userDetails .btns ul li a {
   font-size: large;
   color: black;
   text-decoration: none;
 }
 
-.userDetails .btns ul .Contra{
-  background: #d4e9f3;
+.userDetails .btns ul .Contra {
+  background: #c884d7;
   width: 100px;
   border-radius: 0.5rem;
   padding-left: 3px;
@@ -382,48 +391,49 @@
   height: 2px;
   background: var(--bg5-color);
 }
-.timeline_about .contact_info{
+.timeline_about .contact_info {
   margin-top: 10px;
   margin-left: 20px;
 }
-.timeline_about .contact_info .heading{
+.timeline_about .contact_info .heading {
   font-size: var(--xs-fs);
   color: var(--f4-color);
   text-transform: uppercase;
   margin-bottom: var(--m-1-5);
 }
 
-.timeline_about .contact_info ul{
+.timeline_about .contact_info ul {
   margin-bottom: var(--m-1-5);
 }
 
-.timeline_about .contact_info ul li{
+.timeline_about .contact_info ul li {
   display: flex;
   margin: var(--m-0-5) 0;
 }
 
-.timeline_about .contact_info ul li h1{
+.timeline_about .contact_info ul li h1 {
   font-weight: 500;
   font-size: var(--m-fs);
   min-width: 12rem;
 }
 
-.timeline_about .contact_info ul li span{
+.timeline_about .contact_info ul li span {
   font-size: var(--m-fs);
 }
 .timeline_about .contact_info ul .nombre_usuario h1,
-.timeline_about .contact_info ul .email h1{
+.timeline_about .contact_info ul .email h1 {
   margin-top: 10px;
 }
 .timeline_about .contact_info ul .email span,
-.timeline_about .contact_info ul .nombre_usuario span{
+.timeline_about .contact_info ul .nombre_usuario span {
   margin-top: 10px;
 }
 
 /*Boton de regresar*/
-.Btn{
-  margin-top: 20px;
-  margin-left: 20px;
+.Regresar {
+  display: flex;
+  margin-top: 10px;
+  width: 150%;
 }
 
 /*------------------------------------------- Estilo Cuadro General ----------------------------------*/
@@ -600,3 +610,71 @@
     width: 100%; /* Asegurarse de que el botón ocupe todo el ancho */
   }
 }
+
+/*------------------------------------------------ Dashboard Cards----------------------------------------*/
+.content-area-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 12px;
+  gap: 16px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: 100%;
+  }
+
+  .area-card {
+    background-color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 20px 16px;
+    justify-content: space-between;
+    box-shadow: var(--light-shadow1);
+
+    @media (max-width: 768px) {
+      padding: 12px;
+    }
+
+    .info-title {
+      color: var(--lg-text-color);
+      font-size: 18px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .info-value {
+      color: var(--xl-text-color);
+      font-weight: 700;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .info-text {
+      color: var(--base-text-color);
+      font-weight: 500;
+    }
+  }
+}
+
+.recharts-default-tooltip {
+  padding: 4px 8px !important;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 12px;
+  border-radius: 4px;
+  background-color: var(--secondary-color) !important;
+  border: 1px solid var(--border-color-inverted) !important;
+}
+
+.recharts-tooltip-item-list {
+  * {
+    color: var(--text-color-inverted) !important;
+    font-size: 14px;
+    font-family: inherit !important;
+    opacity: 0.9;
+  }
+}
+
+/*------------------------------Dashboard Card-------------------------------*/

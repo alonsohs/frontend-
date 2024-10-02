@@ -1,39 +1,39 @@
-import "../../Styles/Styles.css"
+import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import Perfil from "../../assets/Perfil.png";
 import { Boton } from "../../components/Botones/Botones";
-import "../../../node_modules/remixicon/fonts/remixicon.css"
+import "../../../node_modules/remixicon/fonts/remixicon.css";
 export function Usuario() {
-  return(
-    //Contenedor principal 
+  return (
+    //Contenedor principal
     <div className="container">
-
       {/* Header */}
       <div className="Logo_img">
-        <img src={Logo} alt="Logo" width={500}/>
+        <img src={Logo} alt="Logo" width={400} />
       </div>
-      
+
       {/*Main-Profile card*/}
       <section className="userProfile card">
         <div className="profile">
-          <figure><img src={Perfil} alt="Perfil" width={250} height={250}/></figure>
+          <figure>
+            <img src={Perfil} alt="Perfil" width={250} height={250} />
+          </figure>
         </div>
       </section>
 
-      {/*Work & Skills Section*/}  
+      {/*Work & Skills Section*/}
       <section className="work_skills card">
-
         {/*Work container*/}
         <div className="work">
           <h1 className="heading">Informacion General</h1>
           <div className="Primary">
             <h1>Unidad Administriva</h1>
             <p>Unidad de Transparencia</p>
-        </div>
+          </div>
 
-        <div className="secondary">
-          <h1>Cargo</h1>
-          <p>Jefe de la unidad de Transparencia</p>
+          <div className="secondary">
+            <h1>Cargo</h1>
+            <p>Jefe de la unidad de Transparencia</p>
           </div>
         </div>
       </section>
@@ -53,11 +53,15 @@ export function Usuario() {
         <div className="btns">
           <ul>
             <li className="Per">
-              <a href="" className="Perfil">Perfil</a>
+              <a href="" className="Perfil">
+                Perfil
+              </a>
             </li>
 
             <li className="Contra">
-              <a href="" className="Pass">Contraseña</a>
+              <a href="" className="Pass">
+                Contraseña
+              </a>
             </li>
           </ul>
         </div>
@@ -87,9 +91,10 @@ export function Usuario() {
             </li>
           </ul>
         </div>
-        <div className="Btn">
-        <a href="/Home" className="Regresar"><Boton>Regresar</Boton></a>
-        </div>
+
+        <a href="/Home" className="Regresar ">
+          <Boton>Regresar</Boton>
+        </a>
       </section>
     </div>
   );
