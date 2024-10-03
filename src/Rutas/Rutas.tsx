@@ -6,7 +6,6 @@ import { Configuración } from "../pages/Configuración/Configuración";
 import {Usuario} from "../pages/Usuario/Perfil";
 import { Cuadro } from "../pages/Cuadro/Cuadro";
 import { Productos } from "../Productos";
-import { MiFormulario } from "../Post";
 
 export function Rutas() {
   return (
@@ -19,7 +18,6 @@ export function Rutas() {
       <Route path="/Usuario" element={<Usuario/>}/>
       <Route path="/Cuadro" element={<Cuadro/>}/>
       <Route path="/Seccion" element={<Productos/>}/>
-      <Route path="/FormCuadro" element={<MiFormulario/>}></Route>
     </Routes>
   );
 }

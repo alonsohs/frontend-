@@ -1,7 +1,30 @@
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import { SVGAttributes } from "react";
-export function Cuadro(){
+import { useState } from "react";
+import {EnviarDatos} from "../../Post";
+
+
+ export function Cuadro (){
+    const [ID, setID] = useState ('');
+    const [Codigo, setCode] = useState ('');
+    const [Descripcion, setDescripcion] = useState ('');
+
+    const handleSubmit = async (event: {preventDefault: () => void; }) =>{
+        event.preventDefault();
+
+        const Seccion = {
+            id_seccion: ID,
+            codigo: Codigo,
+            descripcion: Descripcion
+        };
+
+        try{
+            const result = await  EnviarDatos (Seccion);
+            console.log('Respuesta de la APi:', result); 
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
     return (
         
         <body className="Body_Cuadro">
@@ -21,7 +44,6 @@ export function Cuadro(){
 
             {/*Barra multipasos*/}
                 <div className="multisteps-form ">
-
                     <div className="row">
                         <div className="col-12 col-lg-8 ml-auto mr-auto mb-4">
                             <div className="multisteps-form_progress">
@@ -48,23 +70,28 @@ export function Cuadro(){
 
                             <div className="multisteps-form_v">
 
-                                <div className="form-row mt-4">
+                                <form className="form-row mt-4" onSubmit={handleSubmit}>
 
                                     <div className="col-12 col-sm-6">
                                         <label>ID Seccion</label>
-                                        <input className="multisteps-form_input form-control" type="text" placeholder="ID Seccion"/>
+                                        <input className="multisteps-form_input form-control" type="text" placeholder="ID Seccion" value={ID} onChange={(e) => setID(e.target.value)}/>
+                                    </div>
+
+                                    <div className="col-12 col-sm-6 mt-4 mt-sm-0">
+                                        <label>Codigo</label>
+                                        <input  className="multisteps-form_input form-control" type="text" placeholder="Codigo" value={Codigo} onChange={(e) => setCode(e.target.value)} />
                                     </div>
 
                                     <div className="col-12 col-sm-6 mt-4 mt-sm-0">
                                         <label>Descripcion</label>
-                                        <input  className="multisteps-form_input form-control" type="text" placeholder="Descripcion"/>
+                                        <input className="multisteps-form_input form-control" type="text" placeholder="Decripcion" value={Descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
                                     </div>
 
                                     <div className="button-row d-flex mt-4">
-                                        <Boton>Siguiente</Boton>
+                                        <Boton>Enviar</Boton>
                                     </div>
 
-                                </div>
+                                </form>
 
                             </div>
 
@@ -246,4 +273,5 @@ export function Cuadro(){
 
         </body>
     );
-}
+};
+
