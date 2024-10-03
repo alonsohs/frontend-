@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+
+
 export const MiFormulario = () => {
     const [ID, setNombre] = useState('');
     const [Codigo, setEmail] = useState('');
@@ -15,7 +17,7 @@ export const MiFormulario = () => {
             descripcion: Descripcion
         };
 
-        axios.post('https://backend-1-ck69.onrender.com/cuadro/seccion/', nuevoUsuario)
+        axios.post(import.meta.env.VITE_API_URL + '/cuadro/seccion/', nuevoUsuario)
             .then(response => {
                 console.log('Usuario creado:', response.data);
             })

@@ -3,3 +3,15 @@ export interface Producto{
     codigo: string;
     descripcion: string;
 }
+
+export interface Serie {
+    id_Serie: string;
+    serie: string;
+    descripcion: string;
+    
+}
+
+export interface SubSerie{
+    id_subserie: string;
+    descripcion: string;
+}

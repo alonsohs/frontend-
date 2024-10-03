@@ -8,7 +8,7 @@ export const Productos = () => {
 
     useEffect(() => {
         const fetchProductos = async () => {
-            const response = await axios.get('https://backend-1-ck69.onrender.com/cuadro/seccion/');
+            const response = await axios.get(import.meta.env.VITE_API_URL + '/cuadro/seccion/');
             setProductos(response.data);
         };
         fetchProductos();
