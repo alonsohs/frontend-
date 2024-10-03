@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-interface Serie {
+interface Seccion {
   id_seccion: string;
   codigo: string;
   descripcion: string;
 }
 
-export const serie_post = async (data: Serie) => {
+export const seccion_post = async (data: Seccion) => {
   try {
     const response = await axios.post(import.meta.env.VITE_API_URL + '/cuadro/seccion/', data);
 

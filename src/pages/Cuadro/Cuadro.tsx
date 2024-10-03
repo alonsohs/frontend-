@@ -1,7 +1,7 @@
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
-import {EnviarDatos} from "../../Post";
+import { seccion_post } from "../../Post_cuadro";
 
 
  export function Cuadro (){
@@ -19,7 +19,7 @@ import {EnviarDatos} from "../../Post";
         };
 
         try{
-            const result = await  EnviarDatos (Seccion);
+            const result = await  seccion_post (Seccion);
             console.log('Respuesta de la APi:', result); 
         } catch (error) {
             console.error('Error:', error);
@@ -62,7 +62,7 @@ import {EnviarDatos} from "../../Post";
 
                 <div className="col-12 col-lg-18 m-auto">
 
-                    <form className="multisteps-form_form">
+                    <form className="multisteps-form_form" onSubmit={handleSubmit}>
 
                         <div className="multisteps-form_panel shadow p-4 rounded bg-white js-active" data-animation="scaleIm">
 
@@ -70,7 +70,7 @@ import {EnviarDatos} from "../../Post";
 
                             <div className="multisteps-form_v">
 
-                                <form className="form-row mt-4" onSubmit={handleSubmit}>
+                                <div className="form-row mt-4">
 
                                     <div className="col-12 col-sm-6">
                                         <label>ID Seccion</label>
@@ -91,7 +91,7 @@ import {EnviarDatos} from "../../Post";
                                         <Boton>Enviar</Boton>
                                     </div>
 
-                                </form>
+                                </div>
 
                             </div>
 
