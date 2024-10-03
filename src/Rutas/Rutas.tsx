@@ -7,6 +7,7 @@ import {Usuario} from "../pages/Usuario/Perfil";
 import { Cuadro } from "../pages/Cuadro/Cuadro";
 import { Productos } from "../Productos";
 import { MiFormulario } from "../Post";
+import {MyComponent} from "../test"
 
 export function Rutas() {
   return (
@@ -20,6 +21,7 @@ export function Rutas() {
       <Route path="/Cuadro" element={<Cuadro/>}/>
       <Route path="/Seccion" element={<Productos/>}/>
       <Route path="/FormCuadro" element={<MiFormulario/>}></Route>
+      <Route path="/test" element={<MyComponent/>}></Route>
     </Routes>
   );
 }
