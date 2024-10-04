@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { seccion } from "./Producto";
-import { Serie } from "./Producto";
 import { Seccion_get } from "./services/cuadro.service";
 //import { serie_get } from "./services/cuadro.service";
 import { serie_post } from "./services/cuadro.service";
@@ -11,7 +9,6 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 export const Productos = () => {
   //const [productos, setProductos] = useState<Producto[]>([]);
   const [secciones, setSeccion] = useState<seccion[]>([]);
-  const [serie, setSerie] = useState<Serie[]>([]);
   const [id_seccion, setId_seccion] = useState("");
   const [ID, setID] = useState("");
   const [Serie, setSe] = useState("");

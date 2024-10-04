@@ -9,7 +9,6 @@ export function Subserie() {
   const [subserie, setsubserie] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [serie, setserie] = useState("");
-  const [id_serie, setIdserie] = useState("");
 
   const [Subserie, setSubserie] = useState<SubSerie[]>([]);
 
@@ -28,7 +27,6 @@ export function Subserie() {
       SubSerie: subserie,
       descripcion: Descripcion,
       serie: serie,
-      id_serie: id_serie,
     };
 
     try {
