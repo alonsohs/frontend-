@@ -2,26 +2,18 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
-import { seccion_post } from "../../Services/cuadro.service";
-import { Seccion_get } from "../../Services/cuadro.service";
-import { Seccion } from "./Seccion";
-import { seccion } from '../../Producto';
-
-
-=======
-import { serie_post } from "../../services/cuadro.service";
+import { seccion_post } from "../../services/cuadro.service";
 import { Seccion_get } from "../../services/cuadro.service";
-import { Producto } from "../../Producto";
->>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
+import { Seccion } from "./Seccion";
+import { seccion } from "../../Producto";
+import { serie_post } from "../../services/cuadro.service";
 
 export function Serie() {
-
   const [ID, setID] = useState("");
   const [Serie, setSerie] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
-<<<<<<< HEAD
+  const [ID_seccion, setId_seccion] = useState("");
   const [secciones, setSeccion] = useState<seccion[]>([]);
 
   useEffect(() => {
@@ -29,7 +21,7 @@ export function Serie() {
       try {
         const items = await Seccion_get();
         console.log(items);
-        
+
         setSeccion(items);
       } catch (error) {
         console.error("Error al obtener las secciones:", error);
@@ -38,24 +30,16 @@ export function Serie() {
     fetchSeccion();
   }, []);
 
-
-=======
-  const [secciones, setSeccion] = useState<Producto[]>([]);
->>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
-
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     const serie = {
       id_serie: ID,
       serie: Serie,
-      codigo: Codigo,
+      codigo_serie: Codigo,
       descripcion: Descripcion,
-      id_seccion: secciones,
+      id_seccion: ID_seccion,
     };
-
-
-    
 
     try {
       const result = await serie_post(serie);
@@ -102,62 +86,84 @@ export function Serie() {
         data-animation="scaleIn"
       >
         <h3 className="multisteps-form_title">Serie</h3>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="multisteps-form_content">
+            <div className="form-row" mt-4>
+              {/*Id seccion*/}
+              <div className="col-6 col-sm-3 mt-4 mt-4 mt-sm-0">
+                <label>Seccion</label>
+                <select
+                  name="seccion"
+                  id="seccion"
+                  value={ID_seccion}
+                  onChange={(e) => setId_seccion(e.target.value)}
+                >
+                  {secciones.map((seccion) => (
+                    <option value={seccion.id_seccion}>
+                      {" "}
+                      {seccion.id_seccion}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-        <div className="multisteps-form_content">
-          <div className="form-row" mt-4>
-            {/*Seccion*/}
-            <div className="col-6 col-sm-3 mt-4 mt-4 mt-sm-0">
-              <label>Seccion</label>
-<<<<<<< HEAD
-              <select name="seccion" id="seccion">
-                {secciones.map ((seccion)=> (
-                    <option value={seccion.id_seccion}> {seccion.id_seccion}</option>
-                ))
-                }
-            </select>
-=======
+              {/*ID Serie*/}
+              <div className="col">
+                <label>ID Serie</label>
+                <input
+                  className="multisteps-form_input form-control"
+                  type="Select-box"
+                  placeholder="ID Serie"
+                  value={ID}
+                  onChange={(e) => setID(e.target.value)}
+                />
+              </div>
 
-              <select className="multisteps-form_select form-control">
-                Seccion
-                {secciones.map((seccion) => (
-                  <option value={seccion.id_seccion}>
-                    {seccion.id_seccion}
-                  </option>
-                ))}
-              </select>
->>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
-            </div>
+              {/*Serie*/}
+              <div className="col">
+                <label>Serie</label>
+                <input
+                  className="multisteps-form_input form-control"
+                  type="Select-box"
+                  placeholder="Serie"
+                  value={Serie}
+                  onChange={(e) => setSerie(e.target.value)}
+                />
+              </div>
 
-            {/*ID Serie*/}
-            <div className="col">
-              <label>ID Serie</label>
-              <input
-                className="multisteps-form_input form-control"
-                type="Select-box"
-                placeholder="ID Serie"
-              />
+              {/*Codigo*/}
+              <div className="col">
+                <label>Codigo</label>
+                <input
+                  className="multisteps-form_input form-control"
+                  type="Select-box"
+                  placeholder="Codigo"
+                  value={Codigo}
+                  onChange={(e) => setCode(e.target.value)}
+                />
+              </div>
+
+              {/*Descripcion*/}
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label>Descripcion</label>
+                  <input
+                    className="multisteps-form_input form-control"
+                    type="text"
+                    placeholder="Descripcion"
+                    value={Descripcion}
+                    onChange={(e) => setDescripcion(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/*Botones Anterior y Siguiente*/}
+              <div className="button-row d-flex mt-4">
+                <Boton>Enviar</Boton>
+              </div>
             </div>
           </div>
-
-          {/*Descripcion*/}
-          <div className="form-row mt-4">
-            <div className="col">
-              <label>Descripcion</label>
-              <input
-                className="multisteps-form_input form-control"
-                type="text"
-                placeholder="Descripcion"
-              />
-            </div>
-          </div>
-
-          {/*Botones Anterior y Siguiente*/}
-
-          <div className="button-row d-flex mt-4">
-            <Boton>Anterior</Boton>
-            <Boton>Siguiente</Boton>
-          </div>
-        </div>
+        </form>
       </div>
     </body>
   );

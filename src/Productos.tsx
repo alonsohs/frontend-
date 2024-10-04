@@ -2,9 +2,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { seccion } from "./Producto";
 import { Serie } from "./Producto";
-import { Seccion_get } from "./Services/cuadro.service";
+import { Seccion_get } from "./services/cuadro.service";
 //import { serie_get } from "./services/cuadro.service";
-import { serie_post } from "./Services/cuadro.service";
+import { serie_post } from "./services/cuadro.service";
 import { Boton } from "./components/Botones/Botones";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 

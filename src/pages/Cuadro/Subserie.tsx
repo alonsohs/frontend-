@@ -1,23 +1,34 @@
 import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import { useState } from "react";
-<<<<<<< HEAD
-import { seccion_post } from "../../Services/cuadro.service";
-=======
-import { subserie_post } from "../../services/cuadro.service";
->>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
+import { useState, useEffect } from "react";
+import { serie_get, subserie_post } from "../../services/cuadro.service";
+import { SubSerie } from "../../Producto";
 
 export function Subserie() {
   const [subserie, setsubserie] = useState("");
   const [Descripcion, setDescripcion] = useState("");
+  const [serie, setserie] = useState("");
+  const [id_serie, setIdserie] = useState("");
+
+  const [Subserie, setSubserie] = useState<SubSerie[]>([]);
+
+  useEffect(() => {
+    const fetchSubserie = async () => {
+      const items = await serie_get();
+      setSubserie(items);
+    };
+    fetchSubserie();
+  }, []);
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     const Subserie = {
-      subserie: subserie,
+      SubSerie: subserie,
       descripcion: Descripcion,
+      serie: serie,
+      id_serie: id_serie,
     };
 
     try {
@@ -57,84 +68,52 @@ export function Subserie() {
       >
         <h3 className="multisteps-form_title">Subserie</h3>
 
-        <div className="multisteps-form_content">
-          <div className="row">
-            <div className="col-12 col-sm-6">
-              <label>Seccion</label>
-              <select className="multisteps-form_select form-control">
-                <option selected>Seccion</option>
-                <option>1C. Marco Jurídico.</option>
-                <option>2C. Asuntos Jurídicos.</option>
-                <option>
-                  3C. Programación, organización y presupuestación.
-                </option>
-                <option>4C. Recursos Humanos</option>
-                <option>5C. Recursos Financieros</option>
-                <option>6C. Recursos Materiales</option>
-                <option>7C. Servicios Generales</option>
-                <option>8C. Tecnologías de la Información</option>
-                <option>9C. Comunicación Social</option>
-                <option>10C. Contraloria Municipal</option>
-                <option>
-                  11C. Planeación, Información, Evaluación y Políticas
-                </option>
-                <option>12C. Transparencia</option>
-                <option>13C. Administración de Archivos</option>
-                <option>1S. Gobernación</option>
-                <option>2S. Hacienda Municipal</option>
-                <option>3S. Servicios Municipales</option>
-                <option>4S. Desarrollo económico</option>
-                <option>5S. Desarrollo Social (BIENESTAR)</option>
-                <option>6S. Desarrollo Urbano y Medio Ambiente</option>
-                <option>7S. Seguridad Pública </option>
-                <option>8S. Desarrollo Integral de la Familia</option>
-              </select>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="multisteps-form_content">
+            <div className="row">
+              <div className="col-12 col-sm-6">
+                <label>Serie</label>
+                <select
+                  className="multisteps-form_select form-control"
+                  value={serie}
+                  onChange={(e) => setserie(e.target.value)}
+                >
+                  {Subserie.map((subserie) => (
+                    <option value={subserie.serie}> {subserie.serie}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="col-12 col-sm-6">
+                <label>Subserie</label>
+                <input
+                  className="multisteps-form_input form-control"
+                  type="text"
+                  placeholder="ID Subserie"
+                  value={subserie}
+                  onChange={(e) => setsubserie(e.target.value)}
+                />
+              </div>
+
+              <div className="col-12 col-sm-6 mt-4 mt-sm-0">
+                <label>Descripcion</label>
+                <input
+                  className="multisteps-form_input form-control"
+                  type="text"
+                  placeholder="Descripcion"
+                  value={Descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className="col-12 col-sm-6">
-              <label>Serie</label>
-              <select className="multisteps-form_select form-control">
-                <option selected>Serie</option>
-                <option>1C1. Disposiciones en materia normativa.</option>
-                <option>
-                  1C2. Convenios y tratados nacionales e internacionales.
-                </option>
-                <option>1C3. Decretos.</option>
-                <option>1C4. Reglamentos y lineamientos.</option>
-                <option>1C5. Planes, programas y proyectos.</option>
-                <option>1C6. Acuerdos Generales.</option>
-                <option>1C7. Circulares, oficios, memorandums.</option>
-                <option>1C8. Instrumentos Juridicos Concensuales.</option>
-                <option>1C9. Relaciones jurídicas.</option>
-              </select>
-            </div>
-
-            <div className="col-12 col-sm-6">
-              <label>ID Serie</label>
-              <input
-                className="multisteps-form_input form-control"
-                type="text"
-                placeholder="ID Subserie"
-              />
-            </div>
-
-            <div className="col-12 col-sm-6 mt-4 mt-sm-0">
-              <label>Descripcion</label>
-              <input
-                className="multisteps-form_input form-control"
-                type="text"
-                placeholder="Descripcion"
-              />
+            <div className="row">
+              <div className="button-row d-flex mt-4 col-12">
+                <Boton>Enviar</Boton>
+              </div>
             </div>
           </div>
-
-          <div className="row">
-            <div className="button-row d-flex mt-4 col-12">
-              <Boton>Anterior</Boton>
-              <Boton>Siguiente</Boton>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </body>
   );

@@ -9,10 +9,10 @@ export interface Serie {
     serie: string;
     descripcion: string;
     codigo_serie: string;
-    
 }
 
 export interface SubSerie{
-    id_subserie: string;
+    SubSerie: string;
     descripcion: string;
+    serie: string;
 }
