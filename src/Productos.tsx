@@ -6,6 +6,8 @@ import { Seccion_get } from "./Services/cuadro.service";
 //import { serie_get } from "./services/cuadro.service";
 import { serie_post } from "./Services/cuadro.service";
 import { Boton } from "./components/Botones/Botones";
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+
 
 export const Productos = () => {
   //const [productos, setProductos] = useState<Producto[]>([]);
@@ -43,6 +45,13 @@ export const Productos = () => {
       console.error("Error:", error);
     }
   };
+
+  const columns: GridColDef[] = [
+    { field: 'codigo', headerName: 'codigo', width: 150 },
+    { field: 'descripcion', headerName: 'descripcion', width: 150 },
+  ];
+  
+
   return (
     <div>
       <form action="" onSubmit={handleSubmit}>
@@ -75,6 +84,11 @@ export const Productos = () => {
         />
         <Boton>Enviar</Boton>
       </form>
+
+      <div style={{ height: 300, width: '100%' }}>
+      <DataGrid rows={secciones} columns={columns} getRowId={(x)=> x.id_seccion}/>
+
+    </div>
 
     
       {/*<select name="serie" id="serie">
