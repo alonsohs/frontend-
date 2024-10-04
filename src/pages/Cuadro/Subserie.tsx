@@ -2,24 +2,26 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
+<<<<<<< HEAD
 import { seccion_post } from "../../Services/cuadro.service";
+=======
+import { subserie_post } from "../../services/cuadro.service";
+>>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
 
 export function Subserie() {
-  const [ID, setID] = useState("");
-  const [Codigo, setCode] = useState("");
+  const [subserie, setsubserie] = useState("");
   const [Descripcion, setDescripcion] = useState("");
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    const Seccion = {
-      id_seccion: ID,
-      codigo: Codigo,
+    const Subserie = {
+      subserie: subserie,
       descripcion: Descripcion,
     };
 
     try {
-      const result = await seccion_post(Seccion);
+      const result = await subserie_post(Subserie);
       console.log("Respuesta de la APi:", result);
     } catch (error) {
       console.error("Error:", error);

@@ -2,18 +2,26 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { seccion_post } from "../../Services/cuadro.service";
 import { Seccion_get } from "../../Services/cuadro.service";
 import { Seccion } from "./Seccion";
 import { seccion } from '../../Producto';
 
 
+=======
+import { serie_post } from "../../services/cuadro.service";
+import { Seccion_get } from "../../services/cuadro.service";
+import { Producto } from "../../Producto";
+>>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
 
 export function Serie() {
 
   const [ID, setID] = useState("");
+  const [Serie, setSerie] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
+<<<<<<< HEAD
   const [secciones, setSeccion] = useState<seccion[]>([]);
 
   useEffect(() => {
@@ -31,25 +39,38 @@ export function Serie() {
   }, []);
 
 
+=======
+  const [secciones, setSeccion] = useState<Producto[]>([]);
+>>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    const Seccion = {
-      id_seccion: ID,
+    const serie = {
+      id_serie: ID,
+      serie: Serie,
       codigo: Codigo,
       descripcion: Descripcion,
+      id_seccion: secciones,
     };
 
 
     
 
     try {
-      const result = await seccion_post(Seccion);
+      const result = await serie_post(serie);
       console.log("Respuesta de la APi:", result);
     } catch (error) {
       console.error("Error:", error);
     }
+
+    useEffect(() => {
+      const fetchSeccion = async () => {
+        const items = await Seccion_get();
+        setSeccion(items);
+      };
+      fetchSeccion();
+    }, []);
   };
 
   return (
@@ -87,12 +108,24 @@ export function Serie() {
             {/*Seccion*/}
             <div className="col-6 col-sm-3 mt-4 mt-4 mt-sm-0">
               <label>Seccion</label>
+<<<<<<< HEAD
               <select name="seccion" id="seccion">
                 {secciones.map ((seccion)=> (
                     <option value={seccion.id_seccion}> {seccion.id_seccion}</option>
                 ))
                 }
             </select>
+=======
+
+              <select className="multisteps-form_select form-control">
+                Seccion
+                {secciones.map((seccion) => (
+                  <option value={seccion.id_seccion}>
+                    {seccion.id_seccion}
+                  </option>
+                ))}
+              </select>
+>>>>>>> eefc4dce919d884c99bad0a732faa258d148d107
             </div>
 
             {/*ID Serie*/}
