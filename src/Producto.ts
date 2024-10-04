@@ -8,6 +8,7 @@ export interface Serie {
     id_Serie: string;
     serie: string;
     descripcion: string;
+    codigo_serie: string;
     
 }
 
