@@ -163,7 +163,7 @@ const Container = styled.div<{ isOpen: boolean }>`
       align-items: center;
       text-decoration: none;
       padding: calc(${Variables.smSpacing}-2px) 0;
-      color: #fff;
+      color: #eaeaea;
 
       .Iconos_Links {
         padding: ${Variables.smSpacing} ${Variables.mdSpacing};

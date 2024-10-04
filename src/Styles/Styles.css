@@ -137,6 +137,37 @@
   background: #65257b; /* Cambia el color de fondo al pasar el ratón */
 }
 
+.Atrás {
+  background-color: white;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid black;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.Atrás :hover {
+  background-color: #334155;
+  color: white;
+}
+
+.Adelante {
+  background-color: #441853;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.Adelante:hover {
+  background-color: #65257b;
+  color: white;
+}
+
 /*---------------------------------------------- Estilo de Perfil de usuario -------------------------------------------*/
 /*Main-Container*/
 .container {
@@ -437,74 +468,312 @@
 }
 @media (max-width: 768px) {
   .Entrar {
-    width: 100%; /* Asegurarse de que el botón ocupe todo el ancho */
+    width: 100%;
   }
 }
 
-/*------------------------------------------------ Dashboard Cards----------------------------------------*/
-.content-area-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: 12px;
-  gap: 16px;
-
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 576px) {
-    grid-template-columns: 100%;
-  }
-
-  .area-card {
-    background-color: var(--secondary-color);
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    padding: 20px 16px;
-    justify-content: space-between;
-    box-shadow: var(--light-shadow1);
-
-    @media (max-width: 768px) {
-      padding: 12px;
-    }
-
-    .info-title {
-      color: var(--lg-text-color);
-      font-size: 18px;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    .info-value {
-      color: var(--xl-text-color);
-      font-weight: 700;
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .info-text {
-      color: var(--base-text-color);
-      font-weight: 500;
-    }
-  }
+/*-----------------------------------------Home--------------------------------------*/
+.Home {
+  background: #eaeaea;
 }
 
-.recharts-default-tooltip {
-  padding: 4px 8px !important;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 12px;
+/*------------------------------Dashboard Tabla-------------------------------*/
+
+.Contenedor_Tabla {
+  margin: 70px;
+  padding: 2rem;
+  padding-bottom: 0;
+}
+
+.Card_Tabla {
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Tabla {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Tabla th,
+.Tabla td {
+  padding: 10px 15px;
+  text-align: center;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.Tabla th {
+  color: white;
+  font-weight: bold;
+  background-color: #2a2a2a;
+}
+
+.Tabla td {
+  color: black;
+}
+
+.Campo_Busqueda {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+}
+
+.Campo_Busqueda:focus {
+  border-color: #441853;
+  outline: none;
+}
+
+.Estado_Tabla.proceso {
+  color: #065fa8;
+}
+
+.Estado_Tabla.finalizado {
+  color: #ff9a02;
+}
+.Estado_Tabla.nuevo {
+  color: #65257b;
+}
+
+/*--------------------------------------Dashboard Gráficos ----------------------------------------------------------------------*/
+.Titulo {
+  font-size: 20px;
+  font-weight: inherit;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  width: 40%;
+  margin: 0 auto;
+  margin-left: 100px;
+  margin-top: 60px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-custom {
+  padding: 30px;
+}
+
+.chart-body {
+  height: 300px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-around;
+}
+
+/*-----------------------------------------Cards-----------------------------------------------*/
+
+.Contenedor_Card {
+  display: flex;
+  justify-content: space-around;
+  height: 350px;
+  padding: 75px;
+  padding-bottom: 20px;
+}
+
+.Card_Card {
+  width: 30%;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.Card_Card:hover {
+  transform: scale(1.05); /* Efecto hover */
+}
+
+.Imagen_Card {
+  width: 65%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/*--------------------------------------Contenedor de Página multipasos----------------------------*/
+.Contendor_ControladorPasos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.Pasos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.Contenedor_CrearExpediente {
+  width: 100%;
+  max-width: 80%;
+  margin: 2rem auto;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: white;
+}
+
+.C_PasosExpediente {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  padding: 0 2rem;
+  margin-bottom: 3rem;
+}
+
+.C_Pasos_Pasos {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  flex: 1;
+}
+
+.Número_Display {
+  width: 3rem;
+  height: 3rem;
+  background-color: #441853;
+  border-radius: 50%;
+  transition: background-color 0.5s ease-in-out;
+  border: 2px solid #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 3;
+}
+
+.Número_.Número_Display {
+  background-color: #c884d7;
+}
+
+.Descripción_Display {
+  text-align: center;
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: black;
+  margin-top: 0.5rem;
+}
+
+.Linea_Display {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #000;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.Pasos_Display {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.II_Pasos_Display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.Paso_Seleccionado .Número_Display {
+  background-color: #441853;
+}
+
+.Número_Seleccionado {
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.texto_seleccionado {
+  color: #000;
+  font-weight: bold;
+}
+
+.II_texto_seleccionado {
+  color: #666;
+}
+
+.Linea_Seleccionada {
+  background-color: #441853;
+}
+
+.II_Linea_Seleccionada {
+  background-color: #c884d7;
+}
+
+.Boton_Atrás_Seleccionado {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.Botones_Navegacion {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.Boton_Anterior {
+  margin-right: auto;
+}
+
+.Boton_Siguiente {
+  margin-left: auto;
+}
+
+.Boton_Anterior,
+.Boton_Siguiente {
+  padding: 0.5rem 1rem;
+  background-color: #441853;
+  color: white;
+  border: none;
   border-radius: 4px;
-  background-color: var(--secondary-color) !important;
-  border: 1px solid var(--border-color-inverted) !important;
+  cursor: pointer;
 }
 
-.recharts-tooltip-item-list {
-  * {
-    color: var(--text-color-inverted) !important;
-    font-size: 14px;
-    font-family: inherit !important;
-    opacity: 0.9;
-  }
+.Boton_Anterior:disabled,
+.Boton_Siguiente:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
-
-/*------------------------------Dashboard Card-------------------------------*/

@@ -3,7 +3,8 @@ import { Home } from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Expediente } from "../pages/Expediente/Expediente";
 import { Configuración } from "../pages/Configuración/Configuración";
-import {Usuario} from "../pages/Usuario/Perfil";
+import { Usuario } from "../pages/Usuario/Perfil";
+import { Crear_Expediente } from "../pages/Expediente/Crear_Expediente";
 
 export function Rutas() {
   return (
@@ -13,7 +14,8 @@ export function Rutas() {
       <Route path="/Login" element={<Login />} />
       <Route path="/Expediente" element={<Expediente />} />
       <Route path="/Configuración" element={<Configuración />} />
-      <Route path="/Usuario" element={<Usuario/>}/>
+      <Route path="/Usuario" element={<Usuario />} />
+      <Route path="/Crear_Expediente" element={<Crear_Expediente />} />
     </Routes>
   );
 }
