@@ -2,9 +2,7 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useEffect, useState } from "react";
-import { seccion_post } from "../../services/cuadro.service";
 import { Seccion_get } from "../../services/cuadro.service";
-import { Seccion } from "./Seccion";
 import { seccion } from "../../Producto";
 import { serie_post } from "../../services/cuadro.service";
 
