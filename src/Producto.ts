@@ -1,4 +1,4 @@
-export interface Producto{
+export interface seccion{
     id_seccion: string;
     codigo: string;
     descripcion: string;

@@ -2,7 +2,7 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
-import { seccion_post } from "../../Post_cuadro";
+import { seccion_post } from "../../Services/cuadro.service";
 
 export function Seccion() {
   const [ID, setID] = useState("");

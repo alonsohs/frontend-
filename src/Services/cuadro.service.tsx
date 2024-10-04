@@ -9,8 +9,9 @@ interface Seccion {
 interface Serie {
   id_serie: string;
   serie: string;
-  codigo: string;
+  codigo_serie: string;
   descripcion: string;
+  id_seccion: string;
 }
 
 interface SubSerie {

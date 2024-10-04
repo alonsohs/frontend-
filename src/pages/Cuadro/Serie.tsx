@@ -1,13 +1,36 @@
 import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import { useState } from "react";
-import { seccion_post } from "../../Post_cuadro";
+import { useEffect, useState } from "react";
+import { seccion_post } from "../../Services/cuadro.service";
+import { Seccion_get } from "../../Services/cuadro.service";
+import { Seccion } from "./Seccion";
+import { seccion } from '../../Producto';
+
+
 
 export function Serie() {
+
   const [ID, setID] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
+  const [secciones, setSeccion] = useState<seccion[]>([]);
+
+  useEffect(() => {
+    const fetchSeccion = async () => {
+      try {
+        const items = await Seccion_get();
+        console.log(items);
+        
+        setSeccion(items);
+      } catch (error) {
+        console.error("Error al obtener las secciones:", error);
+      }
+    };
+    fetchSeccion();
+  }, []);
+
+
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -17,6 +40,9 @@ export function Serie() {
       codigo: Codigo,
       descripcion: Descripcion,
     };
+
+
+    
 
     try {
       const result = await seccion_post(Seccion);
@@ -61,36 +87,12 @@ export function Serie() {
             {/*Seccion*/}
             <div className="col-6 col-sm-3 mt-4 mt-4 mt-sm-0">
               <label>Seccion</label>
-
-              <select className="multisteps-form_select form-control">
-                Seccion
-                <option selected>Seccion</option>
-                <option>1C. Marco Jurídico.</option>
-                <option>2C. Asuntos Jurídicos.</option>
-                <option>
-                  3C. Programación, organización y presupuestación.
-                </option>
-                <option>4C. Recursos Humanos</option>
-                <option>5C. Recursos Financieros</option>
-                <option>6C. Recursos Materiales</option>
-                <option>7C. Servicios Generales</option>
-                <option>8C. Tecnologías de la Información</option>
-                <option>9C. Comunicación Social</option>
-                <option>10C. Contraloria Municipal</option>
-                <option>
-                  11C. Planeación, Información, Evaluación y Políticas
-                </option>
-                <option>12C. Transparencia</option>
-                <option>13C. Administración de Archivos</option>
-                <option>1S. Gobernación</option>
-                <option>2S. Hacienda Municipal</option>
-                <option>3S. Servicios Municipales</option>
-                <option>4S. Desarrollo económico</option>
-                <option>5S. Desarrollo Social (BIENESTAR)</option>
-                <option>6S. Desarrollo Urbano y Medio Ambiente</option>
-                <option>7S. Seguridad Pública </option>
-                <option>8S. Desarrollo Integral de la Familia</option>
-              </select>
+              <select name="seccion" id="seccion">
+                {secciones.map ((seccion)=> (
+                    <option value={seccion.id_seccion}> {seccion.id_seccion}</option>
+                ))
+                }
+            </select>
             </div>
 
             {/*ID Serie*/}
