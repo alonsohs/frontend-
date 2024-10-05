@@ -10,15 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@mui/x-charts": "^7.18.0",
+=======
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.2",
+    "@mui/styled-engine-sc": "^6.1.2",
+    "@mui/x-data-grid": "^7.19.0",
+>>>>>>> b1e692be5758ff348a82e33010ad03454947b853
     "@remixicon/react": "^4.2.0",
     "apexcharts": "^3.54.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
     "react": "^18.3.1",
+<<<<<<< HEAD
     "react-apexcharts": "^1.4.1",
     "react-chartjs-2": "^5.2.0",
+=======
+    "react-bootstrap": "^2.10.5",
+>>>>>>> b1e692be5758ff348a82e33010ad03454947b853
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
@@ -33,6 +45,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "cross-env": "^7.0.3",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",

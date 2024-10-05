@@ -9,6 +9,7 @@ import {
   AiOutlineFolderOpen,
   AiOutlineFile,
 } from "react-icons/ai";
+import { SiInternetarchive } from "react-icons/si";
 import { LuSettings } from "react-icons/lu";
 import { GiExitDoor } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
@@ -85,6 +86,11 @@ const LinksArray = [
     label: "Instrumentos Archivísticos ",
     icon: <AiOutlineFile />,
     to: "/Instrumentos_Archivísticos ",
+  },
+  {
+    label: "Cuadro General",
+    icon: <SiInternetarchive />,
+    to: "/Seccion",
   },
 ];
 
