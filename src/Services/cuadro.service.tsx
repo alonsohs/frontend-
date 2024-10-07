@@ -137,3 +137,27 @@ export const serie_get = async () => {
     return null;
   }
 };
+
+
+export const subserie_get = async () => {
+  try {
+    const response = await axios.get(
+      import.meta.env.VITE_API_URL + "/cuadro/subserie/"
+    );
+
+    if (response.status === 200) {
+      // Asume que se devuelve la consulta
+      console.log("subserie ", response.data);
+      return response.data;
+    } else {
+      throw new Error("no consultado" + response.statusText);
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error de Axios:", error.message);
+    } else {
+      console.error("Error inesperado:", error);
+    }
+    return null;
+  }
+};
