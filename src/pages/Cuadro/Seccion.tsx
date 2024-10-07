@@ -3,14 +3,17 @@ import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
+import 'sweetalert2/src/sweetalert2.scss';
 
 export function Seccion() {
   const [ID, setID] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const Seccion = {
       id_seccion: ID,
@@ -21,6 +24,9 @@ export function Seccion() {
     try {
       const result = await seccion_post(Seccion);
       console.log("Respuesta de la APi:", result);
+
+  
+
     } catch (error) {
       console.error("Error:", error);
     }
