@@ -3,7 +3,8 @@ import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
-import 'sweetalert2/src/sweetalert2.scss';
+import "sweetalert2/src/sweetalert2.scss";
+import Swal from "sweetalert2";
 
 export function Seccion() {
   const [ID, setID] = useState("");
@@ -13,6 +14,15 @@ export function Seccion() {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
+    if (!ID.trim() || !Codigo.trim() || !Descripcion.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "¡Atencion!",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
     setIsLoading(true);
 
     const Seccion = {
@@ -25,13 +35,25 @@ export function Seccion() {
       const result = await seccion_post(Seccion);
       console.log("Respuesta de la APi:", result);
 
-      Swal.fire(){
-        icon: 'success',
-        title: 'Exito',
-        
-      }
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Sección agregada con éxito",
+      });
+
+      setID("");
+      setCode("");
+      setDescripcion("");
     } catch (error) {
       console.error("Error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "¡Oops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -102,7 +124,9 @@ export function Seccion() {
                   </div>
 
                   <div className="button-row d-flex mt-4">
-                    <Boton>Enviar</Boton>
+                    <Boton disabled={isLoading}>
+                      {isLoading ? "Enviando..." : "Enviar"}
+                    </Boton>
                   </div>
                 </div>
               </div>
