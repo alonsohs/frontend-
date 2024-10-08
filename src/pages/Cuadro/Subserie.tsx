@@ -4,11 +4,14 @@ import { Boton } from "../../components/Botones/Botones";
 import { useState, useEffect } from "react";
 import { serie_get, subserie_post } from "../../services/cuadro.service";
 import { SubSerie } from "../../Producto";
+import "sweetalert2/src/sweetalert2.scss";
+import Swal from "sweetalert2";
 
 export function Subserie() {
   const [subserie, setsubserie] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [serie, setserie] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [Subserie, setSubserie] = useState<SubSerie[]>([]);
 
@@ -23,6 +26,16 @@ export function Subserie() {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
+    if (!subserie.trim() || !Descripcion.trim() || !serie.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
+    setIsLoading(true);
+
     const Subserie = {
       SubSerie: subserie,
       descripcion: Descripcion,
@@ -32,8 +45,26 @@ export function Subserie() {
     try {
       const result = await subserie_post(Subserie);
       console.log("Respuesta de la APi:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Se ha creado la subserie con exito",
+      });
+
+      setsubserie("");
+      setDescripcion("");
+      setserie("");
     } catch (error) {
       console.error("Error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,6 +107,7 @@ export function Subserie() {
                   value={serie}
                   onChange={(e) => setserie(e.target.value)}
                 >
+                  <option value="">Seleccione una opción</option>
                   {Subserie.map((subserie) => (
                     <option value={subserie.serie}> {subserie.serie}</option>
                   ))}
@@ -107,7 +139,9 @@ export function Subserie() {
 
             <div className="row">
               <div className="button-row d-flex mt-4 col-12">
-                <Boton>Enviar</Boton>
+                <Boton disabled={isLoading}>
+                  {isLoading ? "Enviando..." : "Enviar"}
+                </Boton>
               </div>
             </div>
           </div>
