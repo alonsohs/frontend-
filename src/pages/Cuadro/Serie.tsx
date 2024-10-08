@@ -2,9 +2,14 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useEffect, useState } from "react";
-import { Seccion_get } from "../../services/cuadro.service";
+import { Seccion_get, serie_get } from "../../services/cuadro.service";
 import { seccion } from "../../Producto";
+import { serie } from "../../Producto"
 import { serie_post } from "../../services/cuadro.service";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+
+
 
 export function Serie() {
   const [ID, setID] = useState("");
@@ -12,7 +17,10 @@ export function Serie() {
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [ID_seccion, setId_seccion] = useState("");
+  
+  
   const [secciones, setSeccion] = useState<seccion[]>([]);
+  const [series, setSerieGet] = useState<serie[]>([]);
 
   useEffect(() => {
     const fetchSeccion = async () => {
@@ -27,6 +35,15 @@ export function Serie() {
     };
     fetchSeccion();
   }, []);
+
+
+  useEffect (() =>{
+    const fetchSerie = async () => {
+      const serie = await serie_get();
+      setSerieGet (serie);
+    };
+    fetchSerie(); 
+  }, []); 
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -54,6 +71,16 @@ export function Serie() {
       fetchSeccion();
     }, []);
   };
+
+  //Add Table Section
+  const columns :GridColDef[] = [
+    {field:"id_serie", headerName : "Serie Codigo", width: 150 },
+    {field:"serie", headerName : "Nombre Serie", width: 150 },
+    {field:"codigo_serie", headerName : "Codigo", width: 150 },
+    {field:"descripcion", headerName : "Descripción", width: 250 },
+    {field:"id_seccion", headerName : "A que Seccion Pertenece", width: 250 },
+  ];
+
 
   return (
     <body className="Body_Cuadro">
@@ -163,6 +190,25 @@ export function Serie() {
           </div>
         </form>
       </div>
+      <div //Show the table with information
+             style  = {{height: 400}}>
+             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+         <DataGrid
+         rows = {series}
+         columns={columns}
+         getRowId={(x) => x.serie}
+         disableRowSelectionOnClick
+         //autoHeight
+         density="compact"
+         style={{
+           width: '90%',
+           border: '1px solid grey',
+           borderRadius: '5px',
+           margin: 'auto'
+         }}
+         />
+            </Box>
+          </div>
     </body>
   );
 }

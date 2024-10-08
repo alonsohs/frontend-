@@ -4,7 +4,7 @@ export interface seccion{
     descripcion: string;
 }
 
-export interface Serie {
+export interface serie {
     id_Serie: string;
     serie: string;
     descripcion: string;

@@ -22,7 +22,7 @@ export const Productos = () => {
   const [id_subserie, setId_subserie] = useState("");
 
   const [secciones, setSeccion] = useState<seccion[]>([]);
-  const [serie, setserie] = useState<Serie[]>([]);;
+  const [serie, setserie] = useState<Serie[]>([]);
   const [subserie, setsubserie] = useState<SubSerie[]>([]);
 
 

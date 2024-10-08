@@ -1,16 +1,34 @@
 import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
+import { Seccion_get } from "../../services/cuadro.service";
+import {seccion} from "../../Producto"
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+
+
 
 export function Seccion() {
   const [ID, setID] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+
+  const [seccion, setSeccion] = useState <seccion[]>([]);
+
+
+  useEffect(() => {
+    const fetchSeccion = async () => {
+      const items = await Seccion_get();
+      setSeccion(items);
+    };
+    fetchSeccion();
+  }, []); 
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -56,6 +74,15 @@ export function Seccion() {
       setIsLoading(false);
     }
   };
+
+
+  //Add Table Section
+  const columns :GridColDef[] = [
+    {field:"id_seccion", headerName : "Seccion Codigo", width: 150 },
+    {field:"codigo", headerName : "Nombre Sección", width: 250 },
+    {field:"descripcion", headerName : "Descripción", width: 350 },
+  ];
+
   return (
     <body className="Body_Cuadro">
       <link
@@ -132,6 +159,25 @@ export function Seccion() {
               </div>
             </div>
           </form>
+          <div //Show the table with information
+             style  = {{height: 400}}>
+             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+         <DataGrid
+         rows = {seccion}
+         columns={columns}
+         getRowId={(x) => x.id_seccion }
+         disableRowSelectionOnClick
+         //autoHeight
+         //density="compact"
+         style={{
+           width: '80%',
+           border: '1px solid grey',
+           borderRadius: '5px',
+           margin: 'auto'
+         }}
+         />
+            </Box>
+          </div>
         </div>
       </div>
     </body>
