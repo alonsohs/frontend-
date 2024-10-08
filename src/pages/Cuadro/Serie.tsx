@@ -6,15 +6,12 @@ import { Seccion_get, serie_get } from "../../services/cuadro.service";
 import { seccion } from "../../Producto";
 import { serie } from "../../Producto"
 import { serie_post } from "../../services/cuadro.service";
-<<<<<<< HEAD
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 
 
-=======
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
->>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
 export function Serie() {
   const [ID, setID] = useState("");
@@ -25,11 +22,8 @@ export function Serie() {
   
   
   const [secciones, setSeccion] = useState<seccion[]>([]);
-<<<<<<< HEAD
   const [series, setSerieGet] = useState<serie[]>([]);
-=======
   const [isLoading, setIsLoading] = useState(false);
->>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
   useEffect(() => {
     const fetchSeccion = async () => {

@@ -1,7 +1,6 @@
 import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
 import { Seccion_get } from "../../services/cuadro.service";
@@ -11,11 +10,6 @@ import Swal from "sweetalert2";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 
-
-=======
-import { useState } from "react";
-import { seccion_post } from "../../Services/cuadro.service";
->>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
 export function Seccion() {
   const [ID, setID] = useState("");

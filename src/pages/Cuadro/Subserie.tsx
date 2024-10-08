@@ -2,17 +2,12 @@ import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { serie_get, subserie_get, subserie_post } from "../../services/cuadro.service";
 import { SubSerie, } from "../../Producto";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-=======
-import { serie_get, subserie_post } from "../../services/cuadro.service";
-import { SubSerie } from "../../Producto";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
->>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
 export function Subserie() {
   const [subserie, setsubserie] = useState("");
