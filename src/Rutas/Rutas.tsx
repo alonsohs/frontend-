@@ -3,13 +3,15 @@ import { Home } from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Expediente } from "../pages/Expediente/Expediente";
 import { Configuración } from "../pages/Configuración/Configuración";
-import {  Usuario  } from "../pages/Usuario/Perfil";
+import { Usuario } from "../pages/Usuario/Perfil";
 import { Seccion } from "../pages/Cuadro/Seccion";
 import { Serie } from "../pages/Cuadro/Serie";
 import { Subserie } from "../pages/Cuadro/Subserie";
 import { Productos } from "../Productos";
 import { MiFormulario } from "../Post";
 import { Crear_Expediente } from "../pages/Expediente/Crear_Expediente";
+import { Ficha } from "../pages/Ficha/Crear_Ficha";
+import { Ficha_Registro } from "../pages/Ficha/Ficha_Registro";
 
 export function Rutas() {
   return (
@@ -27,6 +29,8 @@ export function Rutas() {
       <Route path="/Subserie" element={<Subserie />} />
       <Route path="/Usuario" element={<Usuario />} />
       <Route path="/Crear_Expediente" element={<Crear_Expediente />} />
+      <Route path="/Crear_Ficha" element={<Ficha />} />
+      <Route path="/Ficha" element={<Ficha_Registro />} />
     </Routes>
   );
 }

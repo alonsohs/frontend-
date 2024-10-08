@@ -15,6 +15,7 @@ import { GiExitDoor } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { IoIosArrowDropright } from "react-icons/io";
+import { RiTableLine } from "react-icons/ri";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -91,6 +92,33 @@ const LinksArray: MenuItem[] = [
     label: "Instrumentos Archivísticos ",
     icon: <AiOutlineFile />,
     to: "/Instrumentos_Archivisticos",
+    subMenu: [
+      {
+        label: "Inventario",
+        icon: <RiTableLine />,
+        to: "/Inventario",
+      },
+      {
+        label: "Guía",
+        icon: <RiTableLine />,
+        to: "/Guía",
+      },
+      {
+        label: "Ficha",
+        icon: <RiTableLine />,
+        to: "/Ficha",
+      },
+      {
+        label: "Catálogo",
+        icon: <RiTableLine />,
+        to: "/Catálogo",
+      },
+      {
+        label: "Portada",
+        icon: <RiTableLine />,
+        to: "/Portada",
+      },
+    ],
   },
   {
     label: "Cuadro General",
@@ -100,17 +128,17 @@ const LinksArray: MenuItem[] = [
       {
         label: "Sección",
         icon: <HiOutlineDocumentDuplicate />,
-        to: "/Cuadro/Sección",
+        to: "/Seccion",
       },
       {
         label: "Serie",
         icon: <HiOutlineDocumentDuplicate />,
-        to: "/Cuadro/Serie",
+        to: "/Serie",
       },
       {
         label: "Subserie",
         icon: <HiOutlineDocumentDuplicate />,
-        to: "/Cuadro/Subserie",
+        to: "/Subserie",
       },
     ],
   },

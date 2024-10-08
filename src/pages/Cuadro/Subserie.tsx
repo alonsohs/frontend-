@@ -85,7 +85,7 @@ export function Subserie() {
 
         <div className="H_Title">
           <h1 className="Header_Title">
-            Cuadro General de clasificacion Archivistica
+            Cuadro General de Clasificación Archivística
           </h1>
         </div>
       </header>
@@ -126,11 +126,11 @@ export function Subserie() {
               </div>
 
               <div className="col-12 col-sm-6 mt-4 mt-sm-0">
-                <label>Descripcion</label>
+                <label>Descripción</label>
                 <input
                   className="multisteps-form_input form-control"
                   type="text"
-                  placeholder="Descripcion"
+                  placeholder="Descripción"
                   value={Descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
                 />

@@ -41,7 +41,7 @@ export function Cuadro() {
 
         <div className="H_Title">
           <h1 className="Header_Title">
-            Cuadro General de clasificacion Archivistica
+            Cuadro General de Clasificación Archivistica
           </h1>
         </div>
       </header>

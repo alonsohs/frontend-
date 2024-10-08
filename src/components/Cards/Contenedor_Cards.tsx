@@ -1,8 +1,8 @@
 import React from "react";
 import { Card } from "../../components/Cards/Card";
-import Crear from "../../assets/Crear.jpg";
-import Editar from "../../assets/Editar.jpg";
-import Buscar from "../../assets/Buscar.jpg";
+import Crear from "../../assets/Crear.png";
+import Editar from "../../assets/Editar.png";
+import Buscar from "../../assets/Buscar.png";
 
 export const CardContainer: React.FC = () => {
   return (

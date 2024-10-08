@@ -103,7 +103,7 @@ export function Serie() {
 
         <div className="H_Title">
           <h1 className="Header_Title">
-            Cuadro General de clasificacion Archivistica
+            Cuadro General de Clasificación Archivística
           </h1>
         </div>
       </header>
@@ -120,7 +120,7 @@ export function Serie() {
             <div className="form-row" mt-4>
               {/*Id seccion*/}
               <div className="col-6 col-sm-3 mt-4 mt-4 mt-sm-0">
-                <label>Seccion</label>
+                <label>Sección</label>
                 <select
                   name="seccion"
                   id="seccion"
@@ -162,11 +162,11 @@ export function Serie() {
 
               {/*Codigo*/}
               <div className="col">
-                <label>Codigo</label>
+                <label>Código</label>
                 <input
                   className="multisteps-form_input form-control"
                   type="Select-box"
-                  placeholder="Codigo"
+                  placeholder="Código"
                   value={Codigo}
                   onChange={(e) => setCode(e.target.value)}
                 />
@@ -175,11 +175,11 @@ export function Serie() {
               {/*Descripcion*/}
               <div className="form-row mt-4">
                 <div className="col">
-                  <label>Descripcion</label>
+                  <label>Descripción</label>
                   <input
                     className="multisteps-form_input form-control"
                     type="text"
-                    placeholder="Descripcion"
+                    placeholder="Descripción"
                     value={Descripcion}
                     onChange={(e) => setDescripcion(e.target.value)}
                   />
