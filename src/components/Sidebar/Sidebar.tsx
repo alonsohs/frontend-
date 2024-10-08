@@ -1,9 +1,9 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import Iconotipo_Tlaxcala from "../../assets/Iconotipo_Tlaxcala.png";
 import "../../Styles/Styles.css";
 import { Variables } from "../../Styles/Variables";
 import {
-  AiOutlineLeft,
   AiOutlineHome,
   AiOutlineUser,
   AiOutlineFolderOpen,
@@ -13,60 +13,65 @@ import { SiInternetarchive } from "react-icons/si";
 import { LuSettings } from "react-icons/lu";
 import { GiExitDoor } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
+import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
+import { IoIosArrowDropright } from "react-icons/io";
 
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface MenuItem {
+  label: string;
+  icon: React.ReactNode;
+  to: string;
+  subMenu?: MenuItem[];
+}
+
+interface MenuItemProps extends MenuItem {
+  sidebarOpen: boolean;
+}
+
 export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
-  const Modificar_SidebarOpen = () => {
+  const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   return (
     <Container isOpen={sidebarOpen}>
-      <button className="Boton_Siderbar" onClick={Modificar_SidebarOpen}>
-        <AiOutlineLeft />
+      <button className="Boton_Siderbar" onClick={toggleSidebar}>
+        <IoIosArrowDropright />
       </button>
 
       <div className="Contenedor_Iconotipo">
         <div className="Estilo_Iconotipo">
-          <img src={Iconotipo_Tlaxcala} />
+          <img src={Iconotipo_Tlaxcala} alt="Iconotipo Tlaxcala" />
         </div>
       </div>
 
-      {LinksArray.map(({ icon, label, to }) => (
-        <div className="Contenedor_Links" key={label}>
-          <NavLink
-            to={to}
-            className={({ isActive }) => `Links${isActive ? `  active` : ``}`}
-          >
-            <div className="Iconos_Links">{icon}</div>
-            {sidebarOpen && <span>{label}</span>}
-          </NavLink>
-        </div>
+      {LinksArray.map((item) => (
+        <MenuItemComponent
+          key={item.label}
+          {...item}
+          sidebarOpen={sidebarOpen}
+        />
       ))}
 
       <Divider />
 
-      {linksArray.map(({ icon, label, to }) => (
-        <div className="Contenedor_Links" key={label}>
-          <NavLink
-            to={to}
-            className={({ isActive }) => `Links${isActive ? `  active` : ``}`}
-          >
-            <div className="Iconos_Links">{icon}</div>
-            {sidebarOpen && <span>{label}</span>}
-          </NavLink>
-        </div>
+      {linksArray.map((item) => (
+        <MenuItemComponent
+          key={item.label}
+          {...item}
+          sidebarOpen={sidebarOpen}
+        />
       ))}
     </Container>
   );
 }
 
-//Links principales
-const LinksArray = [
+// Links principales
+const LinksArray: MenuItem[] = [
   {
     label: "Home ",
     icon: <AiOutlineHome />,
@@ -85,21 +90,38 @@ const LinksArray = [
   {
     label: "Instrumentos Archivísticos ",
     icon: <AiOutlineFile />,
-    to: "/Instrumentos_Archivísticos ",
+    to: "/Instrumentos_Archivisticos",
   },
   {
     label: "Cuadro General",
     icon: <SiInternetarchive />,
     to: "/Seccion",
+    subMenu: [
+      {
+        label: "Sección",
+        icon: <HiOutlineDocumentDuplicate />,
+        to: "/Cuadro/Sección",
+      },
+      {
+        label: "Serie",
+        icon: <HiOutlineDocumentDuplicate />,
+        to: "/Cuadro/Serie",
+      },
+      {
+        label: "Subserie",
+        icon: <HiOutlineDocumentDuplicate />,
+        to: "/Cuadro/Subserie",
+      },
+    ],
   },
 ];
 
-//Links secundarios
-const linksArray = [
+// Links secundarios
+const linksArray: MenuItem[] = [
   {
     label: "Configuración  ",
     icon: <LuSettings />,
-    to: "/Configuración",
+    to: "/Configuracion",
   },
   {
     label: "Cerrar Sesión  ",
@@ -108,31 +130,80 @@ const linksArray = [
   },
 ];
 
-//Estilos de la sidebar
+// Componente MenuItemComponent
+const MenuItemComponent: React.FC<MenuItemProps> = ({
+  label,
+  icon,
+  to,
+  subMenu,
+  sidebarOpen,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  if (subMenu) {
+    return (
+      <div className="Contenedor_Links">
+        <div
+          onClick={() => setIsOpen(!isOpen)}
+          className="Links"
+          style={{ cursor: "pointer" }}
+        >
+          <div className="Iconos_Links">{icon}</div>
+          {sidebarOpen && <span>{label}</span>}
+        </div>
+        {isOpen && sidebarOpen && (
+          <ul className="Submenu">
+            {subMenu.map((item) => (
+              <li key={item.label}>
+                <NavLink to={item.to} className="Links SubmenuItem">
+                  <div className="Iconos_Links">{item.icon}</div>
+                  <span>{item.label}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="Contenedor_Links">
+      <NavLink
+        to={to}
+        className={({ isActive }) => `Links${isActive ? " active" : ""}`}
+      >
+        <div className="Iconos_Links">{icon}</div>
+        {sidebarOpen && <span>{label}</span>}
+      </NavLink>
+    </div>
+  );
+};
+
+// Estilos de la sidebar
 const Container = styled.div<{ isOpen: boolean }>`
   position: sticky;
-  padding-top: 20px;
   top: 0;
-  height: 100vh;
+  height: 150vh;
   color: #fff;
   background: #1a1a1a;
 
   .Boton_Siderbar {
     position: absolute;
-    top: ${Variables.xxlSpacing};
-    right: -18px;
+    top: 80px;
+    right: ${({ isOpen }) => (isOpen ? "-18px" : "-10px")};
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #2a2a2a;
+    background: #eaeaea;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 4px #fff;
-    color: #fff;
+    box-shadow: 0 0 4px #eaeaea;
+    color: black;
     cursor: pointer;
-    transition: all 0.3s;
-    transform: ${({ isOpen }) => (isOpen ? `rotate(0deg)` : `rotate(180deg)`)};
+    transition: all 0.3s ease;
+    transform: ${({ isOpen }) => (isOpen ? "rotate(0deg)" : "rotate(180deg)")};
     border: none;
   }
 
@@ -159,6 +230,7 @@ const Container = styled.div<{ isOpen: boolean }>`
 
   .Contenedor_Links {
     margin: 8px 0;
+    height: auto;
     padding: 0 15%;
     :hover {
       background: #2a2a2a;
@@ -167,8 +239,9 @@ const Container = styled.div<{ isOpen: boolean }>`
     .Links {
       display: flex;
       align-items: center;
+      height: auto;
       text-decoration: none;
-      padding: calc(${Variables.smSpacing}-2px) 0;
+      padding: calc(${Variables.smSpacing} - 2px) 0;
       color: #eaeaea;
 
       .Iconos_Links {
@@ -189,11 +262,22 @@ const Container = styled.div<{ isOpen: boolean }>`
       }
     }
   }
+
+  .Submenu {
+    list-style-type: none;
+    padding-left: ${Variables.mdSpacing};
+  }
+
+  .SubmenuItem {
+    padding: ${Variables.smSpacing} 0;
+  }
 `;
 
 const Divider = styled.div`
   height: 1px;
   width: 100%;
   background: #fff;
-  margin: ${Variables.lgSpacing};
+  margin: ${Variables.lgSpacing} 0;
 `;
+
+export default Sidebar;

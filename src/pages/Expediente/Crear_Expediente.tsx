@@ -32,8 +32,7 @@ export const Crear_Expediente: React.FC = () => {
         return <Subir_Documentación />;
       case 5:
         return <Resúmen_Expediente />;
-      case 6:
-        return <Final />;
+
       default:
         return null;
     }
