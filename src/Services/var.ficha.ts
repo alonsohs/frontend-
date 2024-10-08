@@ -5,6 +5,7 @@ export interface ficha{
     descripcion: string;
     soporte_docu: string;
     id_seccion : string;
-    id_serie : string;
+    serie : string;
     id_subserie: string;
 }
+
