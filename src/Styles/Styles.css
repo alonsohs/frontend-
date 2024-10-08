@@ -469,49 +469,46 @@
 
 /*------------------------------------------- Estilo Cuadro General ----------------------------------*/
 
-.Body_Cuadro{
+.Body_Cuadro {
   font-size: 16px;
   color: #2c2c2c;
 }
 
-.Body_Cuadro a{
+.Body_Cuadro a {
   color: inherit;
   text-decoration: none;
 }
 
-.brandLogo{
+.brandLogo {
   width: 100px;
   position: static;
   margin-left: 40%;
 }
 
-.H_Title{
+.H_Title {
   max-width: 600px;
   margin: 50px auto;
   text-align: center;
 }
 
-.Header_Title{
+.Header_Title {
   margin-bottom: 20px;
   font-size: 2.1rem;
 }
 
-.multisteps-form_form{
+.multisteps-form_form {
   position: relative;
 }
 
-.multisteps-form_panel{
+.multisteps-form_panel {
   position: relative;
   margin-left: 30%;
   width: 50%;
-  
 }
 
-
-  .Entrar {
-    width: 100%;
-  }
-
+.Entrar {
+  width: 100%;
+}
 
 /*-----------------------------------------Home--------------------------------------*/
 .Home {
@@ -651,6 +648,26 @@
 }
 
 /*--------------------------------------Contenedor de Página multipasos----------------------------*/
+/* Variables globales */
+:root {
+  --primary-color: #65257b;
+  --secondary-color: #441853;
+  --background-color: #f4f4f9;
+  --white: #ffffff;
+  --light-gray: #f9f9f9;
+  --border-color: #ccc;
+  --text-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos generales */
+body {
+  font-family: inherit;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Contenedor principal */
 .Contendor_ControladorPasos {
   display: flex;
   flex-direction: column;
@@ -661,22 +678,18 @@
   padding: 1rem;
 }
 
-.Pasos {
+/* Estilos para pasos */
+.Pasos,
+.Pasos_Display {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 100%;
   padding: 1.5rem;
 }
 
-.Contenedor_CrearExpediente {
-  width: 100%;
-  max-width: 80%;
-  margin: 2rem auto;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  background-color: white;
+.Pasos_Display {
+  align-items: flex-start;
+  margin-top: 2rem;
 }
 
 .C_PasosExpediente {
@@ -701,17 +714,16 @@
 .Número_Display {
   width: 3rem;
   height: 3rem;
-  background-color: #441853;
+  background-color: var(--secondary-color);
   border-radius: 50%;
   transition: background-color 0.5s ease-in-out;
   border: 2px solid #eaeaea;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--white);
   font-weight: bold;
   font-size: 1rem;
-  margin-bottom: 1rem;
   position: relative;
   z-index: 3;
 }
@@ -725,7 +737,7 @@
   width: 100%;
   font-size: 0.85rem;
   font-weight: 500;
-  color: black;
+  color: var(--text-color);
   margin-top: 0.5rem;
 }
 
@@ -735,39 +747,24 @@
   left: 0;
   right: 0;
   height: 2px;
-  background-color: #000;
+  background-color: var(--text-color);
   z-index: 1;
   transform: translateY(-50%);
 }
 
-.Pasos_Display {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.II_Pasos_Display {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 2rem;
-}
-
+/* Estilos para pasos seleccionados */
 .Paso_Seleccionado .Número_Display {
-  background-color: #441853;
+  background-color: var(--secondary-color);
 }
 
 .Número_Seleccionado {
-  color: white;
+  color: var(--white);
   font-weight: bold;
   font-size: 1.25rem;
 }
 
 .texto_seleccionado {
-  color: #000;
+  color: var(--text-color);
   font-weight: bold;
 }
 
@@ -776,23 +773,29 @@
 }
 
 .Linea_Seleccionada {
-  background-color: #441853;
+  background-color: var(--secondary-color);
 }
 
 .II_Linea_Seleccionada {
   background-color: #c884d7;
 }
 
-.Boton_Atrás_Seleccionado {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
+/* Estilos para botones de navegación */
 .Botones_Navegacion {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 2rem;
+}
+
+.Boton_Anterior,
+.Boton_Siguiente {
+  padding: 0.5rem 1rem;
+  background-color: var(--secondary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .Boton_Anterior {
@@ -803,18 +806,129 @@
   margin-left: auto;
 }
 
-.Boton_Anterior,
-.Boton_Siguiente {
-  padding: 0.5rem 1rem;
-  background-color: #441853;
-  color: white;
-  border: none;
-  border-radius: 4px;
+.Boton_Anterior:disabled,
+.Boton_Siguiente:disabled,
+.Boton_Atrás_Seleccionado {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estilos para formularios */
+.Contenedor_Ficha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--light-gray);
+}
+
+.Ficha,
+.Contenedor_CrearExpediente {
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px var(--shadow-color);
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.Contenedor_CrearExpediente {
+  max-width: 80%;
+  margin: 2rem auto;
+}
+
+.Header_Logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Header_Title {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+.Contenedor_Formulario form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.Contenedor_Formulario label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--primary-color);
+}
+
+.Contenedor_Formulario input[type="text"],
+.Contenedor_Formulario select {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.Contenedor_Formulario input[type="text"]:focus,
+.Contenedor_Formulario select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(101, 37, 123, 0.3);
+  outline: none;
+}
+
+.Contenedor_Formulario select {
   cursor: pointer;
 }
 
-.Boton_Anterior:disabled,
-.Boton_Siguiente:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.Contenedor_Formulario select option {
+  padding: 10px;
+}
+
+.Contenedor_Formulario input[type="text"]::placeholder,
+.Contenedor_Formulario select {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.Seccion_Ficha,
+.Serie_Ficha,
+.SubSerie_Ficha {
+  background-color: var(--white);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4a1d5b;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .Ficha {
+    padding: 10px;
+  }
+
+  .Header_Title {
+    font-size: 1.5rem;
+  }
+
+  .Contenedor_Formulario form {
+    gap: 10px;
+  }
+
+  button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
 }

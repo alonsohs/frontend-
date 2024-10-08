@@ -6,10 +6,15 @@ import { Seccion_get, serie_get } from "../../services/cuadro.service";
 import { seccion } from "../../Producto";
 import { serie } from "../../Producto"
 import { serie_post } from "../../services/cuadro.service";
+<<<<<<< HEAD
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 
 
+=======
+import "sweetalert2/src/sweetalert2.scss";
+import Swal from "sweetalert2";
+>>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
 export function Serie() {
   const [ID, setID] = useState("");
@@ -20,7 +25,11 @@ export function Serie() {
   
   
   const [secciones, setSeccion] = useState<seccion[]>([]);
+<<<<<<< HEAD
   const [series, setSerieGet] = useState<serie[]>([]);
+=======
+  const [isLoading, setIsLoading] = useState(false);
+>>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
   useEffect(() => {
     const fetchSeccion = async () => {
@@ -48,6 +57,22 @@ export function Serie() {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
+    if (
+      !ID.trim() ||
+      !Serie.trim() ||
+      !Codigo.trim() ||
+      !Descripcion.trim() ||
+      !ID_seccion.trim()
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
+    setIsLoading(true);
+
     const serie = {
       id_serie: ID,
       serie: Serie,
@@ -59,17 +84,29 @@ export function Serie() {
     try {
       const result = await serie_post(serie);
       console.log("Respuesta de la APi:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Se ha creado la serie con exito",
+      });
+
+      setID("");
+      setSerie("");
+      setCode("");
+      setDescripcion("");
+      setId_seccion("");
     } catch (error) {
       console.error("Error:", error);
-    }
 
-    useEffect(() => {
-      const fetchSeccion = async () => {
-        const items = await Seccion_get();
-        setSeccion(items);
-      };
-      fetchSeccion();
-    }, []);
+      Swal.fire({
+        icon: "error",
+        title: "Oops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   //Add Table Section
@@ -123,9 +160,9 @@ export function Serie() {
                   value={ID_seccion}
                   onChange={(e) => setId_seccion(e.target.value)}
                 >
+                  <option value="">Seleccione una opción</option>
                   {secciones.map((seccion) => (
                     <option value={seccion.id_seccion}>
-                      {" "}
                       {seccion.id_seccion}
                     </option>
                   ))}
@@ -184,7 +221,9 @@ export function Serie() {
 
               {/*Botones Anterior y Siguiente*/}
               <div className="button-row d-flex mt-4">
-                <Boton>Enviar</Boton>
+                <Boton disabled={isLoading}>
+                  {isLoading ? "Enviando..." : "Enviar"}
+                </Boton>
               </div>
             </div>
           </div>

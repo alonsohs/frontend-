@@ -1,6 +1,7 @@
 import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
 import { Seccion_get } from "../../services/cuadro.service";
@@ -11,12 +12,15 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 
 
+=======
+import { useState } from "react";
+import { seccion_post } from "../../Services/cuadro.service";
+>>>>>>> 7b90fc63565c1fe54a76f62b1a2b02f9bd0329c0
 
 export function Seccion() {
   const [ID, setID] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
 
   const [seccion, setSeccion] = useState <seccion[]>([]);
@@ -33,16 +37,6 @@ export function Seccion() {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    if (!ID.trim() || !Codigo.trim() || !Descripcion.trim()) {
-      Swal.fire({
-        icon: "warning",
-        title: "¡Atencion!",
-        text: "Debes llenar todos los campos para enviar el formulario",
-      });
-      return;
-    }
-    setIsLoading(true);
-
     const Seccion = {
       id_seccion: ID,
       codigo: Codigo,
@@ -52,26 +46,8 @@ export function Seccion() {
     try {
       const result = await seccion_post(Seccion);
       console.log("Respuesta de la APi:", result);
-
-      Swal.fire({
-        icon: "success",
-        title: "¡Exito!",
-        text: "Sección agregada con éxito",
-      });
-
-      setID("");
-      setCode("");
-      setDescripcion("");
     } catch (error) {
       console.error("Error:", error);
-
-      Swal.fire({
-        icon: "error",
-        title: "¡Oops",
-        text: "Algo salio mal. Por favor intente de nuevo",
-      });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -151,9 +127,7 @@ export function Seccion() {
                   </div>
 
                   <div className="button-row d-flex mt-4">
-                    <Boton disabled={isLoading}>
-                      {isLoading ? "Enviando..." : "Enviar"}
-                    </Boton>
+                    <Boton>Enviar</Boton>
                   </div>
                 </div>
               </div>
