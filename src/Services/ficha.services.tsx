@@ -34,3 +34,29 @@ export const ficha_post = async (data: ficha) => {
       return null;
     }
   };
+
+
+export const ficha_get = async () => {
+    try {
+      const response = await axios.get(
+        import.meta.env.VITE_API_URL + "/ficha_tec/ficha_tecnica/"
+      );
+  
+      if (response.status === 200) {
+        // Asume que se devuelve la consulta
+        console.log("subserie ", response.data);
+        return response.data;
+      } else {
+        throw new Error("no consultado" + response.statusText);
+      }
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error de Axios:", error.message);
+      } else {
+        console.error("Error inesperado:", error);
+      }
+      return null;
+    }
+  };
+
+  
