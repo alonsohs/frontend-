@@ -3,7 +3,7 @@ import { Boton } from "../../components/Botones/Botones";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ficha_post } from "../../services/ficha.services";
-import { seccion, Serie, SubSerie } from "../../Producto";
+import { seccion, serie, SubSerie } from "../../Producto";
 import "../../Styles/Styles.css";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
@@ -11,7 +11,7 @@ import {
   Seccion_get,
   serie_get,
   subserie_get,
-} from "../../Services/cuadro.service";
+} from "../../services/cuadro.service";
 
 export function Ficha() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export function Ficha() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [secciones, setSeccion] = useState<seccion[]>([]);
-  const [serie, setSerie] = useState<Serie[]>([]);
+  const [serie, setSerie] = useState<serie[]>([]);
   const [subserie, setSubSerie] = useState<SubSerie[]>([]);
 
   useEffect(() => {

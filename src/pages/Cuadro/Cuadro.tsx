@@ -1,7 +1,7 @@
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
-import { seccion_post } from "../../Services/cuadro.service";
+import { seccion_post } from "../../services/cuadro.service";
 
 export function Cuadro() {
   const [ID, setID] = useState("");

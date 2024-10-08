@@ -6,7 +6,8 @@ import { ficha_post } from "./services/ficha.services";
 import { Boton } from "./components/Botones/Botones";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 //import { ficha } from "./services/var.ficha";
-import { seccion, Serie, SubSerie } from "./Producto";
+import { seccion, serie, SubSerie } from "./Producto";
+import { ficha } from "./services/var.ficha";
 
 export const Productos = () => {
   //const [productos, setProductos] = useState<Producto[]>([]);
@@ -21,8 +22,9 @@ export const Productos = () => {
   const [id_subserie, setId_subserie] = useState("");
 
   const [secciones, setSeccion] = useState<seccion[]>([]);
-  const [serie, setserie] = useState<Serie[]>([]);
+  const [serie, setserie] = useState<serie[]>([]);
   const [subserie, setsubserie] = useState<SubSerie[]>([]);
+  const [ficha, setFicha] = useState<ficha[]>([]);
 
   useEffect(() => {
     const fetchSeccion = async () => {
@@ -71,8 +73,30 @@ export const Productos = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "codigo", headerName: "codigo", width: 150 },
-    { field: "descripcion", headerName: "descripcion", width: 150 },
+    { field: "id_ficha", headerName: "Num. de Ficha", width: 150 },
+    { field: "area_resguardante", headerName: "Area Resguardante", width: 150 },
+    {
+      field: "area_interviene",
+      headerName: "Areas que Interviene",
+      width: 150,
+    },
+    {
+      field: "soporte_docu",
+      headerName: "Soporte Documental (Formato)",
+      width: 150,
+    },
+    { field: "descripcion", headerName: "Descripción", width: 150 },
+    {
+      field: "id_seccion",
+      headerName: "Seccion a la que pertenece",
+      width: 150,
+    },
+    { field: "id_serie", headerName: "Serie a la que pertenece", width: 150 },
+    {
+      field: "id_subserie",
+      headerName: "Subserie a la que pertenece",
+      width: 150,
+    },
   ];
 
   return (
@@ -149,11 +173,7 @@ export const Productos = () => {
         <Boton>Enviar</Boton>
       </form>
       <div style={{ height: 300, width: "100%" }}>
-        <DataGrid
-          rows={secciones}
-          columns={columns}
-          getRowId={(x) => x.id_seccion}
-        />
+        <DataGrid rows={ficha} columns={columns} getRowId={(x) => x.id_ficha} />
       </div>
       {/*<select name="serie" id="serie">
         {serie.map((serie) => (
