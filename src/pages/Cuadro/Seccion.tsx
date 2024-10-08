@@ -4,21 +4,19 @@ import { Boton } from "../../components/Botones/Botones";
 import { useEffect, useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
 import { Seccion_get } from "../../services/cuadro.service";
-import {seccion} from "../../Producto"
+import { seccion } from "../../Producto";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 
-
 export function Seccion() {
   const [ID, setID] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-
-  const [seccion, setSeccion] = useState <seccion[]>([]);
-
+  const [seccion, setSeccion] = useState<seccion[]>([]);
 
   useEffect(() => {
     const fetchSeccion = async () => {
@@ -26,10 +24,20 @@ export function Seccion() {
       setSeccion(items);
     };
     fetchSeccion();
-  }, []); 
+  }, []);
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
+    if (!ID.trim() || !Codigo.trim() || !Descripcion.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
+    setIsLoading(true);
 
     const Seccion = {
       id_seccion: ID,
@@ -40,17 +48,34 @@ export function Seccion() {
     try {
       const result = await seccion_post(Seccion);
       console.log("Respuesta de la APi:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Se ha agregado la sección con exito",
+      });
+
+      setID("");
+      setCode("");
+      setDescripcion("");
     } catch (error) {
       console.error("Error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Ooops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-
   //Add Table Section
-  const columns :GridColDef[] = [
-    {field:"id_seccion", headerName : "Seccion Codigo", width: 150 },
-    {field:"codigo", headerName : "Nombre Sección", width: 250 },
-    {field:"descripcion", headerName : "Descripción", width: 350 },
+  const columns: GridColDef[] = [
+    { field: "id_seccion", headerName: "Seccion Codigo", width: 150 },
+    { field: "codigo", headerName: "Nombre Sección", width: 250 },
+    { field: "descripcion", headerName: "Descripción", width: 350 },
   ];
 
   return (
@@ -121,29 +146,39 @@ export function Seccion() {
                   </div>
 
                   <div className="button-row d-flex mt-4">
-                    <Boton>Enviar</Boton>
+                    <Boton disabled={isLoading}>
+                      {isLoading ? "Enviando..." : "Enviar"}
+                    </Boton>
                   </div>
                 </div>
               </div>
             </div>
           </form>
           <div //Show the table with information
-             style  = {{height: 400}}>
-             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-         <DataGrid
-         rows = {seccion}
-         columns={columns}
-         getRowId={(x) => x.id_seccion }
-         disableRowSelectionOnClick
-         //autoHeight
-         //density="compact"
-         style={{
-           width: '80%',
-           border: '1px solid grey',
-           borderRadius: '5px',
-           margin: 'auto'
-         }}
-         />
+            style={{ height: 400 }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <DataGrid
+                rows={seccion}
+                columns={columns}
+                getRowId={(x) => x.id_seccion}
+                disableRowSelectionOnClick
+                //autoHeight
+                //density="compact"
+                style={{
+                  width: "80%",
+                  border: "1px solid grey",
+                  borderRadius: "5px",
+                  margin: "auto",
+                }}
+              />
             </Box>
           </div>
         </div>
