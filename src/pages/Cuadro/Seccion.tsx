@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { seccion_post } from "../../services/cuadro.service";
 import { Seccion_get } from "../../services/cuadro.service";
 import { seccion } from "../../Producto";
-import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";

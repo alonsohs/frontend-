@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Expediente } from "../pages/Expediente/Expediente";
-import { Configuración } from "../pages/Configuración/Configuración";
+import { AgregarUsuario } from "../pages/Usuario/AgregarUsuario";
 import { Usuario } from "../pages/Usuario/Perfil";
 import { Seccion } from "../pages/Cuadro/Seccion";
 import { Serie } from "../pages/Cuadro/Serie";
@@ -12,6 +12,7 @@ import { MiFormulario } from "../Post";
 import { Crear_Expediente } from "../pages/Expediente/Crear_Expediente";
 import { Ficha } from "../pages/Ficha/Crear_Ficha";
 import { Ficha_Registro } from "../pages/Ficha/Ficha_Registro";
+import { ListaUsers } from "../pages/Usuario/ListaUsers";
 
 export function Rutas() {
   return (
@@ -20,7 +21,8 @@ export function Rutas() {
       <Route path="/Home" element={<Home />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Expediente" element={<Expediente />} />
-      <Route path="/Configuración" element={<Configuración />} />
+      <Route path="/Agregar_Usuario" element={<AgregarUsuario />} />
+      <Route path="/UserList" element={<ListaUsers />} />
       <Route path="/Usuario" element={<Usuario />} />
       <Route path="/Seccion" element={<Seccion />} />
       <Route path="/Test" element={<Productos />} />

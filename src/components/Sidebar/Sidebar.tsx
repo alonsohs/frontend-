@@ -147,9 +147,21 @@ const LinksArray: MenuItem[] = [
 // Links secundarios
 const linksArray: MenuItem[] = [
   {
-    label: "Configuración  ",
+    label: "Herramientas Admin  ",
     icon: <LuSettings />,
-    to: "/Configuracion",
+    to: "/AgregarUsuario",
+    subMenu: [
+      {
+        label: "Agregar usuarios",
+        icon: <AiOutlineUser />,
+        to: "/Agregar_Usuario",
+      },
+      {
+        label: "Lista de Usuarios",
+        icon: <AiOutlineUser />,
+        to: "UserList",
+      },
+    ],
   },
   {
     label: "Cerrar Sesión  ",
