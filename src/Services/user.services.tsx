@@ -67,7 +67,7 @@ export const user_profile = async () => {
 
   export const user_login = async () => {
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         import.meta.env.VITE_API_URL + "/users/login"
       );
   
