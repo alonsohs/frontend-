@@ -12,6 +12,9 @@ import { MiFormulario } from "../Post";
 import { Crear_Expediente } from "../pages/Expediente/Crear_Expediente";
 import { Ficha } from "../pages/Ficha/Crear_Ficha";
 import { Ficha_Registro } from "../pages/Ficha/Ficha_Registro";
+import { Catálogo } from "../pages/Catálogo/Catálogo";
+import { Portada } from "../pages/Portada/Portada";
+import { Catálogo_Registro } from "../pages/Catálogo/Catálogo_Registro";
 
 export function Rutas() {
   return (
@@ -31,6 +34,9 @@ export function Rutas() {
       <Route path="/Crear_Expediente" element={<Crear_Expediente />} />
       <Route path="/Crear_Ficha" element={<Ficha />} />
       <Route path="/Ficha" element={<Ficha_Registro />} />
+      <Route path="/Crear_Catálogo" element={<Catálogo />} />
+      <Route path="/Crear_Portada" element={<Portada />} />
+      <Route path="/Catálogo" element={<Catálogo_Registro />} />
     </Routes>
   );
 }
