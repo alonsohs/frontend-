@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 //import { seccion } from "./Producto";
 import { Seccion_get } from "./services/cuadro.service";
 import { serie_get, subserie_get } from "./services/cuadro.service";
-import { ficha_post } from "./services/ficha.services";
+import { ficha_post, ficha_get } from "./services/ficha.services";
 import { Boton } from "./components/Botones/Botones";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 //import { ficha } from "./services/var.ficha";
@@ -50,6 +50,13 @@ export const Productos = () => {
     fetchSubserie();
   }, []);
 
+  useEffect(() => {
+    const fetchficha = async () => {
+      const items = await ficha_get();
+      setsubserie(items);
+    };
+    fetchficha();
+  }, []);
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
