@@ -11,3 +11,19 @@ export interface catalogo {
     id_serie : string;
     id_subserie: string;
 }
+
+
+export interface destino {
+    id_destino: string;
+    destino: string;
+}
+
+export interface type{
+    id_type: string;
+    type: string;
+}
+
+export interface valor{
+     id_valores: string;
+     valores: string;
+}
