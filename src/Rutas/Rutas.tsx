@@ -16,6 +16,7 @@ import { ListaUsers } from "../pages/Usuario/ListaUsers";
 import { Catálogo } from "../pages/Catálogo/Catálogo";
 import { Portada } from "../pages/Portada/Portada";
 import { Catálogo_Registro } from "../pages/Catálogo/Catálogo_Registro";
+import { DatosCatalogo } from "../pages/Configuración/DatosCatalogo";
 
 export function Rutas() {
   return (
@@ -39,6 +40,7 @@ export function Rutas() {
       <Route path="/Crear_Catálogo" element={<Catálogo />} />
       <Route path="/Crear_Portada" element={<Portada />} />
       <Route path="/Catálogo" element={<Catálogo_Registro />} />
+      <Route path="/Datos_Catalogo" element={<DatosCatalogo />} />
     </Routes>
   );
 }

@@ -16,6 +16,7 @@ import { NavLink } from "react-router-dom";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { IoIosArrowDropright } from "react-icons/io";
 import { RiTableLine } from "react-icons/ri";
+import { RiArchiveStackLine } from "react-icons/ri";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -160,6 +161,11 @@ const linksArray: MenuItem[] = [
         label: "Lista de Usuarios",
         icon: <AiOutlineUser />,
         to: "UserList",
+      },
+      {
+        label: "Datos Catalogo",
+        icon: <RiArchiveStackLine />,
+        to: "/Datos_Catalogo",
       },
     ],
   },
