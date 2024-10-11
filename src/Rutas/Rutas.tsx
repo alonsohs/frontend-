@@ -14,7 +14,7 @@ import { Ficha } from "../pages/Ficha/Crear_Ficha";
 import { Ficha_Registro } from "../pages/Ficha/Ficha_Registro";
 import { ListaUsers } from "../pages/Usuario/ListaUsers";
 import { Catálogo } from "../pages/Catálogo/Catálogo";
-import { Portada } from "../pages/Portada/Portada";
+import { PortadaComponent } from "../pages/Portada/Portada";
 import { Catálogo_Registro } from "../pages/Catálogo/Catálogo_Registro";
 import { DatosCatalogo } from "../pages/Configuración/DatosCatalogo";
 
@@ -38,7 +38,7 @@ export function Rutas() {
       <Route path="/Crear_Ficha" element={<Ficha />} />
       <Route path="/Ficha" element={<Ficha_Registro />} />
       <Route path="/Crear_Catálogo" element={<Catálogo />} />
-      <Route path="/Crear_Portada" element={<Portada />} />
+      <Route path="/Crear_Portada" element={<PortadaComponent />} />
       <Route path="/Catálogo" element={<Catálogo_Registro />} />
       <Route path="/Datos_Catalogo" element={<DatosCatalogo />} />
     </Routes>
