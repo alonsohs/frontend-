@@ -1,5 +1,4 @@
 export interface iPortada {
-    
     num_expediente: string;
     asunto: string;
     num_legajos: string;

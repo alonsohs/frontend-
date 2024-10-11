@@ -1,6 +1,7 @@
 import axios from "axios";
 
 interface portada {
+<<<<<<< HEAD
   num_expediente: string;
   asunto: string;
   num_legajos: string;
@@ -15,6 +16,23 @@ interface portada {
   subserie: string;
   ficha: string;
   catalogo: string;
+=======
+    num_expediente: string;
+    asunto: string;
+    num_legajos: string;
+    num_fojas: string;
+    valores_secundarios: string;
+    fecha_apertura: string;
+    fecha_cierre: string;
+    archivo_tramite: string;
+    archivo_concentracion: string;
+    seccion: string;
+    serie: string;
+    subserie: string;
+    ficha: string;
+    catalogo: string;
+  
+>>>>>>> 17f20649193da9440aa83aa59c68d32315267a6a
 }
 
 export const portada_post = async (data: portada) => {
