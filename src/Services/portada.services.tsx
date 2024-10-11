@@ -2,7 +2,6 @@ import axios from "axios";
 
 
 interface portada {
-    id_expediente: string;
     num_expediente: string;
     asunto: string;
     num_legajos: string;
