@@ -3,9 +3,139 @@ import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import {
+  destino_post,
+  type_post,
+  valor_post,
+} from "../../services/catalogo.service";
 
 export function DatosCatalogo() {
+  const [destino, setDestiny] = useState("");
+  const [type, setType] = useState("");
+  const [valor, setValor] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmitDestiny = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
+    if (!destino.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
+    setIsLoading(true);
+
+    const Destino = {
+      destino: destino,
+    };
+
+    try {
+      const result = await destino_post(Destino);
+      console.log("Respuesta de la APi:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Se ha agregado el destino con exito",
+      });
+
+      setDestiny("");
+    } catch (error) {
+      console.error("Error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Ooops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitType = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    if (!type.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
+    setIsLoading(true);
+
+    const Type = {
+      type: type,
+    };
+
+    try {
+      const result = await type_post(Type);
+      console.log("Respuesta de la APi:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Se ha agregado el tipo con exito",
+      });
+
+      setType("");
+    } catch (error) {
+      console.error("Error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Ooops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitValor = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    /*-----------------------Valor Post------------------------*/
+    if (!valor.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes llenar todos los campos para enviar el formulario",
+      });
+      return;
+    }
+    setIsLoading(true);
+
+    const Valor = {
+      valores: valor,
+    };
+
+    try {
+      const result = await valor_post(Valor);
+      console.log("Respuesta de la APi:", result);
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Exito!",
+        text: "Se ha agregado el valor con exito",
+      });
+
+      setValor("");
+    } catch (error) {
+      console.error("Error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Ooops",
+        text: "Algo salio mal. Por favor intente de nuevo",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <body>
       <link
@@ -31,7 +161,7 @@ export function DatosCatalogo() {
                       </h3>
                     </div>
                     <div className="card-body">
-                      <form action="">
+                      <form action="" onSubmit={handleSubmitDestiny}>
                         <div className="row mb-3">
                           <div className=" mb-3">
                             <label>
@@ -46,6 +176,8 @@ export function DatosCatalogo() {
                               id="inputDestiny"
                               type="text"
                               placeholder="Destino del usuario"
+                              value={destino}
+                              onChange={(e) => setDestiny(e.target.value)}
                             />
                             <label htmlFor="inputDestiny">
                               Baja / Historico
@@ -69,7 +201,7 @@ export function DatosCatalogo() {
                       </h3>
                     </div>
                     <div className="card-body">
-                      <form action="">
+                      <form action="" onSubmit={handleSubmitType}>
                         <div className="row mb-3">
                           <div className=" mb-3">
                             <label>
@@ -84,6 +216,8 @@ export function DatosCatalogo() {
                               id="inputAccess"
                               type="text"
                               placeholder="Destino del usuario"
+                              value={type}
+                              onChange={(e) => setType(e.target.value)}
                             />
                             <label htmlFor="inputAccess">
                               Reservado / Público / Confidencial
@@ -107,7 +241,7 @@ export function DatosCatalogo() {
                       </h3>
                     </div>
                     <div className="card-body">
-                      <form action="">
+                      <form action="" onSubmit={handleSubmitValor}>
                         <div className="row mb-3">
                           <div className=" mb-3">
                             <label>
@@ -122,6 +256,8 @@ export function DatosCatalogo() {
                               id="inputValores"
                               type="text"
                               placeholder="Destino del usuario"
+                              value={valor}
+                              onChange={(e) => setValor(e.target.value)}
                             />
                             <label htmlFor="inputValores">
                               Contable / Físcal / Administrativo /Legal
