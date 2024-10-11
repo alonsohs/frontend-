@@ -174,7 +174,7 @@ export function DatosCatalogo() {
                             <input
                               className="form-control"
                               id="inputDestiny"
-                              type="text"
+                              type="radio"
                               placeholder="Destino del usuario"
                               value={destino}
                               onChange={(e) => setDestiny(e.target.value)}
