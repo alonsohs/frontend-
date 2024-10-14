@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import "../../Styles/Styles.css";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
-import {Seccion_get, serie_get,subserie_get} from "../../services/cuadro.service";
+import {
+  Seccion_get,
+  serie_get,
+  subserie_get,
+} from "../../services/cuadro.service";
 import { seccion, serie, SubSerie } from "../../Producto";
 import { portada_post } from "../../services/portada.services";
 import { ficha_get } from "../../services/ficha.services";
@@ -16,26 +20,26 @@ import { Portada } from "../../services/var.portada";
 
 export function PortadaComponent() {
   const navigate = useNavigate();
-  const [portada, setPortada] = useState <Portada>(new Portada());
+  const [portada, setPortada] = useState<Portada>(new Portada());
 
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = event.target;
 
-    setPortada(prevPortada => ({
+    setPortada((prevPortada) => ({
       ...prevPortada,
-      [name]: value 
-    }));
-  };
-  
-  const [isLoading, setIsLoading] = useState(false);
+      [name]: value,
+    }));
+  };
 
+  const [isLoading, setIsLoading] = useState(false);
 
   const [secciones, setSeccion] = useState<seccion[]>([]);
   const [id_serie, setSerie] = useState<serie[]>([]);
   const [id_subserie, setSubSerie] = useState<SubSerie[]>([]);
-  const [id_ficha, setIdFicha] = useState <ficha[]>([]);
-  const [id_catalogo, setIdCatalogo] = useState <catalogo[]>([]);
+  const [id_ficha, setIdFicha] = useState<ficha[]>([]);
+  const [id_catalogo, setIdCatalogo] = useState<catalogo[]>([]);
 
   useEffect(() => {
     const fetchFicha = async () => {
@@ -87,16 +91,15 @@ export function PortadaComponent() {
       !portada.num_fojas.trim() ||
       !portada.valores_secundarios.trim() ||
       !portada.fecha_apertura.trim() ||
-      !portada.fecha_cierre.trim()||
+      !portada.fecha_cierre.trim() ||
       !portada.archivo_tramite.trim() ||
       !portada.archivo_concentracion.trim() ||
       !portada.seccion.trim() ||
       !portada.serie.trim() ||
-      !portada.subserie.trim()||
+      !portada.subserie.trim() ||
       !portada.ficha.trim() ||
-      !portada.catalogo.trim() 
-      
-     ) {
+      !portada.catalogo.trim()
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Error",
@@ -148,7 +151,7 @@ export function PortadaComponent() {
       </header>
       <div className="row">
         <div className="col-12 col-lg-10 m-auto">
-        <form className="multisteps-form_form" onSubmit={handleSubmit}>
+          <form className="multisteps-form_form" onSubmit={handleSubmit}>
             <div
               className="multisteps-form_panel shadow p-4 rounded bg-white js-active"
               data-animation="scaleIm"
@@ -179,7 +182,7 @@ export function PortadaComponent() {
                   />
                 </div>
               </div>
-             
+
               <div className="form-row mt-4">
                 <div className="col">
                   <label> Valores Secundarios </label>
@@ -196,7 +199,7 @@ export function PortadaComponent() {
 
               <div className="form-row mt-4">
                 <div className="col">
-                  <label> Fecha Apertura  </label>
+                  <label> Fecha Apertura </label>
                   <input
                     className="multisteps-form_input form-control"
                     type="date"
@@ -209,7 +212,7 @@ export function PortadaComponent() {
               </div>
               <div className="form-row mt-4">
                 <div className="col">
-                  <label> Fecha de Cierre  </label>
+                  <label> Fecha de Cierre </label>
                   <input
                     className="multisteps-form_input form-control"
                     type="date"
@@ -220,7 +223,7 @@ export function PortadaComponent() {
                   />
                 </div>
               </div>
-            
+
               <div className="form-row mt-4">
                 <div className="col">
                   <label> Número de Legajos </label>
@@ -283,14 +286,12 @@ export function PortadaComponent() {
                     className="multisteps-form_input form-control"
                     id="Ficha"
                     value={portada.ficha}
-                    onChange= {handleInputChange}
-                    name ="ficha"
-                    
+                    onChange={handleInputChange}
+                    name="ficha"
                   >
                     <option value="">Seleccione una opción</option>
                     {id_ficha.map((ficha) => (
-                      <option value={ficha.id_ficha}>{ficha.id_ficha}
-                      </option>
+                      <option value={ficha.id_ficha}>{ficha.id_ficha}</option>
                     ))}
                   </select>
                 </div>
@@ -303,12 +304,13 @@ export function PortadaComponent() {
                     className="multisteps-form_input form-control"
                     id="Catalgo"
                     value={portada.catalogo}
-                    onChange= {handleInputChange}
-                    name ="catalogo"
+                    onChange={handleInputChange}
+                    name="catalogo"
                   >
                     <option value="">Seleccione una opción</option>
                     {id_catalogo.map((catalogo) => (
-                      <option value={catalogo.id_catalogo}>{catalogo.catalogo}
+                      <option value={catalogo.id_catalogo}>
+                        {catalogo.catalogo}
                       </option>
                     ))}
                   </select>
@@ -323,8 +325,7 @@ export function PortadaComponent() {
                     name="seccion"
                     id="seccion"
                     value={portada.seccion}
-                    onChange= {handleInputChange}
-                    
+                    onChange={handleInputChange}
                   >
                     <option value="">Seleccione una opción</option>
                     {secciones.map((seccion) => (
@@ -347,8 +348,7 @@ export function PortadaComponent() {
                     name="serie"
                     id="Serie"
                     value={portada.serie}
-                   onChange= {handleInputChange}
-        
+                    onChange={handleInputChange}
                   >
                     <option value="">Seleccione una opción</option>
                     {id_serie.map((s) => (
@@ -368,8 +368,7 @@ export function PortadaComponent() {
                     name="subserie"
                     id="Subserie"
                     value={portada.subserie}
-                    onChange= {handleInputChange}
-                    
+                    onChange={handleInputChange}
                   >
                     <option value="">Seleccione una opción</option>
                     {id_subserie.map((sub) => (
@@ -381,12 +380,12 @@ export function PortadaComponent() {
                 </div>
               </div>
               <div className="row">
-              <div className="button-row d-flex mt-4 col-12">
-                <Boton disabled={isLoading}>
-                  {isLoading ? "Enviando..." : "Enviar"}
-                </Boton>
+                <div className="button-row d-flex mt-4 col-12">
+                  <Boton disabled={isLoading}>
+                    {isLoading ? "Enviando..." : "Enviar"}
+                  </Boton>
+                </div>
               </div>
-            </div>
             </div>
           </form>
         </div>
