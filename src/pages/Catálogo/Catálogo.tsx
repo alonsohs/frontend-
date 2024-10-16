@@ -1,7 +1,12 @@
 import { Logo } from "../../components/Logo";
 import { Boton } from "../../components/Botones/Botones";
 import { useNavigate } from "react-router-dom";
-import { catalogo_post } from "../../services/catalogo.service";
+import {
+  catalogo_post,
+  destino_get,
+  type_get,
+  valor_get,
+} from "../../services/catalogo.service";
 import { useState, useEffect } from "react";
 import {
   Seccion_get,
@@ -9,6 +14,7 @@ import {
   subserie_get,
 } from "../../services/cuadro.service";
 import { seccion, serie, SubSerie } from "../../Producto";
+import { valor, type, destino } from "../../services/var.catalogo";
 import "../../Styles/Styles.css";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
@@ -30,6 +36,9 @@ export function Catálogo() {
   const [id_serie, setIdSerie] = useState("");
   const [id_subserie, setIdSubserie] = useState("");
   const [secciones, setSeccion] = useState<seccion[]>([]);
+  const [valor, setValor] = useState<valor[]>([]);
+  const [type, setType] = useState<type[]>([]);
+  const [destiny, setDestiny] = useState<destino[]>([]);
   const [serie, setSerie] = useState<serie[]>([]);
   const [subserie, setSubSerie] = useState<SubSerie[]>([]);
   useEffect(() => {
@@ -56,6 +65,29 @@ export function Catálogo() {
     fetchSubSerie();
   }, []);
 
+  useEffect(() => {
+    const fetchValor = async () => {
+      const items = await valor_get();
+      setValor(items);
+    };
+    fetchValor();
+  }, []);
+
+  useEffect(() => {
+    const fetchtype = async () => {
+      const items = await type_get();
+      setType(items);
+    };
+    fetchtype();
+  }, []);
+
+  useEffect(() => {
+    const fetchdestiny = async () => {
+      const items = await destino_get();
+      setDestiny(items);
+    };
+    fetchdestiny();
+  }, []);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -154,14 +186,19 @@ export function Catálogo() {
               </div>
               <div className="form-row mt-4">
                 <div className="col">
-                  <label>Valores Primarios </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Valores Primarios (Administrativo, Contable, Legal) "
+                  <label>Valores Documentales </label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    name="seccion"
+                    id="seccion"
                     value={valores_documentales}
                     onChange={(e) => setValoresDocumentales(e.target.value)}
-                  />
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {valor.map((valor) => (
+                      <option value={valor.valores}>{valor.valores}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="form-row mt-4">
@@ -203,27 +240,37 @@ export function Catálogo() {
 
               <div className="form-row mt-4">
                 <div className="col">
-                  <label>Acceso</label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Acceso (Público, Reservado, Confidencial)"
+                  <label>Tipo de Acceso</label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    name="seccion"
+                    id="seccion"
                     value={type_access}
                     onChange={(e) => setTypeAccess(e.target.value)}
-                  />
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {type.map((type) => (
+                      <option value={type.type}>{type.type}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
               <div className="form-row mt-4">
                 <div className="col">
-                  <label>ID Destino</label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Destino (Baja, Historico)"
+                  <label>Destino del expediente</label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    name="seccion"
+                    id="seccion"
                     value={destino_expe}
                     onChange={(e) => setDestinoExpe(e.target.value)}
-                  />
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {destiny.map((destiny) => (
+                      <option value={destiny.destino}>{destiny.destino}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -231,7 +278,7 @@ export function Catálogo() {
                 <div className="col">
                   <label>ID Sección </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="seccion"
                     id="seccion"
                     value={id_seccion}
@@ -254,7 +301,7 @@ export function Catálogo() {
                 <div className="col">
                   <label>ID Serie</label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="Serie"
                     id="Serie"
                     value={id_serie}
@@ -274,7 +321,7 @@ export function Catálogo() {
                 <div className="col">
                   <label>ID Subserie </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="Subserie"
                     id="Subserie"
                     value={id_subserie}

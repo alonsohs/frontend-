@@ -201,7 +201,7 @@ export function Ficha() {
                 <div className="col">
                   <label>ID Sección </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="seccion"
                     id="seccion"
                     value={id_seccion}
@@ -224,7 +224,7 @@ export function Ficha() {
                 <div className="col">
                   <label>ID Serie</label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="Serie"
                     id="Serie"
                     value={id_serie}
@@ -244,7 +244,7 @@ export function Ficha() {
                 <div className="col">
                   <label>ID Subserie </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="Subserie"
                     id="Subserie"
                     value={id_subserie}

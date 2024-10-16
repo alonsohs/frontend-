@@ -173,15 +173,10 @@ export function DatosCatalogo() {
                           <div className="form-floating mb-3">
                             <input
                               className="form-control"
-                              id="inputDestiny"
-                              type="radio"
-                              placeholder="Destino del usuario"
+                              type="text"
                               value={destino}
                               onChange={(e) => setDestiny(e.target.value)}
                             />
-                            <label htmlFor="inputDestiny">
-                              Baja / Historico
-                            </label>
                           </div>
                         </div>
 
@@ -213,15 +208,10 @@ export function DatosCatalogo() {
                           <div className="form-floating mb-3">
                             <input
                               className="form-control"
-                              id="inputAccess"
                               type="text"
-                              placeholder="Destino del usuario"
                               value={type}
                               onChange={(e) => setType(e.target.value)}
                             />
-                            <label htmlFor="inputAccess">
-                              Reservado / Público / Confidencial
-                            </label>
                           </div>
                         </div>
 
@@ -253,15 +243,10 @@ export function DatosCatalogo() {
                           <div className="form-floating mb-3">
                             <input
                               className="form-control"
-                              id="inputValores"
                               type="text"
-                              placeholder="Destino del usuario"
                               value={valor}
                               onChange={(e) => setValor(e.target.value)}
                             />
-                            <label htmlFor="inputValores">
-                              Contable / Físcal / Administrativo /Legal
-                            </label>
                           </div>
                         </div>
 

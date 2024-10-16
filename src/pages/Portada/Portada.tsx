@@ -283,7 +283,7 @@ export function PortadaComponent() {
                 <div className="col">
                   <label> Ficha </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     id="Ficha"
                     value={portada.ficha}
                     onChange={handleInputChange}
@@ -301,7 +301,7 @@ export function PortadaComponent() {
                 <div className="col">
                   <label> Catalogo </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     id="Catalgo"
                     value={portada.catalogo}
                     onChange={handleInputChange}
@@ -321,7 +321,7 @@ export function PortadaComponent() {
                 <div className="col">
                   <label>ID Sección </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="seccion"
                     id="seccion"
                     value={portada.seccion}
@@ -344,7 +344,7 @@ export function PortadaComponent() {
                 <div className="col">
                   <label>ID Serie</label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="serie"
                     id="Serie"
                     value={portada.serie}
@@ -364,7 +364,7 @@ export function PortadaComponent() {
                 <div className="col">
                   <label>ID Subserie </label>
                   <select
-                    className="multisteps-form_input form-control"
+                    className="multisteps-form_input form-select"
                     name="subserie"
                     id="Subserie"
                     value={portada.subserie}
