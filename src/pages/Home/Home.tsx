@@ -1,6 +1,8 @@
 import { Logo } from "../../components/Logo";
 import { Tabla } from "../../components/Tablas/Tabla";
 import { GraficoExpedientes } from "../../components/dashboard/Charts";
+import { logout } from "../../services/auth.service";
+import { Login } from "../Login/Login";
 
 export function Home() {
   // Datos de ejemplo para los expedientes en gráfico de pie.
@@ -17,6 +19,9 @@ export function Home() {
         enProceso={expedientesEnProceso}
         finalizados={expedientesFinalizados}
       />
+      <a href="/Login">
+        <button onClick={logout}>Cerrar sesion</button>
+      </a>
     </main>
   );
 }
