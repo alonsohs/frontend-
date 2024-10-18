@@ -1,4 +1,5 @@
 import axios from "axios";
+import api from "../api_axios";
 
 interface Seccion {
   id_seccion: string;
@@ -22,8 +23,8 @@ interface SubSerie {
 
 export const seccion_post = async (data: Seccion) => {
   try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/cuadro/seccion/",
+    const response = await api.post(
+        "/cuadro/seccion/",
       data
     );
 
@@ -46,8 +47,7 @@ export const seccion_post = async (data: Seccion) => {
 
 export const serie_post = async (data: Serie) => {
   try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/cuadro/serie/",
+    const response = await api.post( "/cuadro/serie/",
       data
     );
 
@@ -70,8 +70,8 @@ export const serie_post = async (data: Serie) => {
 
 export const subserie_post = async (data: SubSerie) => {
   try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/cuadro/subserie/",
+    const response = await api.post(
+      "/cuadro/subserie/",
       data
     );
 
@@ -94,8 +94,8 @@ export const subserie_post = async (data: SubSerie) => {
 
 export const Seccion_get = async () => {
   try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + "/cuadro/seccion/"
+    const response = await api.get(
+    "/cuadro/seccion/"
     );
 
     if (response.status === 200) {
@@ -117,8 +117,8 @@ export const Seccion_get = async () => {
 
 export const serie_get = async () => {
   try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + "/cuadro/serie/"
+    const response = await api.get(
+ "/cuadro/serie/"
     );
 
     if (response.status === 200) {
@@ -141,8 +141,7 @@ export const serie_get = async () => {
 
 export const subserie_get = async () => {
   try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + "/cuadro/subserie/"
+    const response = await api.get( "/cuadro/subserie/"
     );
 
     if (response.status === 200) {
