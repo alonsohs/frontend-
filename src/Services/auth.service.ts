@@ -40,13 +40,14 @@ export const logout = () => {
     localStorage.removeItem('user');
 };
 
-export const hasRole = (role: Roles): boolean => {
+export const hasRole = (roles: Roles[]): boolean => {
     const user = getUser();
 
     if (user && user.roles) {
-        // Verifica si el usuario tiene el rol
-        return user.roles.includes(role);
+        // Verifica si el usuario tiene al menos uno de los roles
+        return roles.some(role => user.roles.includes(role));
     }
 
     return false;
 };
+
