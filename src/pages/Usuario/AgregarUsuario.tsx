@@ -10,7 +10,8 @@ import { Seccion_get } from "../../services/cuadro.service";
 import { Roles } from "../../models/enums/roles_enum";
 
 export function AgregarUsuario() {
-  const [user, setUser] = useState<User>(new User());
+  const initialUserState = new User();
+  const [user, setUser] = useState<User>(initialUserState);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -20,12 +21,12 @@ export function AgregarUsuario() {
     setUser((prevUser) => ({
       ...prevUser,
       [name]: value,
+      [name]: name === "roles" ? [value] : value,
     }));
   };
 
   const [Repass, setRepass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const [secciones, setSeccion] = useState<seccion[]>([]);
 
   useEffect(() => {
@@ -45,6 +46,8 @@ export function AgregarUsuario() {
       !user.username.trim() ||
       !user.unidad_admi.trim() ||
       !user.cargo.trim() ||
+      user.roles.length === 0 ||
+      user.roles[0].trim() === "" ||
       !user.id_seccion.trim() ||
       !user.password.trim() ||
       !Repass.trim()
@@ -67,6 +70,9 @@ export function AgregarUsuario() {
         title: "¡Exito!",
         text: "Usuario creado con exito",
       });
+
+      setUser(initialUserState);
+      setRepass("");
     } catch (error) {
       console.log("Error", error);
 
@@ -208,14 +214,18 @@ export function AgregarUsuario() {
                               <select
                                 className="multisteps-form_input form-select"
                                 id="roles"
-                                value={user.roles}
+                                value={user.roles[0]}
                                 onChange={handleInputChange}
                                 name="roles"
                               >
                                 <option>Seleccione su rol</option>
-                                <option value={1}>Administrador</option>
-                                <option value={2}>Operador</option>
-                                <option value={3}>Jefe de área</option>
+                                <option value={Roles.Admin}>
+                                  Administrador
+                                </option>
+                                <option value={Roles.Operador}>Operador</option>
+                                <option value={Roles.JefeArea}>
+                                  Jefe de área
+                                </option>
                               </select>
                             </div>
                           </div>

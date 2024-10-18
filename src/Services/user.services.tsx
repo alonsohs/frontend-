@@ -9,7 +9,7 @@ interface user {
   email: string;
   cargo: string;
   unidad_admi: string;
-  roles: string;
+  roles: string[];
   id_seccion: string;
 }
 
