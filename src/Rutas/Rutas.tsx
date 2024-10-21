@@ -17,6 +17,7 @@ import { Catálogo } from "../pages/Catálogo/Catálogo";
 import { PortadaComponent } from "../pages/Portada/Portada";
 import { Catálogo_Registro } from "../pages/Catálogo/Catálogo_Registro";
 import { DatosCatalogo } from "../pages/Configuración/DatosCatalogo";
+import { Portada_Registro } from "../pages/Portada/Portada_Registro";
 
 export function Rutas() {
   return (
@@ -41,6 +42,7 @@ export function Rutas() {
       <Route path="/Crear_Portada" element={<PortadaComponent />} />
       <Route path="/Catálogo" element={<Catálogo_Registro />} />
       <Route path="/Datos_Catalogo" element={<DatosCatalogo />} />
+      <Route path="/Portada" element={<Portada_Registro />} />
     </Routes>
   );
 }

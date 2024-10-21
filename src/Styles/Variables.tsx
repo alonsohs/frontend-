@@ -7,4 +7,5 @@ export const Variables = {
   xlSpacing: `32px`,
   xxlSpacing: `70px`,
   borderRadius: `6px`,
+  Titulos: `6px`,
 };

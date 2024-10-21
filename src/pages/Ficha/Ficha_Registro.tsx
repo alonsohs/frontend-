@@ -19,7 +19,7 @@ export function Ficha_Registro() {
     { field: "area_resguardante", headerName: "Area Resguardante", width: 150 },
     {
       field: "area_interviene",
-      headerName: "Areas que Interviene",
+      headerName: "Areas que Intervienen",
       width: 150,
     },
     {
