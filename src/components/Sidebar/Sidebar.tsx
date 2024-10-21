@@ -12,11 +12,12 @@ import {
 import { SiInternetarchive } from "react-icons/si";
 import { LuSettings } from "react-icons/lu";
 import { GiExitDoor } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { IoIosArrowDropright } from "react-icons/io";
 import { RiTableLine } from "react-icons/ri";
 import { RiArchiveStackLine } from "react-icons/ri";
+import { logout } from "../../services/auth.service";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -28,15 +29,24 @@ interface MenuItem {
   icon: React.ReactNode;
   to: string;
   subMenu?: MenuItem[];
+  onClick?: string;
 }
 
 interface MenuItemProps extends MenuItem {
   sidebarOpen: boolean;
+  handleLogout?: () => void;
 }
 
 export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
+  const navigate = useNavigate();
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/Login");
   };
 
   return (
@@ -56,6 +66,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
           key={item.label}
           {...item}
           sidebarOpen={sidebarOpen}
+          handleLogout={handleLogout}
         />
       ))}
 
@@ -66,6 +77,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
           key={item.label}
           {...item}
           sidebarOpen={sidebarOpen}
+          handleLogout={handleLogout}
         />
       ))}
     </Container>
@@ -171,6 +183,7 @@ const linksArray: MenuItem[] = [
     label: "Cerrar Sesión  ",
     icon: <GiExitDoor />,
     to: "/Login",
+    onClick: "logout",
   },
 ];
 
@@ -180,6 +193,8 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
   to,
   subMenu,
   sidebarOpen,
+  onClick,
+  handleLogout,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -206,6 +221,21 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
             ))}
           </ul>
         )}
+      </div>
+    );
+  }
+
+  if (onClick === "logout") {
+    return (
+      <div className="Contenedor_Links">
+        <div
+          onClick={handleLogout}
+          className="Links"
+          style={{ cursor: "pointer" }}
+        >
+          <div className="Iconos_Links">{icon}</div>
+          {sidebarOpen && <span>{label}</span>}
+        </div>
       </div>
     );
   }
