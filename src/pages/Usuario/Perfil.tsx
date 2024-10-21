@@ -51,9 +51,7 @@ export function Usuario() {
           <h1 className="name">
             {user.first_name} {user.last_name}
           </h1>
-          <p>
-            {user.cargo} de {user.unidad_admi}
-          </p>
+          <p>{user.unidad_admi}</p>
         </div>
 
         <div className="rank">
