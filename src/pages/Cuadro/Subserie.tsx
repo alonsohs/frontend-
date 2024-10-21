@@ -84,7 +84,7 @@ export function Subserie() {
 
   //Add Table SubSerie
   const colums: GridColDef[] = [
-    //{field:"SubSerie", headerName : "Sub-Serie Codigo", width: 150 },
+    {field:"SubSerie", headerName : "Sub-Serie Codigo", width: 150 },
     { field: "descripcion", headerName: "Nombre Sub-Serie", width: 150 },
     { field: "serie", headerName: "A que Serie Pertenece", width: 150 },
   ];
