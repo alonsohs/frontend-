@@ -14,10 +14,10 @@ import { LuSettings } from "react-icons/lu";
 import { GiExitDoor } from "react-icons/gi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
-import { IoIosArrowDropright } from "react-icons/io";
 import { RiTableLine } from "react-icons/ri";
 import { RiArchiveStackLine } from "react-icons/ri";
 import { logout } from "../../services/auth.service";
+import Icon from "../../assets/right-arrow.png";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -52,7 +52,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   return (
     <Container isOpen={sidebarOpen}>
       <button className="Boton_Siderbar" onClick={toggleSidebar}>
-        <IoIosArrowDropright />
+        <img src={Icon} alt="Icono" className="Icono" />
       </button>
 
       <div className="Contenedor_Iconotipo">
@@ -257,26 +257,26 @@ const Container = styled.div<{ isOpen: boolean }>`
   position: sticky;
   top: 0;
   height: 150vh;
-  color: #fff;
+  color: #ff;
   background: #1a1a1a;
 
   .Boton_Siderbar {
+    border: none;
+    padding: 10px;
     position: absolute;
     top: 80px;
     right: ${({ isOpen }) => (isOpen ? "-18px" : "-10px")};
-    width: 32px;
     height: 32px;
-    border-radius: 50%;
-    background: #eaeaea;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 4px #eaeaea;
+    background: white;
     color: black;
+    box-shadow: 0 0 4px #eaeaea;
     cursor: pointer;
     transition: all 0.3s ease;
     transform: ${({ isOpen }) => (isOpen ? "rotate(0deg)" : "rotate(180deg)")};
-    border: none;
+  }
+
+  .Icono {
+    width: 10px;
   }
 
   .Contenedor_Iconotipo {
