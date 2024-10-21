@@ -3,6 +3,7 @@ import Logo from "../../assets/Tlaxcala.png";
 import Perfil from "../../assets/Perfil.png";
 import { Boton } from "../../components/Botones/Botones";
 import "../../../node_modules/remixicon/fonts/remixicon.css";
+import { getUser } from "../../services/auth.service";
 export function Usuario() {
   return (
     //Contenedor principal
@@ -92,9 +93,8 @@ export function Usuario() {
           </ul>
         </div>
 
-        <a href="/Home" className="Regresar ">
-          <Boton>Regresar</Boton>
-        </a>
+        <a href="/Home" className="Regresar "></a>
+        <button onClick={getUser}>Info</button>
       </section>
     </div>
   );

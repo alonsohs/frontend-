@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Roles } from "../models/enums/roles_enum";
 
 interface user {
   username: string;
@@ -8,6 +9,8 @@ interface user {
   email: string;
   cargo: string;
   unidad_admi: string;
+  roles: string[];
+  id_seccion: string;
 }
 
 export const user_post = async (data: user) => {
@@ -21,7 +24,8 @@ export const user_post = async (data: user) => {
       // Asume que se devuelve un 201 Created
       console.log("user creada exitosamente:", response.data);
       return response.data;
-    } else {
+    } else if (response.status === 400) {
+      console.log("Error", response.data);
       throw new Error("Error al crear el usuario " + response.statusText);
     }
   } catch (error: any) {
@@ -46,29 +50,6 @@ export const user_profile = async () => {
       return response.data;
     } else {
       throw new Error("no consultado" + response.statusText);
-    }
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      console.error("Error de Axios:", error.message);
-    } else {
-      console.error("Error inesperado:", error);
-    }
-    return null;
-  }
-};
-
-export const user_login = async () => {
-  try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/users/login"
-    );
-
-    if (response.status === 200) {
-      // Asume que se devuelve la consulta
-      console.log("no accede ", response.data);
-      return response.data;
-    } else {
-      throw new Error("no access " + response.statusText);
     }
   } catch (error: any) {
     if (axios.isAxiosError(error)) {

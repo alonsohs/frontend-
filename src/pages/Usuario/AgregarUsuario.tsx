@@ -1,32 +1,55 @@
 import "../../Styles/Styles.css";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { user_post } from "../../services/user.services";
+import { User } from "../../services/var.user.services";
 import Swal from "sweetalert2";
+import { seccion } from "../../Producto";
+import { Seccion_get } from "../../services/cuadro.service";
+import { Roles } from "../../models/enums/roles_enum";
 
 export function AgregarUsuario() {
-  const [name, setName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [UA, setUA] = useState("");
-  const [cargo, setCargo] = useState("");
-  const [password, setPassword] = useState("");
+  const initialUserState = new User();
+  const [user, setUser] = useState<User>(initialUserState);
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+      [name]: name === "roles" ? [value] : value,
+    }));
+  };
+
   const [Repass, setRepass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [secciones, setSeccion] = useState<seccion[]>([]);
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  useEffect(() => {
+    const fetchSecciones = async () => {
+      const items = await Seccion_get();
+      setSeccion(items);
+    };
+    fetchSecciones();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (
-      !name.trim() ||
-      !last_name.trim() ||
-      !username.trim() ||
-      !email.trim() ||
-      !UA.trim() ||
-      !cargo.trim() ||
-      !password.trim() ||
+      !user.first_name.trim() ||
+      !user.last_name.trim() ||
+      !user.username.trim() ||
+      !user.unidad_admi.trim() ||
+      !user.cargo.trim() ||
+      user.roles.length === 0 ||
+      user.roles[0].trim() === "" ||
+      !user.id_seccion.trim() ||
+      !user.password.trim() ||
       !Repass.trim()
     ) {
       Swal.fire({
@@ -38,18 +61,8 @@ export function AgregarUsuario() {
     }
     setIsLoading(true);
 
-    const Register = {
-      first_name: name,
-      last_name: last_name,
-      username: username,
-      email: email,
-      unidad_admi: UA,
-      cargo: cargo,
-      password: password,
-    };
-
     try {
-      const result = await user_post(Register);
+      const result = await user_post(user);
       console.log("Respuesta de la API", result);
 
       Swal.fire({
@@ -58,13 +71,8 @@ export function AgregarUsuario() {
         text: "Usuario creado con exito",
       });
 
-      setName("");
-      setLastName("");
-      setUsername("");
-      setEmail("");
-      setUA("");
-      setCargo("");
-      setPassword("");
+      setUser(initialUserState);
+      setRepass("");
     } catch (error) {
       console.log("Error", error);
 
@@ -111,8 +119,9 @@ export function AgregarUsuario() {
                                 id="inputName"
                                 type="text"
                                 placeholder="Ingresa tu usuario"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={user.first_name}
+                                onChange={handleInputChange}
+                                name="first_name"
                               />
                               <label htmlFor="inputName">Nombre</label>
                             </div>
@@ -125,8 +134,9 @@ export function AgregarUsuario() {
                                 id="inputLastName"
                                 type="text"
                                 placeholder="Ingresa tu Apellido"
-                                value={last_name}
-                                onChange={(e) => setLastName(e.target.value)}
+                                value={user.last_name}
+                                onChange={handleInputChange}
+                                name="last_name"
                               />
                               <label htmlFor="inputLastName">Apellido</label>
                             </div>
@@ -139,8 +149,9 @@ export function AgregarUsuario() {
                             id="inputLastName"
                             type="text"
                             placeholder="Ingresa tu usuario"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={user.username}
+                            onChange={handleInputChange}
+                            name="username"
                           />
                           <label htmlFor="inputLastName">
                             Nombre de usuario
@@ -153,8 +164,9 @@ export function AgregarUsuario() {
                             id="inputEmail"
                             type="email"
                             placeholder="name@example.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={user.email}
+                            onChange={handleInputChange}
+                            name="email"
                           />
                           <label htmlFor="inputEmail">Correo Electrónico</label>
                         </div>
@@ -162,17 +174,22 @@ export function AgregarUsuario() {
                         <div className="row mb-3">
                           <div className="col-md-6">
                             <div className="form-floating">
-                              <input
-                                className="form-control"
-                                id="inputUA"
-                                type="text"
-                                placeholder="Coloca tu unidad administrativa"
-                                value={UA}
-                                onChange={(e) => setUA(e.target.value)}
-                              />
-                              <label htmlFor="inputUA">
-                                Unidad Adminitrativa
-                              </label>
+                              <select
+                                className="multisteps-form_input form-select"
+                                id="UA"
+                                value={user.unidad_admi}
+                                onChange={handleInputChange}
+                                name="unidad_admi"
+                              >
+                                <option value="">
+                                  Seleccione su Unidad Administrativa
+                                </option>
+                                {secciones.map((seccion) => (
+                                  <option value={seccion.id_seccion}>
+                                    {seccion.id_seccion}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -182,10 +199,52 @@ export function AgregarUsuario() {
                                 id="inputCargo"
                                 type="text"
                                 placeholder="Coloca el cargo"
-                                value={cargo}
-                                onChange={(e) => setCargo(e.target.value)}
+                                value={user.cargo}
+                                onChange={handleInputChange}
+                                name="cargo"
                               />
                               <label htmlFor="input Cargo">Cargo</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="multisteps-form_input form-select"
+                                id="roles"
+                                value={user.roles[0]}
+                                onChange={handleInputChange}
+                                name="roles"
+                              >
+                                <option>Seleccione su rol</option>
+                                <option value={Roles.Admin}>
+                                  Administrador
+                                </option>
+                                <option value={Roles.Operador}>Operador</option>
+                                <option value={Roles.JefeArea}>
+                                  Jefe de área
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="multisteps-form_input form-select"
+                                id="seccion"
+                                value={user.id_seccion}
+                                onChange={handleInputChange}
+                                name="id_seccion"
+                              >
+                                <option value="">Seleccione la Seccion</option>
+                                {secciones.map((seccion) => (
+                                  <option value={seccion.id_seccion}>
+                                    {seccion.id_seccion}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -198,8 +257,9 @@ export function AgregarUsuario() {
                                 id="inputPass"
                                 type="password"
                                 placeholder="Contraseña"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={user.password}
+                                onChange={handleInputChange}
+                                name="password"
                               />
                               <label htmlFor="inputPass">Contraseña</label>
                             </div>
