@@ -72,7 +72,6 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   );
 }
 
-// Links principales
 const LinksArray: MenuItem[] = [
   {
     label: "Home ",
@@ -145,7 +144,6 @@ const LinksArray: MenuItem[] = [
   },
 ];
 
-// Links secundarios
 const linksArray: MenuItem[] = [
   {
     label: "Herramientas Admin  ",
@@ -176,7 +174,6 @@ const linksArray: MenuItem[] = [
   },
 ];
 
-// Componente MenuItemComponent
 const MenuItemComponent: React.FC<MenuItemProps> = ({
   label,
   icon,
@@ -226,7 +223,6 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
   );
 };
 
-// Estilos de la sidebar
 const Container = styled.div<{ isOpen: boolean }>`
   position: sticky;
   top: 0;
