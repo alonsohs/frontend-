@@ -1,4 +1,6 @@
 import axios from "axios";
+import api from '../api_axios';
+
 
 interface ficha {
     id_ficha: string;
@@ -13,8 +15,7 @@ interface ficha {
 
 export const ficha_post = async (data: ficha) => {
     try {
-      const response = await axios.post(
-        import.meta.env.VITE_API_URL + "/ficha_tec/ficha_tecnica/",
+      const response = await api.post("/ficha_tec/ficha_tecnica/",
         data
       );
   
@@ -38,8 +39,7 @@ export const ficha_post = async (data: ficha) => {
 
 export const ficha_get = async () => {
     try {
-      const response = await axios.get(
-        import.meta.env.VITE_API_URL + "/ficha_tec/ficha_tecnica/"
+      const response = await api.get( "/ficha_tec/ficha_tecnica/"
       );
   
       if (response.status === 200) {

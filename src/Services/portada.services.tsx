@@ -1,4 +1,6 @@
 import axios from "axios";
+import api from '../api_axios';
+
 
 interface portada {
   num_expediente: string;
@@ -19,8 +21,7 @@ interface portada {
 
 export const portada_post = async (data: portada) => {
   try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/portada/portada/",
+    const response = await api.post("/portada/portada/",
       data
     );
 
@@ -43,8 +44,7 @@ export const portada_post = async (data: portada) => {
 
 export const portada_get = async () => {
   try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + "/portada/portada/"
+    const response =  await api.get( "/portada/portada/"
     );
 
     if (response.status === 200) {

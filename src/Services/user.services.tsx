@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Roles } from "../models/enums/roles_enum";
+import api from '../api_axios';
+
 
 interface user {
   username: string;
@@ -15,8 +16,7 @@ interface user {
 
 export const user_post = async (data: user) => {
   try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL + "/users/register/",
+    const response = await api.post( "/users/register/",
       data
     );
 
@@ -40,8 +40,7 @@ export const user_post = async (data: user) => {
 
 export const user_profile = async () => {
   try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + "/users/profile/"
+    const response = await api.get( "/users/profile/"
     );
 
     if (response.status === 200) {
