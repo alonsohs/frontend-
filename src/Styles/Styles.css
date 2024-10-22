@@ -1,5 +1,9 @@
 /*-------------------------------------------Estilos de Login------------------------------------------------*/
 /* Aplicables a todo el proyecto*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 * {
   margin: 0;
   padding: 0;
@@ -915,23 +919,22 @@ button:hover {
 
 /*---------------------------------------------------Estilo Registro de usuarios-------------------------------------*/
 
-.Logo_imgRU{
+.Logo_imgRU {
   margin-left: 36%;
   margin-top: 1%;
   position: static;
 }
 
-.layoutAuthentication{
+.layoutAuthentication {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.layoutAuthentication .layoutAuthentication_content{
+.layoutAuthentication .layoutAuthentication_content {
   min-width: 0;
   flex-grow: 1;
 }
-
 
 /* Responsividad */
 @media (max-width: 768px) {
