@@ -1,7 +1,7 @@
 export enum Roles {
 
     Admin =  1,
-    Operador = 2,
-    JefeArea = 3,
+    JefeArea = 2,
+    Personal = 3,
     
 }
