@@ -1,16 +1,14 @@
-import "../../Styles/Styles.css";
-import Logo from "../../assets/Tlaxcala.png";
-import { Boton } from "../../components/Botones/Botones";
 import { useEffect, useState } from "react";
-import { Seccion_get, serie_get } from "../../services/cuadro.service";
-import { seccion } from "../../Producto";
-import { serie } from "../../Producto"
-import { serie_post } from "../../services/cuadro.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-
-
-import "sweetalert2/src/sweetalert2.scss";
+import Logo from "../../assets/Tlaxcala.png";
+import { Boton } from "../../components/Botones/Botones";
+import {
+  Seccion_get,
+  serie_get,
+  serie_post,
+} from "../../services/cuadro.service";
+import { seccion, serie } from "../../Producto";
 import Swal from "sweetalert2";
 
 export function Serie() {
@@ -19,8 +17,6 @@ export function Serie() {
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [ID_seccion, setId_seccion] = useState("");
-  
-  
   const [secciones, setSeccion] = useState<seccion[]>([]);
   const [series, setSerieGet] = useState<serie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +25,6 @@ export function Serie() {
     const fetchSeccion = async () => {
       try {
         const items = await Seccion_get();
-        console.log(items);
-
         setSeccion(items);
       } catch (error) {
         console.error("Error al obtener las secciones:", error);
@@ -39,14 +33,13 @@ export function Serie() {
     fetchSeccion();
   }, []);
 
-
-  useEffect (() =>{
+  useEffect(() => {
     const fetchSerie = async () => {
       const serie = await serie_get();
-      setSerieGet (serie);
+      setSerieGet(serie);
     };
-    fetchSerie(); 
-  }, []); 
+    fetchSerie();
+  }, []);
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -90,6 +83,9 @@ export function Serie() {
       setCode("");
       setDescripcion("");
       setId_seccion("");
+
+      const updatedItems = await serie_get();
+      setSerieGet(updatedItems);
     } catch (error) {
       console.error("Error:", error);
 
@@ -103,145 +99,211 @@ export function Serie() {
     }
   };
 
-  //Add Table Section
-  const columns :GridColDef[] = [
-    {field:"id_serie", headerName : "Serie Codigo", width: 150 },
-    {field:"serie", headerName : "Nombre Serie", width: 150 },
-    {field:"codigo_serie", headerName : "Codigo", width: 150 },
-    {field:"descripcion", headerName : "Descripción", width: 250 },
-    {field:"id_seccion", headerName : "A que Seccion Pertenece", width: 250 },
+  const columns: GridColDef[] = [
+    {
+      field: "id_serie",
+      headerName: "Serie Código",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "serie",
+      headerName: "Nombre Serie",
+      flex: 1.5,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "codigo_serie",
+      headerName: "Código",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "descripcion",
+      headerName: "Descripción",
+      flex: 2,
+      minWidth: 250,
+      headerClassName: "table-header",
+    },
+    {
+      field: "id_seccion",
+      headerName: "Sección",
+      flex: 1.5,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
   ];
 
-
   return (
-    <body className="Body_Cuadro">
+    <body>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossOrigin="anonymous"
       ></link>
+      <img className="Logo_imgRU" src={Logo} alt="" width={"25%"} />
+      <div className="layoutAuthentication">
+        <div className="layoutAuthentication_content">
+          <main>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">
+                        Cuadro General de Clasificación Archivística
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="form-control"
+                                id="inputSeccion"
+                                value={ID_seccion}
+                                onChange={(e) => setId_seccion(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {secciones.map((seccion) => (
+                                  <option
+                                    key={seccion.id_seccion}
+                                    value={seccion.id_seccion}
+                                  >
+                                    {seccion.id_seccion}
+                                  </option>
+                                ))}
+                              </select>
+                              <label htmlFor="inputSeccion">Sección</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                id="inputID"
+                                type="text"
+                                placeholder="ID Serie"
+                                value={ID}
+                                onChange={(e) => setID(e.target.value)}
+                              />
+                              <label htmlFor="inputID">ID Serie</label>
+                            </div>
+                          </div>
+                        </div>
 
-      {/*Imagen de tlaxcala*/}
-      <header className="Header_Logo">
-        <div className="brandLogo">
-          <img src={Logo} alt="Logo" width={300} />
-        </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                id="inputSerie"
+                                type="text"
+                                placeholder="Serie"
+                                value={Serie}
+                                onChange={(e) => setSerie(e.target.value)}
+                              />
+                              <label htmlFor="inputSerie">Serie</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                id="inputCodigo"
+                                type="text"
+                                placeholder="Código"
+                                value={Codigo}
+                                onChange={(e) => setCode(e.target.value)}
+                              />
+                              <label htmlFor="inputCodigo">Código</label>
+                            </div>
+                          </div>
+                        </div>
 
-        <div className="H_Title">
-          <h1 className="Header_Title">
-            Cuadro General de Clasificación Archivística
-          </h1>
-        </div>
-      </header>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputDescripcion"
+                            type="text"
+                            placeholder="Descripción"
+                            value={Descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                          />
+                          <label htmlFor="inputDescripcion">Descripción</label>
+                        </div>
 
-      {/*Serie*/}
-
-      <div
-        className="multisteps-form_panel shadow p-4 rounded bg-white"
-        data-animation="scaleIn"
-      >
-        <h3 className="multisteps-form_title">Serie</h3>
-        <form action="" onSubmit={handleSubmit}>
-          <div className="multisteps-form_content">
-            <div className="form-row" mt-4>
-              {/*Id seccion*/}
-              <div className="col-6 col-sm-3 mt-4 mt-4 mt-sm-0">
-                <label>Sección</label>
-                <select
-                  name="seccion"
-                  id="seccion"
-                  value={ID_seccion}
-                  onChange={(e) => setId_seccion(e.target.value)}
-                >
-                  <option value="">Seleccione una opción</option>
-                  {secciones.map((seccion) => (
-                    <option value={seccion.id_seccion}>
-                      {seccion.id_seccion}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/*ID Serie*/}
-              <div className="col">
-                <label>ID Serie</label>
-                <input
-                  className="multisteps-form_input form-control"
-                  type="Select-box"
-                  placeholder="ID Serie"
-                  value={ID}
-                  onChange={(e) => setID(e.target.value)}
-                />
-              </div>
-
-              {/*Serie*/}
-              <div className="col">
-                <label>Serie</label>
-                <input
-                  className="multisteps-form_input form-control"
-                  type="Select-box"
-                  placeholder="Serie"
-                  value={Serie}
-                  onChange={(e) => setSerie(e.target.value)}
-                />
-              </div>
-
-              {/*Codigo*/}
-              <div className="col">
-                <label>Código</label>
-                <input
-                  className="multisteps-form_input form-control"
-                  type="Select-box"
-                  placeholder="Código"
-                  value={Codigo}
-                  onChange={(e) => setCode(e.target.value)}
-                />
-              </div>
-
-              {/*Descripcion*/}
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Descripción</label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Descripción"
-                    value={Descripcion}
-                    onChange={(e) => setDescripcion(e.target.value)}
-                  />
+                        <div className="mt-4 mb-0">
+                          <div className="d-grid">
+                            <Boton disabled={isLoading}>
+                              {isLoading ? "Enviando..." : "Enviar"}
+                            </Boton>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/*Botones Anterior y Siguiente*/}
-              <div className="button-row d-flex mt-4">
-                <Boton disabled={isLoading}>
-                  {isLoading ? "Enviando..." : "Enviar"}
-                </Boton>
+            <div className="container-fluid mt-5">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg">
+                    <div className="card-body">
+                      <Box
+                        sx={{
+                          height: 400,
+                          width: "100%",
+                          "& .table-header": {
+                            backgroundColor: "#f8fafc",
+                            color: "#1f2937",
+                            fontWeight: 600,
+                          },
+                          "& .MuiDataGrid-root": {
+                            border: "none",
+                            "& .MuiDataGrid-cell": {
+                              borderBottom: "1px solid #f1f5f9",
+                            },
+                            "& .MuiDataGrid-columnHeaders": {
+                              borderBottom: "2px solid #e2e8f0",
+                            },
+                            "& .MuiDataGrid-virtualScroller": {
+                              backgroundColor: "#ffffff",
+                            },
+                          },
+                        }}
+                      >
+                        <DataGrid
+                          rows={series}
+                          columns={columns}
+                          getRowId={(x) => x.id_serie}
+                          disableRowSelectionOnClick
+                          density="comfortable"
+                          initialState={{
+                            pagination: {
+                              paginationModel: { pageSize: 5 },
+                            },
+                          }}
+                          pageSizeOptions={[5, 10, 25]}
+                        />
+                      </Box>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </main>
+        </div>
       </div>
-      <div //Show the table with information
-             style  = {{height: 400}}>
-             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-         <DataGrid
-         rows = {series}
-         columns={columns}
-         getRowId={(x) => x.serie}
-         disableRowSelectionOnClick
-         //autoHeight
-         density="compact"
-         style={{
-           width: '90%',
-           border: '1px solid grey',
-           borderRadius: '5px',
-           margin: 'auto'
-         }}
-         />
-            </Box>
-          </div>
     </body>
   );
 }
+
+export default Serie;

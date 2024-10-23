@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import Logo from "../../assets/Tlaxcala.png";
@@ -55,7 +55,6 @@ export function Seccion() {
       setCode("");
       setDescripcion("");
 
-      // Actualizar la tabla después de agregar
       const updatedItems = await Seccion_get();
       setSeccion(updatedItems);
     } catch (error) {
@@ -96,111 +95,134 @@ export function Seccion() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="p-4 flex flex-col items-center">
-        <div className="w-64 mb-4">
-          <img src={Logo} alt="Logo" className="w-full h-auto" />
-        </div>
-        <h1 className="text-2xl font-bold text-gray-800 text-center">
-          Cuadro General de Clasificación Archivística
-        </h1>
-      </header>
+    <body>
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossOrigin="anonymous"
+      ></link>
+      <img className="Logo_imgRU" src={Logo} alt="" width={"25%"} />
+      <div className="layoutAuthentication">
+        <div className="layoutAuthentication_content">
+          <main>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">
+                        Cuadro General de Clasificación Archivística
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                id="inputID"
+                                type="text"
+                                placeholder="ID Sección"
+                                value={ID}
+                                onChange={(e) => setID(e.target.value)}
+                              />
+                              <label htmlFor="inputID">ID Sección</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                id="inputCodigo"
+                                type="text"
+                                placeholder="Código"
+                                value={Codigo}
+                                onChange={(e) => setCode(e.target.value)}
+                              />
+                              <label htmlFor="inputCodigo">Código</label>
+                            </div>
+                          </div>
+                        </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-sm mb-8">
-          <form onSubmit={handleSubmit} className="p-6">
-            <h3 className="text-xl font-semibold mb-6">Sección</h3>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputDescripcion"
+                            type="text"
+                            placeholder="Descripción"
+                            value={Descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                          />
+                          <label htmlFor="inputDescripcion">Descripción</label>
+                        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  ID Sección
-                </label>
-                <input
-                  className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  type="text"
-                  placeholder="ID Sección"
-                  value={ID}
-                  onChange={(e) => setID(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Código
-                </label>
-                <input
-                  className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  type="text"
-                  placeholder="Código"
-                  value={Codigo}
-                  onChange={(e) => setCode(e.target.value)}
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Descripción
-                </label>
-                <input
-                  className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  type="text"
-                  placeholder="Descripción"
-                  value={Descripcion}
-                  onChange={(e) => setDescripcion(e.target.value)}
-                />
+                        <div className="mt-4 mb-0">
+                          <div className="d-grid">
+                            <Boton disabled={isLoading}>
+                              {isLoading ? "Enviando..." : "Enviar"}
+                            </Boton>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="mt-6">
-              <Boton disabled={isLoading} className="w-full md:w-auto">
-                {isLoading ? "Enviando..." : "Enviar"}
-              </Boton>
+            <div className="container-fluid mt-5">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg">
+                    <div className="card-body">
+                      <Box
+                        sx={{
+                          height: 400,
+                          width: "100%",
+                          "& .table-header": {
+                            backgroundColor: "#f8fafc",
+                            color: "#1f2937",
+                            fontWeight: 600,
+                          },
+                          "& .MuiDataGrid-root": {
+                            border: "none",
+                            "& .MuiDataGrid-cell": {
+                              borderBottom: "1px solid #f1f5f9",
+                            },
+                            "& .MuiDataGrid-columnHeaders": {
+                              borderBottom: "2px solid #e2e8f0",
+                            },
+                            "& .MuiDataGrid-virtualScroller": {
+                              backgroundColor: "#ffffff",
+                            },
+                          },
+                        }}
+                      >
+                        <DataGrid
+                          rows={seccion}
+                          columns={columns}
+                          getRowId={(x) => x.id_seccion}
+                          disableRowSelectionOnClick
+                          density="comfortable"
+                          initialState={{
+                            pagination: {
+                              paginationModel: { pageSize: 5 },
+                            },
+                          }}
+                          pageSizeOptions={[5, 10, 25]}
+                        />
+                      </Box>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </form>
+          </main>
         </div>
-
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <Box
-            sx={{
-              height: 400,
-              width: "100%",
-              "& .table-header": {
-                backgroundColor: "#f8fafc",
-                color: "#1f2937",
-                fontWeight: 600,
-              },
-              "& .MuiDataGrid-root": {
-                border: "none",
-                "& .MuiDataGrid-cell": {
-                  borderBottom: "1px solid #f1f5f9",
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  borderBottom: "2px solid #e2e8f0",
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                  backgroundColor: "#ffffff",
-                },
-              },
-            }}
-          >
-            <DataGrid
-              rows={seccion}
-              columns={columns}
-              getRowId={(x) => x.id_seccion}
-              disableRowSelectionOnClick
-              density="comfortable"
-              initialState={{
-                pagination: {
-                  paginationModel: { pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5, 10, 25]}
-            />
-          </Box>
-        </div>
-      </main>
-    </div>
+      </div>
+    </body>
   );
 }
 
