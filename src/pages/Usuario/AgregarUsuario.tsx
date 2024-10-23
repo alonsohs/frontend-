@@ -222,10 +222,10 @@ export function AgregarUsuario() {
                                 <option value={Roles.Admin}>
                                   Administrador
                                 </option>
-                                <option value={Roles.Operador}>Operador</option>
                                 <option value={Roles.JefeArea}>
-                                  Jefe de área
+                                  Jefe de Area
                                 </option>
+                                <option value={Roles.Personal}>Personal</option>
                               </select>
                             </div>
                           </div>
