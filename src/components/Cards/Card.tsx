@@ -27,17 +27,18 @@ export const Card: React.FC<CardProps> = ({
         className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 h-full"
       >
         <div className="relative flex flex-col h-full">
-          <div className="aspect-square w-full overflow-hidden">
+          {/* Cambiado object-cover por object-contain y ajustado el contenedor */}
+          <div className="w-full h-64 md:h-72 lg:h-80 relative bg-gray-100">
             <img
               src={imageSrc}
               alt={title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
             />
-            {/* Gradiente más oscuro para mejor contraste */}
+            {/* Overlay ajustado para cubrir toda la imagen */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70 group-hover:opacity-60 transition-opacity duration-300" />
           </div>
 
-          {/* Contenedor de texto con mejor posicionamiento y espaciado */}
+          {/* Contenedor de texto ajustado */}
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent pt-12">
             <div className="relative z-10">
               <h3 className="text-xl md:text-2xl font-bold mb-3 text-white tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
