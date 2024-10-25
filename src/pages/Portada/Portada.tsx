@@ -4,12 +4,8 @@ import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import {
-  Seccion_get,
-  serie_get,
-  subserie_get,
-} from "../../services/cuadro.service";
-import { seccion, serie, SubSerie } from "../../Producto";
+import { Seccion_get, serie_get } from "../../services/cuadro.service";
+import { seccion, serie } from "../../Producto";
 import { portada_post } from "../../services/portada.services";
 import { ficha_get } from "../../services/ficha.services";
 import { catalogo_get } from "../../services/catalogo.service";
@@ -24,7 +20,6 @@ export function PortadaComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [secciones, setSeccion] = useState<seccion[]>([]);
   const [id_serie, setSerie] = useState<serie[]>([]);
-  const [id_subserie, setSubSerie] = useState<SubSerie[]>([]);
   const [id_ficha, setIdFicha] = useState<ficha[]>([]);
   const [id_catalogo, setIdCatalogo] = useState<catalogo[]>([]);
 
@@ -34,13 +29,11 @@ export function PortadaComponent() {
       const catalogos = await catalogo_get();
       const secciones = await Seccion_get();
       const series = await serie_get();
-      const subseries = await subserie_get();
 
       setIdFicha(fichas);
       setIdCatalogo(catalogos);
       setSeccion(secciones);
       setSerie(series);
-      setSubSerie(subseries);
     };
 
     fetchData();
