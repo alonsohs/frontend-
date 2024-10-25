@@ -1,10 +1,9 @@
-import { Logo } from "../../components/Logo";
-import { Boton } from "../../components/Botones/Botones";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../Styles/Styles.css";
-import "sweetalert2/src/sweetalert2.scss";
+import Logo from "../../assets/Tlaxcala.png";
+import { Boton } from "../../components/Botones/Botones";
 import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 import {
   Seccion_get,
   serie_get,
@@ -17,24 +16,12 @@ import { catalogo_get } from "../../services/catalogo.service";
 import { ficha } from "../../services/var.ficha";
 import { catalogo } from "../../services/var.catalogo";
 import { Portada } from "../../services/var.portada";
+import "../../Styles/Styles.css";
 
 export function PortadaComponent() {
   const navigate = useNavigate();
   const [portada, setPortada] = useState<Portada>(new Portada());
-
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = event.target;
-
-    setPortada((prevPortada) => ({
-      ...prevPortada,
-      [name]: value,
-    }));
-  };
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [secciones, setSeccion] = useState<seccion[]>([]);
   const [id_serie, setSerie] = useState<serie[]>([]);
   const [id_subserie, setSubSerie] = useState<SubSerie[]>([]);
@@ -42,44 +29,32 @@ export function PortadaComponent() {
   const [id_catalogo, setIdCatalogo] = useState<catalogo[]>([]);
 
   useEffect(() => {
-    const fetchFicha = async () => {
-      const items = await ficha_get();
-      setIdFicha(items);
+    const fetchData = async () => {
+      const fichas = await ficha_get();
+      const catalogos = await catalogo_get();
+      const secciones = await Seccion_get();
+      const series = await serie_get();
+      const subseries = await subserie_get();
+
+      setIdFicha(fichas);
+      setIdCatalogo(catalogos);
+      setSeccion(secciones);
+      setSerie(series);
+      setSubSerie(subseries);
     };
-    fetchFicha();
+
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchCatalogo = async () => {
-      const items = await catalogo_get();
-      setIdCatalogo(items);
-    };
-    fetchCatalogo();
-  }, []);
-
-  useEffect(() => {
-    const fetchSeccion = async () => {
-      const items = await Seccion_get();
-      setSeccion(items);
-    };
-    fetchSeccion();
-  }, []);
-
-  useEffect(() => {
-    const fetchSerie = async () => {
-      const items = await serie_get();
-      setSerie(items);
-    };
-    fetchSerie();
-  }, []);
-
-  useEffect(() => {
-    const fetchSubSerie = async () => {
-      const items = await subserie_get();
-      setSubSerie(items);
-    };
-    fetchSubSerie();
-  }, []);
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    setPortada((prevPortada) => ({
+      ...prevPortada,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -103,18 +78,20 @@ export function PortadaComponent() {
       Swal.fire({
         icon: "warning",
         title: "Error",
-        text: "Debes llenar todos los campos para enviar el formulario",
+        text: "Todos los campos son obligatorios",
       });
       return;
     }
+
     setIsLoading(true);
 
     try {
       const result = await portada_post(portada);
       console.log("Respuesta de la API:", result);
+
       Swal.fire({
         icon: "success",
-        title: "Éxito",
+        title: "¡Éxito!",
         text: "Datos enviados exitosamente.",
         timer: 1500,
         showConfirmButton: false,
@@ -134,262 +111,276 @@ export function PortadaComponent() {
   };
 
   return (
-    <div className="Body_Catálogo">
+    <body>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossOrigin="anonymous"
       />
-      <header>
-        <div>
-          <Logo />
-        </div>
-        <div className="H_Title">
-          <h1 className="Header_Title">Portada de Expediente </h1>
-        </div>
-      </header>
-      <div className="row">
-        <div className="col-12 col-lg-10 m-auto">
-          <form className="multisteps-form_form" onSubmit={handleSubmit}>
-            <div
-              className="multisteps-form_panel shadow p-4 rounded bg-white js-active"
-              data-animation="scaleIm"
-            >
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Número de Expediente </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Número de Expediente"
-                    value={portada.num_expediente}
-                    onChange={handleInputChange}
-                    name="num_expediente"
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Nombre / Asunto del Expediente</label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Nombre / Asunto del Expediente "
-                    value={portada.asunto}
-                    onChange={handleInputChange}
-                    name="asunto"
-                  />
-                </div>
-              </div>
+      <img className="Logo_imgRU" src={Logo} alt="" width="25%" />
+      <div className="layoutAuthentication">
+        <div className="layoutAuthentication_content">
+          <main>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">
+                        Portada de Expediente
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="text"
+                                placeholder="Número de Expediente"
+                                value={portada.num_expediente}
+                                onChange={handleInputChange}
+                                name="num_expediente"
+                              />
+                              <label>Número de Expediente</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="text"
+                                placeholder="Nombre / Asunto del Expediente"
+                                value={portada.asunto}
+                                onChange={handleInputChange}
+                                name="asunto"
+                              />
+                              <label>Nombre / Asunto del Expediente</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label> Valores Secundarios </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Valores Secundarios "
-                    value={portada.valores_secundarios}
-                    onChange={handleInputChange}
-                    name="valores_secundarios"
-                  />
-                </div>
-              </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            type="text"
+                            placeholder="Valores Secundarios"
+                            value={portada.valores_secundarios}
+                            onChange={handleInputChange}
+                            name="valores_secundarios"
+                          />
+                          <label>Valores Secundarios</label>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label> Fecha Apertura </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="date"
-                    placeholder="Fecha Apertura"
-                    value={portada.fecha_apertura}
-                    onChange={handleInputChange}
-                    name="fecha_apertura"
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label> Fecha de Cierre </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="date"
-                    placeholder="Archivo de Concentración"
-                    value={portada.fecha_cierre}
-                    onChange={handleInputChange}
-                    name="fecha_cierre"
-                  />
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="date"
+                                value={portada.fecha_apertura}
+                                onChange={handleInputChange}
+                                name="fecha_apertura"
+                              />
+                              <label>Fecha Apertura</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="date"
+                                value={portada.fecha_cierre}
+                                onChange={handleInputChange}
+                                name="fecha_cierre"
+                              />
+                              <label>Fecha de Cierre</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label> Número de Legajos </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="number"
-                    placeholder="Número de Legajos "
-                    value={portada.num_legajos}
-                    onChange={handleInputChange}
-                    name="num_legajos"
-                  />
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="number"
+                                placeholder="Número de Legajos"
+                                value={portada.num_legajos}
+                                onChange={handleInputChange}
+                                name="num_legajos"
+                              />
+                              <label>Número de Legajos</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="number"
+                                placeholder="Número de Fojas"
+                                value={portada.num_fojas}
+                                onChange={handleInputChange}
+                                name="num_fojas"
+                              />
+                              <label>Número de Fojas</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Número de Fojas</label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="number"
-                    placeholder="Número de Fojas "
-                    value={portada.num_fojas}
-                    onChange={handleInputChange}
-                    name="num_fojas"
-                  />
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="text"
+                                placeholder="Archivo de trámite"
+                                value={portada.archivo_tramite}
+                                onChange={handleInputChange}
+                                name="archivo_tramite"
+                              />
+                              <label>Archivo de Trámite</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="text"
+                                placeholder="Archivo de Concentración"
+                                value={portada.archivo_concentracion}
+                                onChange={handleInputChange}
+                                name="archivo_concentracion"
+                              />
+                              <label>Archivo de Concentración</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Archivo de Trámite </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Archivo de trámite"
-                    value={portada.archivo_tramite}
-                    onChange={handleInputChange}
-                    name="archivo_tramite"
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Archivo de Concentración </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Archivo de Concentración"
-                    value={portada.archivo_concentracion}
-                    onChange={handleInputChange}
-                    name="archivo_concentracion"
-                  />
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="form-select"
+                                value={portada.ficha}
+                                onChange={handleInputChange}
+                                name="ficha"
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {id_ficha.map((ficha) => (
+                                  <option
+                                    key={ficha.id_ficha}
+                                    value={ficha.id_ficha}
+                                  >
+                                    {ficha.id_ficha}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>Ficha</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="form-select"
+                                value={portada.catalogo}
+                                onChange={handleInputChange}
+                                name="catalogo"
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {id_catalogo.map((catalogo) => (
+                                  <option
+                                    key={catalogo.id_catalogo}
+                                    value={catalogo.id_catalogo}
+                                  >
+                                    {catalogo.catalogo}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>Catálogo</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label> Ficha </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    id="Ficha"
-                    value={portada.ficha}
-                    onChange={handleInputChange}
-                    name="ficha"
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {id_ficha.map((ficha) => (
-                      <option value={ficha.id_ficha}>{ficha.id_ficha}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-select"
+                                value={portada.seccion}
+                                onChange={handleInputChange}
+                                name="seccion"
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {secciones.map((seccion) => (
+                                  <option
+                                    key={seccion.id_seccion}
+                                    value={seccion.id_seccion}
+                                  >
+                                    {seccion.id_seccion}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>ID Sección</label>
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-select"
+                                value={portada.serie}
+                                onChange={handleInputChange}
+                                name="serie"
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {id_serie.map((s) => (
+                                  <option key={s.serie} value={s.serie}>
+                                    {s.serie}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>ID Serie</label>
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-select"
+                                value={portada.subserie}
+                                onChange={handleInputChange}
+                                name="subserie"
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {id_subserie.map((sub) => (
+                                  <option
+                                    key={sub.SubSerie}
+                                    value={sub.SubSerie}
+                                  >
+                                    {sub.SubSerie}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>ID Subserie</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label> Catalogo </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    id="Catalgo"
-                    value={portada.catalogo}
-                    onChange={handleInputChange}
-                    name="catalogo"
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {id_catalogo.map((catalogo) => (
-                      <option value={catalogo.id_catalogo}>
-                        {catalogo.catalogo}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Sección </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="seccion"
-                    id="seccion"
-                    value={portada.seccion}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {secciones.map((seccion) => (
-                      <option
-                        key={seccion.id_seccion}
-                        value={seccion.id_seccion}
-                      >
-                        {seccion.id_seccion}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Serie</label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="serie"
-                    id="Serie"
-                    value={portada.serie}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {id_serie.map((s) => (
-                      <option key={s.serie} value={s.serie}>
-                        {s.serie}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Subserie </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="subserie"
-                    id="Subserie"
-                    value={portada.subserie}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {id_subserie.map((sub) => (
-                      <option key={sub.SubSerie} value={sub.SubSerie}>
-                        {sub.SubSerie}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="row">
-                <div className="button-row d-flex mt-4 col-12">
-                  <Boton disabled={isLoading}>
-                    {isLoading ? "Enviando..." : "Enviar"}
-                  </Boton>
+                        <div className="text-center mt-4">
+                          <Boton disabled={isLoading}>
+                            {isLoading ? "Enviando..." : "Enviar"}
+                          </Boton>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </form>
+          </main>
         </div>
       </div>
-    </div>
+    </body>
   );
 }

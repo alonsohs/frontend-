@@ -18,6 +18,7 @@ import { valor, type, destino } from "../../services/var.catalogo";
 import "../../Styles/Styles.css";
 import "sweetalert2/src/sweetalert2.scss";
 import Swal from "sweetalert2";
+import LogoImg from "../../assets/Tlaxcala.png";
 
 export function Catálogo() {
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ export function Catálogo() {
   const [type_access, setTypeAccess] = useState("");
   const [valores_documentales, setValoresDocumentales] = useState("");
   const [observaciones, setObservaciones] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [id_seccion, setIdSeccion] = useState("");
@@ -41,6 +41,8 @@ export function Catálogo() {
   const [destiny, setDestiny] = useState<destino[]>([]);
   const [serie, setSerie] = useState<serie[]>([]);
   const [subserie, setSubSerie] = useState<SubSerie[]>([]);
+
+  // Fetch data effects remain the same...
   useEffect(() => {
     const fetchSeccion = async () => {
       const items = await Seccion_get();
@@ -88,6 +90,7 @@ export function Catálogo() {
     };
     fetchdestiny();
   }, []);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -113,18 +116,19 @@ export function Catálogo() {
     setIsLoading(true);
 
     const CatalogoData = {
-      id_catalogo: id_catalogo,
-      catalogo: catalogo,
-      archivo_tramite: archivo_tramite,
-      archivo_concentracion: archivo_concentracion,
-      destino_expe: destino_expe,
-      type_access: type_access,
-      valores_documentales: valores_documentales,
-      observaciones: observaciones,
-      id_seccion: id_seccion,
-      id_serie: id_serie,
-      id_subserie: id_subserie,
+      id_catalogo,
+      catalogo,
+      archivo_tramite,
+      archivo_concentracion,
+      destino_expe,
+      type_access,
+      valores_documentales,
+      observaciones,
+      id_seccion,
+      id_serie,
+      id_subserie,
     };
+
     try {
       const result = await catalogo_post(CatalogoData);
       console.log("Respuesta de la API:", result);
@@ -150,201 +154,221 @@ export function Catálogo() {
   };
 
   return (
-    <div className="Body_Catálogo">
+    <body>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossOrigin="anonymous"
       />
-      <header>
-        <div>
-          <Logo />
-        </div>
-        <div className="H_Title">
-          <h1 className="Header_Title">Catálogo de Disposición Documental</h1>
-        </div>
-      </header>
-      <div className="row">
-        <div className="col-12 col-lg-10 m-auto">
-          <form className="multisteps-form_form" onSubmit={handleSubmit}>
-            <div
-              className="multisteps-form_panel shadow p-4 rounded bg-white js-active"
-              data-animation="scaleIm"
-            >
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Catálogo </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="number "
-                    placeholder="ID Catálogo"
-                    value={catalogo}
-                    onChange={(e) => setCatalogo(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Valores Documentales </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="seccion"
-                    id="seccion"
-                    value={valores_documentales}
-                    onChange={(e) => setValoresDocumentales(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {valor.map((valor) => (
-                      <option value={valor.valores}>{valor.valores}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Observaciones </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Observaciones "
-                    value={observaciones}
-                    onChange={(e) => setObservaciones(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Archivo de Trámite </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="date"
-                    placeholder="Archivo de Trámite"
-                    value={archivo_tramite}
-                    onChange={(e) => setArchivoTramite(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Archivo de Concentración </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="date"
-                    placeholder=" Archivo de Concentración"
-                    value={archivo_concentracion}
-                    onChange={(e) => setArchivoConcentracion(e.target.value)}
-                  />
-                </div>
-              </div>
+      <img className="Logo_imgRU" src={LogoImg} alt="" width="25%" />
+      <div className="layoutAuthentication">
+        <div className="layoutAuthentication_content">
+          <main>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">
+                        Catálogo de Disposición Documental
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="number"
+                                placeholder="ID Catálogo"
+                                value={catalogo}
+                                onChange={(e) => setCatalogo(e.target.value)}
+                              />
+                              <label>ID Catálogo</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="form-control form-select"
+                                value={valores_documentales}
+                                onChange={(e) =>
+                                  setValoresDocumentales(e.target.value)
+                                }
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {valor.map((valor) => (
+                                  <option
+                                    key={valor.valores}
+                                    value={valor.valores}
+                                  >
+                                    {valor.valores}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>Valores Documentales</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Tipo de Acceso</label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="seccion"
-                    id="seccion"
-                    value={type_access}
-                    onChange={(e) => setTypeAccess(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {type.map((type) => (
-                      <option value={type.type}>{type.type}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            type="text"
+                            placeholder="Observaciones"
+                            value={observaciones}
+                            onChange={(e) => setObservaciones(e.target.value)}
+                          />
+                          <label>Observaciones</label>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Destino del expediente</label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="seccion"
-                    id="seccion"
-                    value={destino_expe}
-                    onChange={(e) => setDestinoExpe(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {destiny.map((destiny) => (
-                      <option value={destiny.destino}>{destiny.destino}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="date"
+                                value={archivo_tramite}
+                                onChange={(e) =>
+                                  setArchivoTramite(e.target.value)
+                                }
+                              />
+                              <label>Archivo de Trámite</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <input
+                                className="form-control"
+                                type="date"
+                                value={archivo_concentracion}
+                                onChange={(e) =>
+                                  setArchivoConcentracion(e.target.value)
+                                }
+                              />
+                              <label>Archivo de Concentración</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Sección </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="seccion"
-                    id="seccion"
-                    value={id_seccion}
-                    onChange={(e) => setIdSeccion(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {secciones.map((seccion) => (
-                      <option
-                        key={seccion.id_seccion}
-                        value={seccion.id_seccion}
-                      >
-                        {seccion.id_seccion}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="form-control form-select"
+                                value={type_access}
+                                onChange={(e) => setTypeAccess(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {type.map((type) => (
+                                  <option key={type.type} value={type.type}>
+                                    {type.type}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>Tipo de Acceso</label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-floating">
+                              <select
+                                className="form-control form-select"
+                                value={destino_expe}
+                                onChange={(e) => setDestinoExpe(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {destiny.map((destiny) => (
+                                  <option
+                                    key={destiny.destino}
+                                    value={destiny.destino}
+                                  >
+                                    {destiny.destino}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>Destino del expediente</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Serie</label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="Serie"
-                    id="Serie"
-                    value={id_serie}
-                    onChange={(e) => setIdSerie(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {serie.map((s) => (
-                      <option key={s.serie} value={s.serie}>
-                        {s.serie}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="row mb-3">
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-control form-select"
+                                value={id_seccion}
+                                onChange={(e) => setIdSeccion(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {secciones.map((seccion) => (
+                                  <option
+                                    key={seccion.id_seccion}
+                                    value={seccion.id_seccion}
+                                  >
+                                    {seccion.id_seccion}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>ID Sección</label>
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-control form-select"
+                                value={id_serie}
+                                onChange={(e) => setIdSerie(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {serie.map((s) => (
+                                  <option key={s.serie} value={s.serie}>
+                                    {s.serie}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>ID Serie</label>
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-control form-select"
+                                value={id_subserie}
+                                onChange={(e) => setIdSubserie(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {subserie.map((sub) => (
+                                  <option
+                                    key={sub.SubSerie}
+                                    value={sub.SubSerie}
+                                  >
+                                    {sub.SubSerie}
+                                  </option>
+                                ))}
+                              </select>
+                              <label>ID Subserie</label>
+                            </div>
+                          </div>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Subserie </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="Subserie"
-                    id="Subserie"
-                    value={id_subserie}
-                    onChange={(e) => setIdSubserie(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {subserie.map((sub) => (
-                      <option key={sub.SubSerie} value={sub.SubSerie}>
-                        {sub.SubSerie}
-                      </option>
-                    ))}
-                  </select>
+                        <div className="mt-4 mb-0">
+                          <div className="d-grid">
+                            <Boton disabled={isLoading}>
+                              {isLoading ? "Enviando..." : "Enviar"}
+                            </Boton>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="button-row d-flex mt-4">
-                <Boton disabled={isLoading}>
-                  {isLoading ? "Enviando..." : "Enviar"}
-                </Boton>
               </div>
             </div>
-          </form>
+          </main>
         </div>
       </div>
-    </div>
+    </body>
   );
 }

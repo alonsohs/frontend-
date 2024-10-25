@@ -34,6 +34,11 @@ export function Subserie() {
     fetchSubserie();
   }, []);
 
+  const rowsWithIds = Subserie.map((row, index) => ({
+    ...row,
+    id: index, // Añade un id único basado en el índice
+  }));
+
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -223,9 +228,8 @@ export function Subserie() {
                         }}
                       >
                         <DataGrid
-                          rows={Subserie}
+                          rows={rowsWithIds}
                           columns={columns}
-                          getRowId={(x) => x.descripcion}
                           disableRowSelectionOnClick
                           density="comfortable"
                           initialState={{

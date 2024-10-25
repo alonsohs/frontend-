@@ -12,6 +12,7 @@ import {
   serie_get,
   subserie_get,
 } from "../../services/cuadro.service";
+import Logo2 from "../../assets/Tlaxcala.png";
 
 export function Ficha() {
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ export function Ficha() {
   const [id_seccion, setIdSeccion] = useState("");
   const [id_serie, setIdSerie] = useState("");
   const [id_subserie, setIdSubserie] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [secciones, setSeccion] = useState<seccion[]>([]);
@@ -112,163 +112,173 @@ export function Ficha() {
   };
 
   return (
-    <div className="Body_Ficha">
+    <body>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossOrigin="anonymous"
       />
-      <header>
-        <div>
-          <Logo />
-        </div>
-        <div className="H_Title">
-          <h1 className="Header_Title">
-            Ficha Técnica de Valoración Documental
-          </h1>
-        </div>
-      </header>
-      <div className="row">
-        <div className="col-12 col-lg-10 m-auto">
-          <form className="multisteps-form_form" onSubmit={handleSubmit}>
-            <div
-              className="multisteps-form_panel shadow p-4 rounded bg-white js-active"
-              data-animation="scaleIm"
-            >
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Ficha </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="ID Ficha"
-                    value={id_ficha}
-                    onChange={(e) => setID(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Área Resguardante </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Área Resguardante"
-                    value={area_resguardante}
-                    onChange={(e) => setResguardante(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Áreas que Intervienen </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Áreas que Intervienen"
-                    value={area_intervienen}
-                    onChange={(e) => setIntervienen(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Descripción </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Descripción"
-                    value={descripcion}
-                    onChange={(e) => setDescripcion(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Soporte Documental </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Soporte Documental"
-                    value={soporte_docu}
-                    onChange={(e) => setSoporte(e.target.value)}
-                  />
-                </div>
-              </div>
+      <img className="Logo_imgRU" src={Logo2} alt="" width={"25%"} />
+      <div className="layoutAuthentication">
+        <div className="layoutAuthentication_content">
+          <main>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">
+                        Ficha Técnica de Valoración Documental
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputIdFicha"
+                            type="text"
+                            placeholder="ID Ficha"
+                            value={id_ficha}
+                            onChange={(e) => setID(e.target.value)}
+                          />
+                          <label htmlFor="inputIdFicha">ID Ficha</label>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Sección </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="seccion"
-                    id="seccion"
-                    value={id_seccion}
-                    onChange={(e) => setIdSeccion(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {secciones.map((seccion) => (
-                      <option
-                        key={seccion.id_seccion}
-                        value={seccion.id_seccion}
-                      >
-                        {seccion.id_seccion}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputAreaResguardante"
+                            type="text"
+                            placeholder="Área Resguardante"
+                            value={area_resguardante}
+                            onChange={(e) => setResguardante(e.target.value)}
+                          />
+                          <label htmlFor="inputAreaResguardante">
+                            Área Resguardante
+                          </label>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Serie</label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="Serie"
-                    id="Serie"
-                    value={id_serie}
-                    onChange={(e) => setIdSerie(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {serie.map((s) => (
-                      <option key={s.serie} value={s.serie}>
-                        {s.serie}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputAreaIntervienen"
+                            type="text"
+                            placeholder="Áreas que Intervienen"
+                            value={area_intervienen}
+                            onChange={(e) => setIntervienen(e.target.value)}
+                          />
+                          <label htmlFor="inputAreaIntervienen">
+                            Áreas que Intervienen
+                          </label>
+                        </div>
 
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>ID Subserie </label>
-                  <select
-                    className="multisteps-form_input form-select"
-                    name="Subserie"
-                    id="Subserie"
-                    value={id_subserie}
-                    onChange={(e) => setIdSubserie(e.target.value)}
-                  >
-                    <option value="">Seleccione una opción</option>
-                    {subserie.map((sub) => (
-                      <option key={sub.SubSerie} value={sub.SubSerie}>
-                        {sub.SubSerie}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputDescripcion"
+                            type="text"
+                            placeholder="Descripción"
+                            value={descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                          />
+                          <label htmlFor="inputDescripcion">Descripción</label>
+                        </div>
 
-              <div className="button-row d-flex mt-4">
-                <Boton disabled={isLoading}>
-                  {isLoading ? "Enviando..." : "Enviar"}
-                </Boton>
+                        <div className="form-floating mb-3">
+                          <input
+                            className="form-control"
+                            id="inputSoporteDocu"
+                            type="text"
+                            placeholder="Soporte Documental"
+                            value={soporte_docu}
+                            onChange={(e) => setSoporte(e.target.value)}
+                          />
+                          <label htmlFor="inputSoporteDocu">
+                            Soporte Documental
+                          </label>
+                        </div>
+
+                        <div className="row mb-3">
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-control"
+                                id="inputSeccion"
+                                value={id_seccion}
+                                onChange={(e) => setIdSeccion(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {secciones.map((seccion) => (
+                                  <option
+                                    key={seccion.id_seccion}
+                                    value={seccion.id_seccion}
+                                  >
+                                    {seccion.id_seccion}
+                                  </option>
+                                ))}
+                              </select>
+                              <label htmlFor="inputSeccion">ID Sección</label>
+                            </div>
+                          </div>
+
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-control"
+                                id="inputSerie"
+                                value={id_serie}
+                                onChange={(e) => setIdSerie(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {serie.map((s) => (
+                                  <option key={s.serie} value={s.serie}>
+                                    {s.serie}
+                                  </option>
+                                ))}
+                              </select>
+                              <label htmlFor="inputSerie">ID Serie</label>
+                            </div>
+                          </div>
+
+                          <div className="col-md-4">
+                            <div className="form-floating">
+                              <select
+                                className="form-control"
+                                id="inputSubserie"
+                                value={id_subserie}
+                                onChange={(e) => setIdSubserie(e.target.value)}
+                              >
+                                <option value="">Seleccione una opción</option>
+                                {subserie.map((sub) => (
+                                  <option
+                                    key={sub.SubSerie}
+                                    value={sub.SubSerie}
+                                  >
+                                    {sub.SubSerie}
+                                  </option>
+                                ))}
+                              </select>
+                              <label htmlFor="inputSubserie">ID Subserie</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-4">
+                          <Boton disabled={isLoading}>
+                            {isLoading ? "Enviando..." : "Enviar"}
+                          </Boton>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </form>
+          </main>
         </div>
       </div>
-    </div>
+    </body>
   );
 }
