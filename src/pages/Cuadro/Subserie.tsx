@@ -34,6 +34,11 @@ export function Subserie() {
     fetchSubserie();
   }, []);
 
+  const rowsWithIds = Subserie.map((row, index) => ({
+    ...row,
+    id: index, // Añade un id único basado en el índice
+  }));
+
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -133,7 +138,7 @@ export function Subserie() {
                           <div className="col-md-6">
                             <div className="form-floating">
                               <select
-                                className="form-control"
+                                className="form-select"
                                 id="inputSerie"
                                 value={serie}
                                 onChange={(e) => setserie(e.target.value)}
@@ -223,9 +228,8 @@ export function Subserie() {
                         }}
                       >
                         <DataGrid
-                          rows={Subserie}
+                          rows={rowsWithIds}
                           columns={columns}
-                          getRowId={(x) => x.descripcion}
                           disableRowSelectionOnClick
                           density="comfortable"
                           initialState={{

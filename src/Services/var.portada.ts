@@ -1,4 +1,5 @@
 export interface iPortada {
+    id_expediente: string;
     num_expediente: string;
     asunto: string;
     num_legajos: string;
@@ -15,6 +16,7 @@ export interface iPortada {
 }
 
 export class Portada implements iPortada {
+    id_expediente: string = "";
     num_expediente: string = "";
     asunto: string = "";
     num_legajos: string= "";
