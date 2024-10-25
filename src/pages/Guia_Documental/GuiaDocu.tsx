@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { invetario_post } from "../../services/inventario.services";
-import { Inventario } from "../../services/var.inven";
+import { Guia } from "../../services/var.guia";
+import { useEffect, useState } from "react";
 import { Portada } from "../../services/var.portada";
-import { serie } from "../../Producto";
 import { portada_get } from "../../services/portada.services";
-import { serie_get } from "../../services/cuadro.service";
 import Swal from "sweetalert2";
-import { Boton } from "../../components/Botones/Botones";
+import { guia_post } from "../../services/gui.service";
 import Logo from "../../assets/Tlaxcala.png";
+import { Boton } from "../../components/Botones/Botones";
 
-export function Inventory() {
-  const initialUserState = new Inventario();
-  const [inventario, setInventario] = useState<Inventario>(initialUserState);
+export function GuiaDocu() {
+  const initialUserState = new Guia();
+  const [guia, setGuia] = useState<Guia>(initialUserState);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
 
-    setInventario((prevInventario) => ({
-      ...prevInventario,
+    setGuia((prevGuia) => ({
+      ...prevGuia,
       [name]: value,
     }));
   };
 
   const [isLoading, setIsLoading] = useState(false);
   const [Portada, setPortada] = useState<Portada[]>([]);
-  const [Serie, setSerie] = useState<serie[]>([]);
 
   useEffect(() => {
     const fetchPortada = async () => {
@@ -36,23 +33,14 @@ export function Inventory() {
     fetchPortada();
   }, []);
 
-  useEffect(() => {
-    const fetchSerie = async () => {
-      const items = await serie_get();
-      setSerie(items);
-    };
-    fetchSerie();
-  }, []);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (
-      !inventario.descripsion.trim() ||
-      !inventario.estatus.trim() ||
-      !inventario.expediente.trim() ||
-      !inventario.observaciones.trim() ||
-      !inventario.serie.trim()
+      !guia.num_expediente.trim() ||
+      !guia.descripcion.trim() ||
+      !guia.ubicacion_fisica.trim() ||
+      !guia.volumen.trim()
     ) {
       Swal.fire({
         icon: "warning",
@@ -64,24 +52,24 @@ export function Inventory() {
     setIsLoading(true);
 
     try {
-      const result = await invetario_post(inventario);
-      console.log("Respuesta de la API;", result);
+      const result = await guia_post(guia);
+      console.log("Respuesta de la API:", result);
       Swal.fire({
         icon: "success",
-        title: "Exito",
-        text: "El inventario se ha creado correctamente",
+        title: "¡Exito!",
+        text: "Se ha enviado el formulario correctamente",
         timer: 1500,
         showConfirmButton: false,
       });
 
-      setInventario(initialUserState);
+      setGuia(initialUserState);
     } catch (error) {
       console.log("Error", error);
 
       Swal.fire({
         icon: "error",
         title: "Oops",
-        text: "Algo salió mal, intenta de nuevo",
+        text: "Ha ocurrido un error al enviar el formulario",
       });
     } finally {
       setIsLoading(false);
@@ -108,7 +96,7 @@ export function Inventory() {
                       {" "}
                       <h3 className="text-center font-weight-light my-4">
                         {" "}
-                        Inventario General
+                        Guia Documental
                       </h3>
                     </div>
                     <div className="card-body">
@@ -118,15 +106,17 @@ export function Inventory() {
                             <div className="form-floating">
                               <select
                                 className="multisteps-form_input form-select"
-                                id="UA"
-                                value={inventario.serie}
+                                id="NE"
+                                value={guia.num_expediente}
                                 onChange={handleInputChange}
-                                name="unidad_admi"
+                                name="num_expediente"
                               >
-                                <option value="">Seleccione la Serie</option>
-                                {Serie.map((serie) => (
-                                  <option value={serie.serie}>
-                                    {serie.serie}
+                                <option value="">
+                                  Seleccione el numero de expediente
+                                </option>
+                                {Portada.map((portada) => (
+                                  <option value={portada.id_expediente}>
+                                    {portada.num_expediente}
                                   </option>
                                 ))}
                               </select>
@@ -139,11 +129,13 @@ export function Inventory() {
                                 id="inputCargo"
                                 type="text"
                                 placeholder="Coloca el cargo"
-                                value={inventario.descripsion}
+                                value={guia.descripcion}
                                 onChange={handleInputChange}
-                                name="cargo"
+                                name="descripcion"
                               />
-                              <label htmlFor="input Cargo">Descripcion</label>
+                              <label htmlFor="input Descripcion">
+                                Descripcion
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -151,19 +143,18 @@ export function Inventory() {
                         <div className="row mb-3">
                           <div className="col-md-6">
                             <div className="form-floating">
-                              <select
-                                className="multisteps-form_input form-select"
-                                id="roles"
-                                value={inventario.estatus}
+                              <input
+                                className="form-control"
+                                id="inputCargo"
+                                type="text"
+                                placeholder="Coloca el cargo"
+                                value={guia.ubicacion_fisica}
                                 onChange={handleInputChange}
-                                name="roles"
-                              >
-                                <option>
-                                  Seleccione el Status del Expediente
-                                </option>
-                                <option value="abierto">Abierto</option>
-                                <option value="cerrado">Cerrado</option>
-                              </select>
+                                name="ubicacion_fisica"
+                              />
+                              <label htmlFor="input Descripcion">
+                                Ubicacion Fisica
+                              </label>
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -171,36 +162,13 @@ export function Inventory() {
                               <input
                                 className="form-control"
                                 id="inputEmail"
-                                type="email"
+                                type="number"
                                 placeholder="name@example.com"
-                                value={inventario.observaciones}
+                                value={guia.volumen}
                                 onChange={handleInputChange}
-                                name="email"
+                                name="volumen"
                               />
-                              <label htmlFor="inputEmail">Observaciones</label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <select
-                                className="multisteps-form_input form-select"
-                                id="UA"
-                                value={inventario.expediente}
-                                onChange={handleInputChange}
-                                name="unidad_admi"
-                              >
-                                <option value="">
-                                  Seleccione el expediente
-                                </option>
-                                {Portada.map((portada) => (
-                                  <option value={portada.id_expediente}>
-                                    {portada.num_expediente}
-                                  </option>
-                                ))}
-                              </select>
+                              <label htmlFor="inputEmail">Volumen</label>
                             </div>
                           </div>
                         </div>
