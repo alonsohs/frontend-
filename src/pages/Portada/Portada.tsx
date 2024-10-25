@@ -161,16 +161,22 @@ export function PortadaComponent() {
                         </div>
 
               <div className="form-row mt-4">
+              <label> Valores Secundarios </label>
                 <div className="col">
-                  <label> Valores Secundarios </label>
-                  <input
+                  <select
                     className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Valores Secundarios "
+                    id="item"
                     value={portada.valores_secundarios}
                     onChange={handleInputChange}
-                    name="valores_secundarios"
-                  />
+                    name="item"
+                  >
+                    <option>
+                      Seleccione el Valor Secundario
+                    </option>
+                    <option value="informativo">Informativo</option>
+                    <option value="evidencial">Evidencial</option>
+                    <option value="testimonial">Testimonial</option>
+                  </select>
                 </div>
               </div>
               <div className="form-row mt-4">
@@ -200,48 +206,34 @@ export function PortadaComponent() {
                 </div>
               </div>
 
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                type="number"
-                                placeholder="Número de Legajos"
-                                value={portada.num_legajos}
-                                onChange={handleInputChange}
-                                name="num_legajos"
-                              />
-                              <label>Número de Legajos</label>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <div className="form-floating">
+                    <input
+                      className="form-control"
+                      type="number"
+                      placeholder="Número de Legajos"
+                      value={portada.num_legajos}
+                      onChange={handleInputChange}
+                      name="num_legajos"
+                    />
+                  <label>Número de Legajos</label>
                             </div>
                           </div>
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                type="number"
-                                placeholder="Número de Fojas"
-                                value={portada.num_fojas}
-                                onChange={handleInputChange}
-                                name="num_fojas"
-                              />
-                              <label>Número de Fojas</label>
-                            </div>
-                          </div>
-                        </div>
-
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Número de Fojas</label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="number"
-                    placeholder="Número de Fojas "
-                    value={portada.num_fojas}
-                    onChange={handleInputChange}
-                    name="num_fojas"
-                  />
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        className="form-control"
+                        type="number"
+                        placeholder="Número de Fojas"
+                        value={portada.num_fojas}
+                        onChange={handleInputChange}
+                        name="num_fojas"
+                      />
+                      <label>Número de Fojas</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
               <div className="form-row mt-4">
                 <div className="col">
                   <label> Ficha </label>
@@ -255,6 +247,60 @@ export function PortadaComponent() {
                     <option value="">Seleccione una opción</option>
                     {id_ficha.map((ficha) => (
                       <option value={ficha.id_ficha}>{ficha.id_ficha}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Catalogo </label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    id="Ficha"
+                    value={portada.catalogo}
+                    onChange={handleInputChange}
+                    name="ficha"
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {id_catalogo.map((catalogo) => (
+                      <option value={catalogo.id_catalogo}>{catalogo.catalogo}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Seccion </label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    id="Seccion"
+                    value={portada.seccion}
+                    onChange={handleInputChange}
+                    name="seccion"
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {secciones.map((seccion) => (
+                      <option value={seccion.id_seccion}>{seccion.id_seccion}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Serie </label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    id="Serie"
+                    value={portada.serie}
+                    onChange={handleInputChange}
+                    name="serie"
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {id_serie.map((serie) => (
+                      <option value={serie.id_Serie}>{serie.serie}</option>
                     ))}
                   </select>
                 </div>
