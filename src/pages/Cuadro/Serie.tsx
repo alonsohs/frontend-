@@ -164,7 +164,7 @@ export function Serie() {
                           <div className="col-md-6">
                             <div className="form-floating">
                               <select
-                                className="form-control"
+                                className="form-select"
                                 id="inputSeccion"
                                 value={ID_seccion}
                                 onChange={(e) => setId_seccion(e.target.value)}

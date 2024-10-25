@@ -138,7 +138,7 @@ export function Subserie() {
                           <div className="col-md-6">
                             <div className="form-floating">
                               <select
-                                className="form-control"
+                                className="form-select"
                                 id="inputSerie"
                                 value={serie}
                                 onChange={(e) => setserie(e.target.value)}

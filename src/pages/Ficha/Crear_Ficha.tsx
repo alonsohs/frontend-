@@ -204,7 +204,7 @@ export function Ficha() {
                           <div className="col-md-4">
                             <div className="form-floating">
                               <select
-                                className="form-control"
+                                className="form-select"
                                 id="inputSeccion"
                                 value={id_seccion}
                                 onChange={(e) => setIdSeccion(e.target.value)}
@@ -226,7 +226,7 @@ export function Ficha() {
                           <div className="col-md-4">
                             <div className="form-floating">
                               <select
-                                className="form-control"
+                                className="form-select"
                                 id="inputSerie"
                                 value={id_serie}
                                 onChange={(e) => setIdSerie(e.target.value)}
@@ -245,7 +245,7 @@ export function Ficha() {
                           <div className="col-md-4">
                             <div className="form-floating">
                               <select
-                                className="form-control"
+                                className="form-select"
                                 id="inputSubserie"
                                 value={id_subserie}
                                 onChange={(e) => setIdSubserie(e.target.value)}
