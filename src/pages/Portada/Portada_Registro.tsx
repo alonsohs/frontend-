@@ -121,9 +121,6 @@ export function Portada_Registro() {
     <div className="min-h-screen bg-gray-50">
       <header className="p-4 flex flex-col items-center">
         <Logo />
-        <h1 className="text-2xl font-bold text-gray-800 text-center mt-4">
-          Registro de Portadas
-        </h1>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
