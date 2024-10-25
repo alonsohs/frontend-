@@ -10,13 +10,12 @@ interface portada {
   valores_secundarios: string;
   fecha_apertura: string;
   fecha_cierre: string;
-  archivo_tramite: string;
-  archivo_concentracion: string;
   seccion: string;
   serie: string;
   subserie: string;
   ficha: string;
   catalogo: string;
+  
 }
 
 export const portada_post = async (data: portada) => {

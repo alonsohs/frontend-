@@ -67,8 +67,6 @@ export function PortadaComponent() {
       !portada.valores_secundarios.trim() ||
       !portada.fecha_apertura.trim() ||
       !portada.fecha_cierre.trim() ||
-      !portada.archivo_tramite.trim() ||
-      !portada.archivo_concentracion.trim() ||
       !portada.seccion.trim() ||
       !portada.serie.trim() ||
       !portada.subserie.trim() ||
@@ -162,44 +160,45 @@ export function PortadaComponent() {
                           </div>
                         </div>
 
-                        <div className="form-floating mb-3">
-                          <input
-                            className="form-control"
-                            type="text"
-                            placeholder="Valores Secundarios"
-                            value={portada.valores_secundarios}
-                            onChange={handleInputChange}
-                            name="valores_secundarios"
-                          />
-                          <label>Valores Secundarios</label>
-                        </div>
-
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                type="date"
-                                value={portada.fecha_apertura}
-                                onChange={handleInputChange}
-                                name="fecha_apertura"
-                              />
-                              <label>Fecha Apertura</label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                type="date"
-                                value={portada.fecha_cierre}
-                                onChange={handleInputChange}
-                                name="fecha_cierre"
-                              />
-                              <label>Fecha de Cierre</label>
-                            </div>
-                          </div>
-                        </div>
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Valores Secundarios </label>
+                  <input
+                    className="multisteps-form_input form-control"
+                    type="text"
+                    placeholder="Valores Secundarios "
+                    value={portada.valores_secundarios}
+                    onChange={handleInputChange}
+                    name="valores_secundarios"
+                  />
+                </div>
+              </div>
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Fecha Apertura </label>
+                  <input
+                    className="multisteps-form_input form-control"
+                    type="date"
+                    placeholder="Fecha Apertura"
+                    value={portada.fecha_apertura}
+                    onChange={handleInputChange}
+                    name="fecha_apertura"
+                  />
+                </div>
+              </div>
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Fecha de Cierre </label>
+                  <input
+                    className="multisteps-form_input form-control"
+                    type="date"
+                    placeholder="Fecha Cierre "
+                    value={portada.fecha_cierre}
+                    onChange={handleInputChange}
+                    name="fecha_cierre"
+                  />
+                </div>
+              </div>
 
                         <div className="row mb-3">
                           <div className="col-md-6">
@@ -230,142 +229,36 @@ export function PortadaComponent() {
                           </div>
                         </div>
 
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                type="text"
-                                placeholder="Archivo de trámite"
-                                value={portada.archivo_tramite}
-                                onChange={handleInputChange}
-                                name="archivo_tramite"
-                              />
-                              <label>Archivo de Trámite</label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                type="text"
-                                placeholder="Archivo de Concentración"
-                                value={portada.archivo_concentracion}
-                                onChange={handleInputChange}
-                                name="archivo_concentracion"
-                              />
-                              <label>Archivo de Concentración</label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <select
-                                className="form-select"
-                                value={portada.ficha}
-                                onChange={handleInputChange}
-                                name="ficha"
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {id_ficha.map((ficha) => (
-                                  <option
-                                    key={ficha.id_ficha}
-                                    value={ficha.id_ficha}
-                                  >
-                                    {ficha.id_ficha}
-                                  </option>
-                                ))}
-                              </select>
-                              <label>Ficha</label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <select
-                                className="form-select"
-                                value={portada.catalogo}
-                                onChange={handleInputChange}
-                                name="catalogo"
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {id_catalogo.map((catalogo) => (
-                                  <option
-                                    key={catalogo.id_catalogo}
-                                    value={catalogo.id_catalogo}
-                                  >
-                                    {catalogo.catalogo}
-                                  </option>
-                                ))}
-                              </select>
-                              <label>Catálogo</label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="row mb-3">
-                          <div className="col-md-4">
-                            <div className="form-floating">
-                              <select
-                                className="form-select"
-                                value={portada.seccion}
-                                onChange={handleInputChange}
-                                name="seccion"
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {secciones.map((seccion) => (
-                                  <option
-                                    key={seccion.id_seccion}
-                                    value={seccion.id_seccion}
-                                  >
-                                    {seccion.id_seccion}
-                                  </option>
-                                ))}
-                              </select>
-                              <label>ID Sección</label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div className="form-floating">
-                              <select
-                                className="form-select"
-                                value={portada.serie}
-                                onChange={handleInputChange}
-                                name="serie"
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {id_serie.map((s) => (
-                                  <option key={s.serie} value={s.serie}>
-                                    {s.serie}
-                                  </option>
-                                ))}
-                              </select>
-                              <label>ID Serie</label>
-                            </div>
-                          </div>
-                          <div className="col-md-4">
-                            <div className="form-floating">
-                              <select
-                                className="form-select"
-                                value={portada.subserie}
-                                onChange={handleInputChange}
-                                name="subserie"
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {id_subserie.map((sub) => (
-                                  <option
-                                    key={sub.SubSerie}
-                                    value={sub.SubSerie}
-                                  >
-                                    {sub.SubSerie}
-                                  </option>
-                                ))}
-                              </select>
-                              <label>ID Subserie</label>
-                            </div>
-                          </div>
-                        </div>
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label>Número de Fojas</label>
+                  <input
+                    className="multisteps-form_input form-control"
+                    type="number"
+                    placeholder="Número de Fojas "
+                    value={portada.num_fojas}
+                    onChange={handleInputChange}
+                    name="num_fojas"
+                  />
+                </div>
+              </div>
+              <div className="form-row mt-4">
+                <div className="col">
+                  <label> Ficha </label>
+                  <select
+                    className="multisteps-form_input form-select"
+                    id="Ficha"
+                    value={portada.ficha}
+                    onChange={handleInputChange}
+                    name="ficha"
+                  >
+                    <option value="">Seleccione una opción</option>
+                    {id_ficha.map((ficha) => (
+                      <option value={ficha.id_ficha}>{ficha.id_ficha}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
                         <div className="text-center mt-4">
                           <Boton disabled={isLoading}>
