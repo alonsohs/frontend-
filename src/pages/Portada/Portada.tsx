@@ -92,8 +92,6 @@ export function PortadaComponent() {
       !portada.valores_secundarios.trim() ||
       !portada.fecha_apertura.trim() ||
       !portada.fecha_cierre.trim() ||
-      !portada.archivo_tramite.trim() ||
-      !portada.archivo_concentracion.trim() ||
       !portada.seccion.trim() ||
       !portada.serie.trim() ||
       !portada.subserie.trim() ||
@@ -196,7 +194,6 @@ export function PortadaComponent() {
                   />
                 </div>
               </div>
-
               <div className="form-row mt-4">
                 <div className="col">
                   <label> Fecha Apertura </label>
@@ -216,7 +213,7 @@ export function PortadaComponent() {
                   <input
                     className="multisteps-form_input form-control"
                     type="date"
-                    placeholder="Archivo de Concentración"
+                    placeholder="Fecha Cierre "
                     value={portada.fecha_cierre}
                     onChange={handleInputChange}
                     name="fecha_cierre"
@@ -251,34 +248,6 @@ export function PortadaComponent() {
                   />
                 </div>
               </div>
-
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Archivo de Trámite </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Archivo de trámite"
-                    value={portada.archivo_tramite}
-                    onChange={handleInputChange}
-                    name="archivo_tramite"
-                  />
-                </div>
-              </div>
-              <div className="form-row mt-4">
-                <div className="col">
-                  <label>Archivo de Concentración </label>
-                  <input
-                    className="multisteps-form_input form-control"
-                    type="text"
-                    placeholder="Archivo de Concentración"
-                    value={portada.archivo_concentracion}
-                    onChange={handleInputChange}
-                    name="archivo_concentracion"
-                  />
-                </div>
-              </div>
-
               <div className="form-row mt-4">
                 <div className="col">
                   <label> Ficha </label>
