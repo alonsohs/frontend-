@@ -181,7 +181,7 @@ export function Catálogo() {
                             <div className="form-floating">
                               <input
                                 className="form-control"
-                                type="number"
+                                type="text"
                                 placeholder="ID Catálogo"
                                 value={catalogo}
                                 onChange={(e) => setCatalogo(e.target.value)}
@@ -200,10 +200,7 @@ export function Catálogo() {
                               >
                                 <option value="">Seleccione una opción</option>
                                 {valor.map((valor) => (
-                                  <option
-                                    key={valor.valores}
-                                    value={valor.valores}
-                                  >
+                                  <option value={valor.id_valores}>
                                     {valor.valores}
                                   </option>
                                 ))}
@@ -229,7 +226,7 @@ export function Catálogo() {
                             <div className="form-floating">
                               <input
                                 className="form-control"
-                                type="date"
+                                type="text"
                                 value={archivo_tramite}
                                 onChange={(e) =>
                                   setArchivoTramite(e.target.value)
@@ -242,7 +239,7 @@ export function Catálogo() {
                             <div className="form-floating">
                               <input
                                 className="form-control"
-                                type="date"
+                                type="text"
                                 value={archivo_concentracion}
                                 onChange={(e) =>
                                   setArchivoConcentracion(e.target.value)
@@ -263,7 +260,7 @@ export function Catálogo() {
                               >
                                 <option value="">Seleccione una opción</option>
                                 {type.map((type) => (
-                                  <option key={type.type} value={type.type}>
+                                  <option value={type.id_type}>
                                     {type.type}
                                   </option>
                                 ))}
@@ -280,10 +277,7 @@ export function Catálogo() {
                               >
                                 <option value="">Seleccione una opción</option>
                                 {destiny.map((destiny) => (
-                                  <option
-                                    key={destiny.destino}
-                                    value={destiny.destino}
-                                  >
+                                  <option value={destiny.id_destino}>
                                     {destiny.destino}
                                   </option>
                                 ))}
@@ -303,10 +297,7 @@ export function Catálogo() {
                               >
                                 <option value="">Seleccione una opción</option>
                                 {secciones.map((seccion) => (
-                                  <option
-                                    key={seccion.id_seccion}
-                                    value={seccion.id_seccion}
-                                  >
+                                  <option value={seccion.id_seccion}>
                                     {seccion.id_seccion}
                                   </option>
                                 ))}
@@ -323,9 +314,7 @@ export function Catálogo() {
                               >
                                 <option value="">Seleccione una opción</option>
                                 {serie.map((s) => (
-                                  <option key={s.serie} value={s.serie}>
-                                    {s.serie}
-                                  </option>
+                                  <option value={s.serie}>{s.serie}</option>
                                 ))}
                               </select>
                               <label>ID Serie</label>
@@ -340,10 +329,7 @@ export function Catálogo() {
                               >
                                 <option value="">Seleccione una opción</option>
                                 {subserie.map((sub) => (
-                                  <option
-                                    key={sub.SubSerie}
-                                    value={sub.SubSerie}
-                                  >
+                                  <option value={sub.SubSerie}>
                                     {sub.SubSerie}
                                   </option>
                                 ))}

@@ -121,7 +121,7 @@ export function Inventory() {
                                 id="UA"
                                 value={inventario.serie}
                                 onChange={handleInputChange}
-                                name="unidad_admi"
+                                name="serie"
                               >
                                 <option value="">Seleccione la Serie</option>
                                 {Serie.map((serie) => (
@@ -141,7 +141,7 @@ export function Inventory() {
                                 placeholder="Coloca el cargo"
                                 value={inventario.descripsion}
                                 onChange={handleInputChange}
-                                name="cargo"
+                                name="descripsion"
                               />
                               <label htmlFor="input Cargo">Descripcion</label>
                             </div>
@@ -156,7 +156,7 @@ export function Inventory() {
                                 id="roles"
                                 value={inventario.estatus}
                                 onChange={handleInputChange}
-                                name="roles"
+                                name="estatus"
                               >
                                 <option>
                                   Seleccione el Status del Expediente
@@ -175,7 +175,7 @@ export function Inventory() {
                                 placeholder="name@example.com"
                                 value={inventario.observaciones}
                                 onChange={handleInputChange}
-                                name="email"
+                                name="observaciones"
                               />
                               <label htmlFor="inputEmail">Observaciones</label>
                             </div>
@@ -190,7 +190,7 @@ export function Inventory() {
                                 id="UA"
                                 value={inventario.expediente}
                                 onChange={handleInputChange}
-                                name="unidad_admi"
+                                name="expediente"
                               >
                                 <option value="">
                                   Seleccione el expediente
