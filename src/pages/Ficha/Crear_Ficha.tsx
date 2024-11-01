@@ -1,4 +1,3 @@
-import { Logo } from "../../components/Logo";
 import { Boton } from "../../components/Botones/Botones";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,17 +24,19 @@ export function Ficha() {
   const [id_serie, setIdSerie] = useState("");
   const [id_subserie, setIdSubserie] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
 
-  const [secciones, setSeccion] = useState<seccion[]>([]);
   const [serie, setSerie] = useState<serie[]>([]);
   const [subserie, setSubSerie] = useState<SubSerie[]>([]);
 
   useEffect(() => {
-    const fetchSeccion = async () => {
-      const items = await Seccion_get();
-      setSeccion(items);
-    };
-    fetchSeccion();
+    const userDataStr = localStorage.getItem("user");
+    if (userDataStr) {
+      const user = JSON.parse(userDataStr);
+      setUserInfo(user);
+
+      setIdSeccion(user.unidad_admi);
+    }
   }, []);
 
   useEffect(() => {
@@ -203,22 +204,14 @@ export function Ficha() {
                         <div className="row mb-3">
                           <div className="col-md-4">
                             <div className="form-floating">
-                              <select
-                                className="form-select"
+                              <input
+                                className="form-control"
                                 id="inputSeccion"
+                                type="text"
+                                placeholder="Seccion"
                                 value={id_seccion}
-                                onChange={(e) => setIdSeccion(e.target.value)}
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {secciones.map((seccion) => (
-                                  <option
-                                    key={seccion.id_seccion}
-                                    value={seccion.id_seccion}
-                                  >
-                                    {seccion.id_seccion}
-                                  </option>
-                                ))}
-                              </select>
+                                readOnly
+                              />
                               <label htmlFor="inputSeccion">ID Sección</label>
                             </div>
                           </div>

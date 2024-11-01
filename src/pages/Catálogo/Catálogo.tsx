@@ -31,6 +31,7 @@ export function Catálogo() {
   const [valores_documentales, setValoresDocumentales] = useState("");
   const [observaciones, setObservaciones] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
 
   const [id_seccion, setIdSeccion] = useState("");
   const [id_serie, setIdSerie] = useState("");
@@ -41,6 +42,16 @@ export function Catálogo() {
   const [destiny, setDestiny] = useState<destino[]>([]);
   const [serie, setSerie] = useState<serie[]>([]);
   const [subserie, setSubSerie] = useState<SubSerie[]>([]);
+
+  useEffect(() => {
+    const userDataStr = localStorage.getItem("user");
+    if (userDataStr) {
+      const user = JSON.parse(userDataStr);
+      setUserInfo(user);
+
+      setIdSeccion(user.unidad_admi);
+    }
+  }, []);
 
   // Fetch data effects remain the same...
   useEffect(() => {
@@ -290,18 +301,14 @@ export function Catálogo() {
                         <div className="row mb-3">
                           <div className="col-md-4">
                             <div className="form-floating">
-                              <select
-                                className="form-control form-select"
+                              <input
+                                className="form-control"
+                                id="inputSeccion"
+                                type="text"
+                                placeholder="Seccion"
                                 value={id_seccion}
-                                onChange={(e) => setIdSeccion(e.target.value)}
-                              >
-                                <option value="">Seleccione una opción</option>
-                                {secciones.map((seccion) => (
-                                  <option value={seccion.id_seccion}>
-                                    {seccion.id_seccion}
-                                  </option>
-                                ))}
-                              </select>
+                                readOnly
+                              />
                               <label>ID Sección</label>
                             </div>
                           </div>

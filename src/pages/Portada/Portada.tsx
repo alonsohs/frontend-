@@ -4,7 +4,7 @@ import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import { Seccion_get, serie_get } from "../../services/cuadro.service";
+import { serie_get } from "../../services/cuadro.service";
 import { seccion, serie } from "../../Producto";
 import { portada_post } from "../../services/portada.services";
 import { ficha_get } from "../../services/ficha.services";
@@ -18,21 +18,36 @@ export function PortadaComponent() {
   const navigate = useNavigate();
   const [portada, setPortada] = useState<Portada>(new Portada());
   const [isLoading, setIsLoading] = useState(false);
-  const [secciones, setSeccion] = useState<seccion[]>([]);
+  const [seccion, setSeccion] = useState("");
   const [id_serie, setSerie] = useState<serie[]>([]);
   const [id_ficha, setIdFicha] = useState<ficha[]>([]);
   const [id_catalogo, setIdCatalogo] = useState<catalogo[]>([]);
+  const [userInfo, setUserInfo] = useState<any>(null);
+
+  useEffect(() => {
+    try {
+      const userDataStr = localStorage.getItem("user");
+      if (userDataStr) {
+        const userData = JSON.parse(userDataStr);
+
+        setPortada((prevPortada) => ({
+          ...prevPortada,
+          seccion: userData.unidad_admi || "",
+        }));
+      }
+    } catch (error) {
+      console.log("Error al cargar los datos del usuario:", error);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       const fichas = await ficha_get();
       const catalogos = await catalogo_get();
-      const secciones = await Seccion_get();
       const series = await serie_get();
 
       setIdFicha(fichas);
       setIdCatalogo(catalogos);
-      setSeccion(secciones);
       setSerie(series);
     };
 
@@ -76,6 +91,14 @@ export function PortadaComponent() {
     setIsLoading(true);
 
     try {
+      const userDataStr = localStorage.getItem("user");
+      const userData = userDataStr ? JSON.parse(userDataStr) : {};
+
+      const portadaData = {
+        ...portada,
+        unidad_admi: userData.unidad_admi,
+      };
+
       const result = await portada_post(portada);
       console.log("Respuesta de la API:", result);
 
@@ -160,7 +183,7 @@ export function PortadaComponent() {
                               id="item"
                               value={portada.valores_secundarios}
                               onChange={handleInputChange}
-                              name="item"
+                              name="valores_secundarios"
                             >
                               <option>Seleccione el Valor Secundario</option>
                               <option value="informativo">Informativo</option>
@@ -267,20 +290,14 @@ export function PortadaComponent() {
                         <div className="form-row mt-4">
                           <div className="col">
                             <label> Seccion </label>
-                            <select
-                              className="multisteps-form_input form-select"
-                              id="Seccion"
+                            <input
+                              className="form-control"
+                              id="inputSeccion"
+                              type="text"
+                              placeholder="Seccion"
                               value={portada.seccion}
-                              onChange={handleInputChange}
-                              name="seccion"
-                            >
-                              <option value="">Seleccione una opción</option>
-                              {secciones.map((seccion) => (
-                                <option value={seccion.id_seccion}>
-                                  {seccion.id_seccion}
-                                </option>
-                              ))}
-                            </select>
+                              readOnly
+                            />
                           </div>
                         </div>
 
