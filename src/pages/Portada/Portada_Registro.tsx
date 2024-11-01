@@ -5,8 +5,10 @@ import { portada_get } from "../../services/portada.services";
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Portada_Registro() {
+  const navigate = useNavigate();
   const [portada, setPortada] = useState<iPortada[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
 
@@ -34,7 +36,7 @@ export function Portada_Registro() {
   };
 
   const handleCreate = () => {
-    console.log("Creating new item");
+    navigate("/Crear_Portada");
   };
 
   const columns: GridColDef[] = [

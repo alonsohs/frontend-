@@ -5,8 +5,10 @@ import { catalogo_get } from "../../services/catalogo.service";
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Catálogo_Registro() {
+  const navigate = useNavigate();
   const [catalogo, setCatalogo] = useState<catalogo[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
 
@@ -34,7 +36,7 @@ export function Catálogo_Registro() {
   };
 
   const handleCreate = () => {
-    console.log("Creating new item");
+    navigate("/Crear_Catálogo");
   };
 
   const columns: GridColDef[] = [

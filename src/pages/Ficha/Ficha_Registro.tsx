@@ -5,8 +5,10 @@ import { ficha_get } from "../../services/ficha.services";
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Ficha_Registro() {
+  const navigate = useNavigate();
   const [ficha, setFicha] = useState<ficha[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
 
@@ -34,7 +36,7 @@ export function Ficha_Registro() {
   };
 
   const handleCreate = () => {
-    console.log("Creating new item");
+    navigate("/Crear_Ficha");
   };
 
   const columns: GridColDef[] = [
