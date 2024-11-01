@@ -1,12 +1,14 @@
 import { Logo } from "../../components/Logo";
-import { catalogo_get } from "../../services/catalogo.service";
 import { catalogo } from "../../services/var.catalogo";
+import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
+import { catalogo_get } from "../../services/catalogo.service";
 import { useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 
 export function Catálogo_Registro() {
   const [catalogo, setCatalogo] = useState<catalogo[]>([]);
+  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
 
   useEffect(() => {
     const fetchCatalogo = async () => {
@@ -15,6 +17,25 @@ export function Catálogo_Registro() {
     };
     fetchCatalogo();
   }, []);
+
+  const handleView = () => {
+    const selectedId = selectedRows[0];
+    console.log("Viewing item:", selectedId);
+  };
+
+  const handleEdit = () => {
+    const selectedId = selectedRows[0];
+    console.log("Editing item:", selectedId);
+  };
+
+  const handleDelete = () => {
+    const selectedId = selectedRows[0];
+    console.log("Deleting item:", selectedId);
+  };
+
+  const handleCreate = () => {
+    console.log("Creating new item");
+  };
 
   const columns: GridColDef[] = [
     {
@@ -104,6 +125,64 @@ export function Catálogo_Registro() {
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          {/* Toolbar */}
+          <div className="p-4 border-b flex justify-between items-center bg-gray-50">
+            <div className="flex gap-2">
+              <Tooltip title="Ver detalles">
+                <span>
+                  <IconButton
+                    onClick={handleView}
+                    size="small"
+                    className="text-blue-600 hover:text-blue-800"
+                    disabled={selectedRows.length !== 1}
+                  >
+                    <Eye className="h-5 w-5" />
+                  </IconButton>
+                </span>
+              </Tooltip>
+
+              <Tooltip title="Editar">
+                <span>
+                  <IconButton
+                    onClick={handleEdit}
+                    size="small"
+                    className="text-green-600 hover:text-green-800"
+                    disabled={selectedRows.length !== 1}
+                  >
+                    <Pencil className="h-5 w-5" />
+                  </IconButton>
+                </span>
+              </Tooltip>
+
+              <Tooltip title="Eliminar">
+                <span>
+                  <IconButton
+                    onClick={handleDelete}
+                    size="small"
+                    className="text-red-600 hover:text-red-800"
+                    disabled={selectedRows.length !== 1}
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </IconButton>
+                </span>
+              </Tooltip>
+            </div>
+
+            <Button
+              variant="contained"
+              startIcon={<Plus className="h-4 w-4" />}
+              onClick={handleCreate}
+              sx={{
+                backgroundColor: "#441853",
+                "&:hover": {
+                  backgroundColor: "#331340",
+                },
+              }}
+            >
+              Nuevo
+            </Button>
+          </div>
+
           <Box
             sx={{
               height: 600,
@@ -131,7 +210,9 @@ export function Catálogo_Registro() {
               rows={catalogo}
               columns={columns}
               getRowId={(x) => x.id_catalogo}
-              disableRowSelectionOnClick
+              onRowSelectionModelChange={(newSelection) => {
+                setSelectedRows(newSelection);
+              }}
               density="comfortable"
               initialState={{
                 pagination: {
@@ -140,6 +221,7 @@ export function Catálogo_Registro() {
               }}
               pageSizeOptions={[5, 10, 25, 50]}
               className="w-full"
+              checkboxSelection
             />
           </Box>
         </div>

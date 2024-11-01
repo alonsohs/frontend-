@@ -1,4 +1,3 @@
-import { Logo } from "../../components/Logo";
 import { Boton } from "../../components/Botones/Botones";
 import { useNavigate } from "react-router-dom";
 import {
