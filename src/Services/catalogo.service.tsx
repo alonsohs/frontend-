@@ -51,6 +51,46 @@ export const catalogo_post = async (data: catalogo) => {
   }
 };
 
+export const catalogo_put = async (id: string, data: catalogo) => {
+  try {
+    const response = await api.put(`/catalogo/Catalogo/${id}/`, data);
+    if (response.status === 200) {
+      console.log("Catalogo actualizado exitosamente:", response.data);
+      return response.data;
+    } else {
+      throw new Error("Error al actualizar catalogo " + response.statusText);
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error de Axios:", error.message);
+    } else {
+      console.error("Error inesperado:", error);
+    }
+    return null;
+  }
+};
+
+
+export const catalogo_delete = async (id: string) => {
+  try {
+    const response = await api.delete(`/catalogo/Catalogo/${id}/`);
+    if (response.status === 204) {
+      console.log("Catalogo eliminado exitosamente");
+      return true;
+    } else {
+      throw new Error("Error al eliminar catalogo " + response.statusText);
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error de Axios:", error.message);
+    } else {
+      console.error("Error inesperado:", error);
+    }
+    return false;
+  }
+};
+
+
 export const destino_post = async (data: destino) => {
   try {
     const response = await api.post( "/catalogo/Destino/",
