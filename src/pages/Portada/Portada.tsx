@@ -252,7 +252,7 @@ export function PortadaComponent() {
                               id="Ficha"
                               value={portada.catalogo}
                               onChange={handleInputChange}
-                              name="ficha"
+                              name="catalogo"
                             >
                               <option value="">Seleccione una opción</option>
                               {id_catalogo.map((catalogo) => (
