@@ -1,22 +1,26 @@
 import { Logo } from "../../components/Logo";
 import { catalogo } from "../../services/var.catalogo";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import { catalogo_get } from "../../services/catalogo.service";
+import { catalogo_get, catalogo_delete } from "../../services/catalogo.service";
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 export function Catálogo_Registro() {
   const navigate = useNavigate();
   const [catalogo, setCatalogo] = useState<catalogo[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCatalogo = async () => {
+    const items = await catalogo_get();
+    setCatalogo(items);
+  };
 
   useEffect(() => {
-    const fetchCatalogo = async () => {
-      const items = await catalogo_get();
-      setCatalogo(items);
-    };
     fetchCatalogo();
   }, []);
 
@@ -30,9 +34,63 @@ export function Catálogo_Registro() {
     console.log("Editing item:", selectedId);
   };
 
-  const handleDelete = () => {
-    const selectedId = selectedRows[0];
-    console.log("Deleting item:", selectedId);
+  const handleDelete = async () => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para eliminar",
+      });
+      return;
+    }
+
+    const selectedId = selectedRows[0] as string;
+
+    const result = await Swal.fire({
+      title: "¿Está seguro?",
+      text: "No podrá revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      setIsLoading(true);
+      try {
+        const success = await catalogo_delete(selectedId);
+
+        if (success) {
+          Swal.fire({
+            icon: "success",
+            title: "Eliminado",
+            text: "El catálogo ha sido eliminado exitosamente.",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            fetchCatalogo();
+            setSelectedRows([]);
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo eliminar el catálogo",
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al eliminar el catálogo",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   const handleCreate = () => {
@@ -136,7 +194,7 @@ export function Catálogo_Registro() {
                     onClick={handleView}
                     size="small"
                     className="text-blue-600 hover:text-blue-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Eye className="h-5 w-5" />
                   </IconButton>
@@ -149,7 +207,7 @@ export function Catálogo_Registro() {
                     onClick={handleEdit}
                     size="small"
                     className="text-green-600 hover:text-green-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Pencil className="h-5 w-5" />
                   </IconButton>
@@ -162,7 +220,7 @@ export function Catálogo_Registro() {
                     onClick={handleDelete}
                     size="small"
                     className="text-red-600 hover:text-red-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Trash2 className="h-5 w-5" />
                   </IconButton>
@@ -174,6 +232,7 @@ export function Catálogo_Registro() {
               variant="contained"
               startIcon={<Plus className="h-4 w-4" />}
               onClick={handleCreate}
+              disabled={isLoading}
               sx={{
                 backgroundColor: "#441853",
                 "&:hover": {

@@ -232,7 +232,7 @@ export function Portada_Registro() {
             <DataGrid
               rows={portada}
               columns={columns}
-              getRowId={(x) => x.id_portada}
+              getRowId={(x) => x.id_expediente}
               onRowSelectionModelChange={(newSelection) => {
                 setSelectedRows(newSelection);
               }}
