@@ -17,6 +17,8 @@ import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { RiTableLine } from "react-icons/ri";
 import { RiArchiveStackLine } from "react-icons/ri";
 import { logout } from "../../services/auth.service";
+import { hasRole } from "../../services/auth.service";
+import { Roles } from "../../models/enums/roles_enum";
 import Icono from "../../assets/right-arrow.png";
 
 interface SidebarProps {
@@ -30,6 +32,7 @@ interface MenuItem {
   to: string;
   subMenu?: MenuItem[];
   onClick?: string;
+  requiredRoles?: Roles[];
 }
 
 interface MenuItemProps extends MenuItem {
@@ -61,25 +64,29 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         </div>
       </div>
 
-      {LinksArray.map((item) => (
-        <MenuItemComponent
-          key={item.label}
-          {...item}
-          sidebarOpen={sidebarOpen}
-          handleLogout={handleLogout}
-        />
-      ))}
+      {LinksArray.filter((item) => hasRole(item.requiredRoles || [])).map(
+        (item) => (
+          <MenuItemComponent
+            key={item.label}
+            {...item}
+            sidebarOpen={sidebarOpen}
+            handleLogout={handleLogout}
+          />
+        )
+      )}
 
       <Divider />
 
-      {linksArray.map((item) => (
-        <MenuItemComponent
-          key={item.label}
-          {...item}
-          sidebarOpen={sidebarOpen}
-          handleLogout={handleLogout}
-        />
-      ))}
+      {linksArray
+        .filter((item) => hasRole(item.requiredRoles || []))
+        .map((item) => (
+          <MenuItemComponent
+            key={item.label}
+            {...item}
+            sidebarOpen={sidebarOpen}
+            handleLogout={handleLogout}
+          />
+        ))}
     </Container>
   );
 }
@@ -89,46 +96,55 @@ const LinksArray: MenuItem[] = [
     label: "Home ",
     icon: <AiOutlineHome />,
     to: "/Home",
+    requiredRoles: [Roles.Admin, Roles.JefeArea, Roles.Personal],
   },
   {
     label: "Mi Perfil ",
     icon: <AiOutlineUser />,
     to: "/Usuario",
+    requiredRoles: [Roles.Admin, Roles.JefeArea, Roles.Personal],
   },
   {
     label: "Crear Expediente ",
     icon: <AiOutlineFolderOpen />,
     to: "/Expediente",
+    requiredRoles: [Roles.Admin, Roles.JefeArea],
   },
   {
     label: "Instrumentos Archivísticos ",
     icon: <AiOutlineFile />,
     to: "/Instrumentos_Archivisticos",
+    requiredRoles: [Roles.Admin, Roles.JefeArea],
     subMenu: [
       {
         label: "Inventario",
         icon: <RiTableLine />,
         to: "/Inventario",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
       {
         label: "Guía",
         icon: <RiTableLine />,
         to: "/GuiaDocu",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
       {
         label: "Ficha",
         icon: <RiTableLine />,
         to: "/Ficha",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
       {
         label: "Catálogo",
         icon: <RiTableLine />,
         to: "/Catálogo",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
       {
         label: "Portada",
         icon: <RiTableLine />,
         to: "/Portada",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
     ],
   },
@@ -136,21 +152,25 @@ const LinksArray: MenuItem[] = [
     label: "Cuadro General",
     icon: <SiInternetarchive />,
     to: "/Seccion",
+    requiredRoles: [Roles.Admin, Roles.JefeArea],
     subMenu: [
       {
         label: "Sección",
         icon: <HiOutlineDocumentDuplicate />,
         to: "/Seccion",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
       {
         label: "Serie",
         icon: <HiOutlineDocumentDuplicate />,
         to: "/Serie",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
       {
         label: "Subserie",
         icon: <HiOutlineDocumentDuplicate />,
         to: "/Subserie",
+        requiredRoles: [Roles.Admin, Roles.JefeArea],
       },
     ],
   },
@@ -161,21 +181,25 @@ const linksArray: MenuItem[] = [
     label: "Herramientas Admin  ",
     icon: <LuSettings />,
     to: "/AgregarUsuario",
+    requiredRoles: [Roles.Admin],
     subMenu: [
       {
         label: "Agregar usuarios",
         icon: <AiOutlineUser />,
         to: "/Agregar_Usuario",
+        requiredRoles: [Roles.Admin],
       },
       {
         label: "Lista de Usuarios",
         icon: <AiOutlineUser />,
         to: "UserList",
+        requiredRoles: [Roles.Admin],
       },
       {
         label: "Datos Catalogo",
         icon: <RiArchiveStackLine />,
         to: "/Datos_Catalogo",
+        requiredRoles: [Roles.Admin],
       },
     ],
   },
@@ -184,6 +208,7 @@ const linksArray: MenuItem[] = [
     icon: <GiExitDoor />,
     to: "/Login",
     onClick: "logout",
+    requiredRoles: [Roles.Admin, Roles.JefeArea, Roles.Personal],
   },
 ];
 
@@ -195,6 +220,7 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
   sidebarOpen,
   onClick,
   handleLogout,
+  requiredRoles,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -211,14 +237,16 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
         </div>
         {isOpen && sidebarOpen && (
           <ul className="Submenu">
-            {subMenu.map((item) => (
-              <li key={item.label}>
-                <NavLink to={item.to} className="Links SubmenuItem">
-                  <div className="Iconos_Links">{item.icon}</div>
-                  <span>{item.label}</span>
-                </NavLink>
-              </li>
-            ))}
+            {subMenu
+              .filter((item) => hasRole(item.requiredRoles || []))
+              .map((item) => (
+                <li key={item.label}>
+                  <NavLink to={item.to} className="Links SubmenuItem">
+                    <div className="Iconos_Links">{item.icon}</div>
+                    <span>{item.label}</span>
+                  </NavLink>
+                </li>
+              ))}
           </ul>
         )}
       </div>
