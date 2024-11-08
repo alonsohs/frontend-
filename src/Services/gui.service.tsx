@@ -50,3 +50,45 @@ export const guia_get = async () => {
     return null;
   }
 };
+
+
+export const guia_put = async (id: string, data: guia) => {
+  try {
+    const response = await api.put(`/guia_docu/guia_doc/${id}/`, data);
+    if (response.status === 200) {
+      console.log("Catalogo actualizado exitosamente:", response.data);
+      return response.data;
+    } else {
+      throw new Error("Error al actualizar catalogo " + response.statusText);
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error de Axios:", error.message);
+    } else {
+      console.error("Error inesperado:", error);
+    }
+    return null;
+  }
+};
+
+
+export const guia_delete = async (id: string) => {
+  try {
+    const response = await api.delete(`/guia_docu/guia_doc/${id}/`);
+    if (response.status === 204) {
+      console.log("Catalogo eliminado exitosamente");
+      return true;
+    } else {
+      throw new Error("Error al eliminar catalogo " + response.statusText);
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error de Axios:", error.message);
+    } else {
+      console.error("Error inesperado:", error);
+    }
+    return false;
+  }
+};
+
+

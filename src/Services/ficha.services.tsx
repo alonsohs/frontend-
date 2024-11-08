@@ -59,4 +59,43 @@ export const ficha_get = async () => {
     }
   };
 
+  export const ficha_put = async (id: string, data: ficha) => {
+    try {
+      const response = await api.put(`/ficha_tec/ficha_tecnica/${id}/`, data);
+      if (response.status === 200) {
+        console.log("Ficha actualizada exitosamente:", response.data);
+        return response.data;
+      } else {
+        throw new Error("Error al actualizar ficha " + response.statusText);
+      }
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error de Axios:", error.message);
+      } else {
+        console.error("Error inesperado:", error);
+      }
+      return null;
+    }
+  };
+  
+  
+  export const ficha_delete = async (id: string) => {
+    try {
+      const response = await api.delete(`/ficha_tec/ficha_tecnica/${id}/`);
+      if (response.status === 204) {
+        console.log("Ficha eliminada exitosamente");
+        return true;
+      } else {
+        throw new Error("Error al eliminar ficha " + response.statusText);
+      }
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error de Axios:", error.message);
+      } else {
+        console.error("Error inesperado:", error);
+      }
+      return false;
+    }
+  };
+  
   

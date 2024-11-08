@@ -1,22 +1,25 @@
 import { Logo } from "../../components/Logo";
 import { ficha } from "../../services/var.ficha";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import { ficha_get } from "../../services/ficha.services";
+import { ficha_get, ficha_delete } from "../../services/ficha.services";
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function Ficha_Registro() {
   const navigate = useNavigate();
   const [ficha, setFicha] = useState<ficha[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+
+  const fetchFicha = async () => {
+    const items = await ficha_get();
+    setFicha(items);
+  }
   useEffect(() => {
-    const fetchFicha = async () => {
-      const items = await ficha_get();
-      setFicha(items);
-    };
     fetchFicha();
   }, []);
 
@@ -30,9 +33,63 @@ export function Ficha_Registro() {
     console.log("Editing item:", selectedId);
   };
 
-  const handleDelete = () => {
-    const selectedId = selectedRows[0];
-    console.log("Deleting item:", selectedId);
+  const handleDelete = async () => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para eliminar",
+      });
+      return;
+    }
+
+    const selectedId = selectedRows[0] as string;
+
+    const result = await Swal.fire({
+      title: "¿Está seguro?",
+      text: "No podrá revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      setIsLoading(true);
+      try {
+        const success = await ficha_delete(selectedId);
+
+        if (success) {
+          Swal.fire({
+            icon: "success",
+            title: "Eliminado",
+            text: "El catálogo ha sido eliminado exitosamente.",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            fetchFicha();
+            setSelectedRows([]);
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo eliminar el catálogo",
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al eliminar el catálogo",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   const handleCreate = () => {
