@@ -6,19 +6,26 @@ import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SearchFilter_Portada from "./SearchFilter_Portada";
 
 export function Portada_Registro() {
   const navigate = useNavigate();
-  const [portada, setPortada] = useState<iPortada[]>([]);
+  const [iPortada, setIPortada] = useState<iPortada[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [filteredIPortada, setFilteredIPortada] = useState<iPortada[]>([]);
 
   useEffect(() => {
-    const fetchPortada = async () => {
+    const fetchIPortada = async () => {
       const items = await portada_get();
-      setPortada(items);
+      setIPortada(items);
+      setFilteredIPortada(items);
     };
-    fetchPortada();
+    fetchIPortada();
   }, []);
+
+  const handleFilterChange = (filteredData: iPortada[]) => {
+    setFilteredIPortada(filteredData);
+  };
 
   const handleView = () => {
     const selectedId = selectedRows[0];
@@ -89,7 +96,7 @@ export function Portada_Registro() {
       minWidth: 150,
       headerClassName: "table-header",
     },
-    {
+    /*  {
       field: "archivo_tramite",
       headerName: "Estancia en Archivo de Trámite",
       flex: 1.5,
@@ -102,7 +109,7 @@ export function Portada_Registro() {
       flex: 1.5,
       minWidth: 200,
       headerClassName: "table-header",
-    },
+    },*/
     {
       field: "seccion",
       headerName: "Sección",
@@ -117,13 +124,13 @@ export function Portada_Registro() {
       minWidth: 150,
       headerClassName: "table-header",
     },
-    {
+    /*  {
       field: "subserie",
       headerName: "Subserie",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
-    },
+    }, */
     {
       field: "ficha",
       headerName: "Ficha",
@@ -206,6 +213,11 @@ export function Portada_Registro() {
             </Button>
           </div>
 
+          <SearchFilter_Portada
+            onFilterChange={handleFilterChange}
+            iPortada={iPortada}
+          />
+
           <Box
             sx={{
               height: 600,
@@ -230,7 +242,7 @@ export function Portada_Registro() {
             }}
           >
             <DataGrid
-              rows={portada}
+              rows={filteredIPortada}
               columns={columns}
               getRowId={(x) => x.id_expediente}
               onRowSelectionModelChange={(newSelection) => {

@@ -6,19 +6,26 @@ import { useEffect, useState } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SearchFilter_Ficha from "./SearchFilter_Ficha";
 
 export function Ficha_Registro() {
   const navigate = useNavigate();
   const [ficha, setFicha] = useState<ficha[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [filteredFicha, setFilteredFicha] = useState<ficha[]>([]);
 
   useEffect(() => {
     const fetchFicha = async () => {
       const items = await ficha_get();
       setFicha(items);
+      setFilteredFicha(items);
     };
     fetchFicha();
   }, []);
+
+  const handleFilterChange = (filteredData: ficha[]) => {
+    setFilteredFicha(filteredData);
+  };
 
   const handleView = () => {
     const selectedId = selectedRows[0];
@@ -164,6 +171,11 @@ export function Ficha_Registro() {
             </Button>
           </div>
 
+          <SearchFilter_Ficha
+            onFilterChange={handleFilterChange}
+            ficha={ficha}
+          />
+
           <Box
             sx={{
               height: 600,
@@ -188,7 +200,7 @@ export function Ficha_Registro() {
             }}
           >
             <DataGrid
-              rows={ficha}
+              rows={filteredFicha}
               columns={columns}
               getRowId={(x) => x.id_ficha}
               onRowSelectionModelChange={(newSelection) => {

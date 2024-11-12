@@ -2,39 +2,51 @@ import { Logo } from "../../components/Logo";
 import { catalogo } from "../../services/var.catalogo";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import { catalogo_get, catalogo_delete } from "../../services/catalogo.service";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import SearchFilter from "./SearchFilter";
 
-export function Catálogo_Registro() {
+export function Catálogo_Registro(): JSX.Element {
   const navigate = useNavigate();
   const [catalogo, setCatalogo] = useState<catalogo[]>([]);
+  const [filteredCatalogo, setFilteredCatalogo] = useState<catalogo[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fetchCatalogo = async () => {
-    const items = await catalogo_get();
-    setCatalogo(items);
+  const fetchCatalogo = async (): Promise<void> => {
+    try {
+      const items = await catalogo_get();
+      setCatalogo(items);
+      setFilteredCatalogo(items);
+    } catch (error) {
+      console.error("Error fetching catalogo:", error);
+      // Manejar el error según sea necesario
+    }
   };
 
   useEffect(() => {
     fetchCatalogo();
   }, []);
 
-  const handleView = () => {
+  const handleFilterChange = useCallback((filteredData: catalogo[]): void => {
+    setFilteredCatalogo(filteredData);
+  }, []);
+
+  const handleView = (): void => {
     const selectedId = selectedRows[0];
     console.log("Viewing item:", selectedId);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     const selectedId = selectedRows[0];
     console.log("Editing item:", selectedId);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (): Promise<void> => {
     if (!selectedRows || selectedRows.length === 0) {
       Swal.fire({
         icon: "warning",
@@ -63,16 +75,15 @@ export function Catálogo_Registro() {
         const success = await catalogo_delete(selectedId);
 
         if (success) {
-          Swal.fire({
+          await Swal.fire({
             icon: "success",
             title: "Eliminado",
             text: "El catálogo ha sido eliminado exitosamente.",
             timer: 1500,
             showConfirmButton: false,
-          }).then(() => {
-            fetchCatalogo();
-            setSelectedRows([]);
           });
+          await fetchCatalogo();
+          setSelectedRows([]); // Resetear la selección después de eliminar
         } else {
           Swal.fire({
             icon: "error",
@@ -93,18 +104,11 @@ export function Catálogo_Registro() {
     }
   };
 
-  const handleCreate = () => {
+  const handleCreate = (): void => {
     navigate("/Crear_Catálogo");
   };
 
   const columns: GridColDef[] = [
-    {
-      field: "id_catalogo",
-      headerName: "ID Catálogo",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
     {
       field: "catalogo",
       headerName: "Número de Catálogo",
@@ -112,18 +116,12 @@ export function Catálogo_Registro() {
       minWidth: 150,
       headerClassName: "table-header",
     },
+
     {
-      field: "archivo_tramite",
-      headerName: "Estancia en Archivo de Trámite",
-      flex: 1.5,
-      minWidth: 200,
-      headerClassName: "table-header",
-    },
-    {
-      field: "archivo_concentracion",
-      headerName: "Estancia en Archivo de Concentración",
-      flex: 1.5,
-      minWidth: 200,
+      field: "observaciones",
+      headerName: "Observaciones",
+      flex: 1,
+      minWidth: 150,
       headerClassName: "table-header",
     },
     {
@@ -134,43 +132,15 @@ export function Catálogo_Registro() {
       headerClassName: "table-header",
     },
     {
-      field: "type_access",
-      headerName: "Tipo de Acceso",
+      field: "archivo_tramite",
+      headerName: "Tiempo en Archivo de Trámite",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
     },
     {
-      field: "valores_documentales",
-      headerName: "Valores Documentales",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "observaciones",
-      headerName: "Observaciones",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "id_seccion",
-      headerName: "Sección",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "id_serie",
-      headerName: "Serie",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "id_subserie",
-      headerName: "Subserie",
+      field: "archivo_concentracion",
+      headerName: "Tiempo en Archivo de Concentración",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
@@ -185,7 +155,6 @@ export function Catálogo_Registro() {
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          {/* Toolbar */}
           <div className="p-4 border-b flex justify-between items-center bg-gray-50">
             <div className="flex gap-2">
               <Tooltip title="Ver detalles">
@@ -244,6 +213,11 @@ export function Catálogo_Registro() {
             </Button>
           </div>
 
+          <SearchFilter
+            onFilterChange={handleFilterChange}
+            catalogo={catalogo}
+          />
+
           <Box
             sx={{
               height: 600,
@@ -268,12 +242,13 @@ export function Catálogo_Registro() {
             }}
           >
             <DataGrid
-              rows={catalogo}
+              rows={filteredCatalogo}
               columns={columns}
-              getRowId={(x) => x.id_catalogo}
+              getRowId={(row) => row.id_catalogo}
               onRowSelectionModelChange={(newSelection) => {
                 setSelectedRows(newSelection);
               }}
+              rowSelectionModel={selectedRows}
               density="comfortable"
               initialState={{
                 pagination: {

@@ -109,7 +109,7 @@ export function PortadaComponent() {
         timer: 1500,
         showConfirmButton: false,
       }).then(() => {
-        navigate("/Ficha");
+        navigate("/Portada");
       });
     } catch (error) {
       console.error("Error al enviar datos:", error);
