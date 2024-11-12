@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Expediente } from "../pages/Expediente/Expediente";
@@ -7,8 +7,6 @@ import { Usuario } from "../pages/Usuario/Perfil";
 import { Seccion } from "../pages/Cuadro/Seccion";
 import { Serie } from "../pages/Cuadro/Serie";
 import { Subserie } from "../pages/Cuadro/Subserie";
-import { Productos } from "../Productos";
-import { MiFormulario } from "../Post";
 import { Crear_Expediente } from "../pages/Expediente/Crear_Expediente";
 import { Ficha } from "../pages/Ficha/Crear_Ficha";
 import { Ficha_Registro } from "../pages/Ficha/Ficha_Registro";
@@ -20,33 +18,182 @@ import { DatosCatalogo } from "../pages/Configuración/DatosCatalogo";
 import { Portada_Registro } from "../pages/Portada/Portada_Registro";
 import { Inventory } from "../pages/Inventario/inventario";
 import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
+import { hasRole } from "../services/auth.service";
+import { Roles } from "../models/enums/roles_enum";
 
 export function Rutas() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/Home" element={<Home />} />
+      <Route
+        path="/Home"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea, Roles.Personal]) ? (
+            <Home />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
       <Route path="/Login" element={<Login />} />
-      <Route path="/Expediente" element={<Expediente />} />
-      <Route path="/Agregar_Usuario" element={<AgregarUsuario />} />
-      <Route path="/UserList" element={<ListaUsers />} />
-      <Route path="/Usuario" element={<Usuario />} />
-      <Route path="/Seccion" element={<Seccion />} />
-      <Route path="/Test" element={<Productos />} />
-      <Route path="/FormCuadro" element={<MiFormulario />} />
-      <Route path="/Serie" element={<Serie />} />
-      <Route path="/Subserie" element={<Subserie />} />
-      <Route path="/Usuario" element={<Usuario />} />
-      <Route path="/Crear_Expediente" element={<Crear_Expediente />} />
-      <Route path="/Crear_Ficha" element={<Ficha />} />
-      <Route path="/Ficha" element={<Ficha_Registro />} />
-      <Route path="/Crear_Catálogo" element={<Catálogo />} />
-      <Route path="/Crear_Portada" element={<PortadaComponent />} />
-      <Route path="/Catálogo" element={<Catálogo_Registro />} />
-      <Route path="/Datos_Catalogo" element={<DatosCatalogo />} />
-      <Route path="/Portada" element={<Portada_Registro />} />
-      <Route path="/Inventario" element={<Inventory />} />
-      <Route path="/GuiaDocu" element={<GuiaDocu />} />
+      <Route
+        path="/Expediente"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Expediente />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Agregar_Usuario"
+        element={
+          hasRole([Roles.Admin]) ? <AgregarUsuario /> : <Navigate to="/Home" />
+        }
+      />
+      <Route
+        path="/UserList"
+        element={
+          hasRole([Roles.Admin]) ? <ListaUsers /> : <Navigate to="/Home" />
+        }
+      />
+      <Route
+        path="/Usuario"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea, Roles.Personal]) ? (
+            <Usuario />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Seccion"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Seccion />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Serie"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Serie />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Subserie"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Subserie />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Crear_Expediente"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Crear_Expediente />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Crear_Ficha"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Ficha />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Ficha"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Ficha_Registro />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Crear_Catálogo"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Catálogo />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Crear_Portada"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <PortadaComponent />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Catálogo"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Catálogo_Registro />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Datos_Catalogo"
+        element={
+          hasRole([Roles.Admin]) ? <DatosCatalogo /> : <Navigate to="/Home" />
+        }
+      />
+      <Route
+        path="/Portada"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Portada_Registro />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Inventario"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Inventory />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/GuiaDocu"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <GuiaDocu />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
     </Routes>
   );
 }
