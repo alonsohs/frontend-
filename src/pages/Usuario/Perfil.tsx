@@ -5,6 +5,25 @@ import { Boton } from "../../components/Botones/Botones";
 import "../../../node_modules/remixicon/fonts/remixicon.css";
 import { getUser } from "../../services/auth.service";
 
+export enum Roles {
+  Admin = 1,
+  JefeArea = 2,
+  Personal = 3,
+}
+
+export function getRoleName(roleId: number): string {
+  switch (roleId) {
+    case Roles.Admin:
+      return "Admin";
+    case Roles.JefeArea:
+      return "Jefe de Área";
+    case Roles.Personal:
+      return "Personal";
+    default:
+      return "Unknown";
+  }
+}
+
 export function Usuario() {
   const user = getUser();
   const ButtonClick = () => {
@@ -41,6 +60,11 @@ export function Usuario() {
           <div className="secondary">
             <h1>Cargo</h1>
             <p>{user.cargo}</p>
+          </div>
+
+          <div className="secondary">
+            <h1>Rol</h1>
+            <p>{getRoleName(user.roles[0])}</p>
           </div>
         </div>
       </section>

@@ -306,6 +306,7 @@ export function Catálogo() {
                                 type="text"
                                 placeholder="Seccion"
                                 value={id_seccion}
+                                disabled
                                 readOnly
                               />
                               <label>ID Sección</label>
