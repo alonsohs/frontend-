@@ -71,23 +71,23 @@ export function Seccion() {
   };
 
   const columns: GridColDef[] = [
-    {
+    /* {
       field: "id_seccion",
-      headerName: "Seccion Código",
+      headerName: "Código de la Sección ",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
-    },
+    },*/
     {
       field: "codigo",
-      headerName: "Nombre Sección",
+      headerName: "Código de la Sección ",
       flex: 1.5,
       minWidth: 200,
       headerClassName: "table-header",
     },
     {
       field: "descripcion",
-      headerName: "Descripción",
+      headerName: "Nombre de la Sección",
       flex: 2,
       minWidth: 250,
       headerClassName: "table-header",

@@ -90,21 +90,21 @@ export function Subserie() {
   const columns: GridColDef[] = [
     {
       field: "SubSerie",
-      headerName: "Sub-Serie Código",
+      headerName: "Código de la Sub-serie",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
     },
     {
       field: "descripcion",
-      headerName: "Nombre Sub-Serie",
+      headerName: "Nombre de la Sub-serie",
       flex: 1.5,
       minWidth: 150,
       headerClassName: "table-header",
     },
     {
       field: "serie",
-      headerName: "Serie",
+      headerName: "Serie Asociada ",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",

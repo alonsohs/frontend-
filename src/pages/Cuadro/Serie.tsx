@@ -100,27 +100,27 @@ export function Serie() {
   };
 
   const columns: GridColDef[] = [
-    {
+    /* {
       field: "id_serie",
       headerName: "Serie Código",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
-    },
+    },*/
     {
       field: "serie",
-      headerName: "Nombre Serie",
+      headerName: "Nombre de la Serie",
       flex: 1.5,
       minWidth: 150,
       headerClassName: "table-header",
     },
-    {
+    /* {
       field: "codigo_serie",
       headerName: "Código",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
-    },
+    },*/
     {
       field: "descripcion",
       headerName: "Descripción",
@@ -130,7 +130,7 @@ export function Serie() {
     },
     {
       field: "id_seccion",
-      headerName: "Sección",
+      headerName: "Sección Asociada",
       flex: 1.5,
       minWidth: 150,
       headerClassName: "table-header",
