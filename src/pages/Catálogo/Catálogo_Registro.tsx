@@ -1,7 +1,7 @@
 import { Logo } from "../../components/Logo";
-import { catalogo } from "../../services/var.catalogo";
+import { catalogo, destino, type, valor } from "../../services/var.catalogo";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import { catalogo_get, catalogo_delete } from "../../services/catalogo.service";
+import { catalogo_get, catalogo_delete,destino_get,type_get,valor_get } from "../../services/catalogo.service";
 import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
@@ -14,23 +14,58 @@ export function Catálogo_Registro(): JSX.Element {
   const navigate = useNavigate();
   const [catalogo, setCatalogo] = useState<catalogo[]>([]);
   const [filteredCatalogo, setFilteredCatalogo] = useState<catalogo[]>([]);
+  const [destinos, setDestinos] = useState<destino[]>([]);
+  const [types, setTypes] = useState<type[]>([]);
+  const [valores, setValores] = useState<valor[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false); 
 
+
+  useEffect(() => {
+    // Fetch destinos, types y valores
+    const fetchRelatedData = async () => {
+      try {
+        const [destinosData, typesData, valoresData] = await Promise.all([
+          destino_get(),
+          type_get(),
+          valor_get(),
+        ]);
+        setDestinos(destinosData);
+        setTypes(typesData);
+        setValores(valoresData);
+        setIsDataLoaded(true); // Marcar como cargado
+      } catch (error) {
+        console.error("Error fetching related data:", error);
+      }
+    };
+  
+    fetchRelatedData();
+  }, []);
+
+
+  useEffect(() => {
+    // Solo mapear el catálogo cuando los datos de destinos, types y valores estén cargados
+    if (isDataLoaded) {
+      fetchCatalogo();
+    }
+  }, [isDataLoaded]); // Ejecutar fetchCatalogo cuando los datos estén cargados
+  
   const fetchCatalogo = async (): Promise<void> => {
     try {
       const items = await catalogo_get();
-      setCatalogo(items);
-      setFilteredCatalogo(items);
+      const mappedItems: catalogo[] = items.map((item: catalogo) => ({
+        ...item,
+        destino_expe: destinos.find((dest) => dest.id_destino === item.destino_expe)?.destino || item.destino_expe,
+        type_access: types.find((type) => type.id_type === item.type_access)?.type || item.type_access,
+        valores_documentales: valores.find((valor) => valor.id_valores === item.valores_documentales)?.valores || item.valores_documentales,
+      }));
+      setCatalogo(mappedItems);
+      setFilteredCatalogo(mappedItems);
     } catch (error) {
       console.error("Error fetching catalogo:", error);
-      // Manejar el error según sea necesario
     }
   };
-
-  useEffect(() => {
-    fetchCatalogo();
-  }, []);
 
   const handleFilterChange = useCallback((filteredData: catalogo[]): void => {
     setFilteredCatalogo(filteredData);
@@ -127,6 +162,20 @@ export function Catálogo_Registro(): JSX.Element {
     {
       field: "destino_expe",
       headerName: "Destino del Expediente",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "type_access",
+      headerName: "Tipo  del Expediente",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "valores_documentales",
+      headerName: "Valores  del Expediente",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
