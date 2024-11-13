@@ -76,7 +76,7 @@ export function Ficha_Registro() {
           Swal.fire({
             icon: "success",
             title: "Eliminado",
-            text: "El catálogo ha sido eliminado exitosamente.",
+            text: "La ficha ha sido eliminada exitosamente.",
             timer: 1500,
             showConfirmButton: false,
           }).then(() => {
@@ -87,7 +87,7 @@ export function Ficha_Registro() {
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: "No se pudo eliminar el catálogo",
+            text: "No se pudo eliminar la ficha",
           });
         }
       } catch (error) {
@@ -95,7 +95,7 @@ export function Ficha_Registro() {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Hubo un error al eliminar el catálogo",
+          text: "Hubo un error al eliminar la ficha",
         });
       } finally {
         setIsLoading(false);
@@ -183,7 +183,7 @@ export function Ficha_Registro() {
                     onClick={handleView}
                     size="small"
                     className="text-blue-600 hover:text-blue-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Eye className="h-5 w-5" />
                   </IconButton>
@@ -196,7 +196,7 @@ export function Ficha_Registro() {
                     onClick={handleEdit}
                     size="small"
                     className="text-green-600 hover:text-green-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Pencil className="h-5 w-5" />
                   </IconButton>
@@ -209,7 +209,7 @@ export function Ficha_Registro() {
                     onClick={handleDelete}
                     size="small"
                     className="text-red-600 hover:text-red-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Trash2 className="h-5 w-5" />
                   </IconButton>

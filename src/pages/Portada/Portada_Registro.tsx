@@ -1,45 +1,106 @@
 import { Logo } from "../../components/Logo";
 import { iPortada } from "../../services/var.portada";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import { portada_get } from "../../services/portada.services";
-import { useEffect, useState } from "react";
+import { portada_get, portada_delete } from "../../services/portada.services";
+import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 import SearchFilter_Portada from "./SearchFilter_Portada";
 
-export function Portada_Registro() {
+export function Portada_Registro(): JSX.Element {
   const navigate = useNavigate();
   const [iPortada, setIPortada] = useState<iPortada[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
   const [filteredIPortada, setFilteredIPortada] = useState<iPortada[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchIPortada = async () => {
+  const fetchIPortada = async (): Promise<void> => {
+    try {
       const items = await portada_get();
       setIPortada(items);
       setFilteredIPortada(items);
-    };
+    } catch (error) {
+      console.error("Error fetching portada:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchIPortada();
   }, []);
 
-  const handleFilterChange = (filteredData: iPortada[]) => {
+  const handleFilterChange = useCallback((filteredData: iPortada[]): void => {
     setFilteredIPortada(filteredData);
-  };
+  }, []);
 
-  const handleView = () => {
+  const handleView = (): void => {
     const selectedId = selectedRows[0];
     console.log("Viewing item:", selectedId);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     const selectedId = selectedRows[0];
     console.log("Editing item:", selectedId);
   };
 
-  const handleDelete = () => {
-    const selectedId = selectedRows[0];
-    console.log("Deleting item:", selectedId);
+  const handleDelete = async (): Promise<void> => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para eliminar",
+      });
+      return;
+    }
+
+    const selectedId = selectedRows[0] as string;
+
+    const result = await Swal.fire({
+      title: "¿Estas seguro?",
+      text: "No podrá revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      setIsLoading(true);
+      try {
+        const success = await portada_delete(selectedId);
+
+        if (success) {
+          await Swal.fire({
+            icon: "success",
+            title: "Eliminado",
+            text: "La portada ha sido eliminada exitosamente.",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          await fetchIPortada();
+          setSelectedRows([]);
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo eliminar la portada",
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al eliminar la portada",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   const handleCreate = () => {
@@ -164,7 +225,7 @@ export function Portada_Registro() {
                     onClick={handleView}
                     size="small"
                     className="text-blue-600 hover:text-blue-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Eye className="h-5 w-5" />
                   </IconButton>
@@ -177,7 +238,7 @@ export function Portada_Registro() {
                     onClick={handleEdit}
                     size="small"
                     className="text-green-600 hover:text-green-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Pencil className="h-5 w-5" />
                   </IconButton>
@@ -190,7 +251,7 @@ export function Portada_Registro() {
                     onClick={handleDelete}
                     size="small"
                     className="text-red-600 hover:text-red-800"
-                    disabled={selectedRows.length !== 1}
+                    disabled={selectedRows.length !== 1 || isLoading}
                   >
                     <Trash2 className="h-5 w-5" />
                   </IconButton>
