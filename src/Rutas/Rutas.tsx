@@ -21,6 +21,8 @@ import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
 import { hasRole } from "../services/auth.service";
 import { Roles } from "../models/enums/roles_enum";
 
+import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
+
 export function Rutas() {
   return (
     <Routes>
@@ -189,6 +191,16 @@ export function Rutas() {
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <GuiaDocu />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Subir_Documentos"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <Subir_Documentos />
           ) : (
             <Navigate to="/Home" />
           )
