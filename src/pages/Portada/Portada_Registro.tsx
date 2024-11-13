@@ -122,7 +122,7 @@ export function Portada_Registro(): JSX.Element {
       minWidth: 150,
       headerClassName: "table-header",
     },
-    {
+    /* {
       field: "num_legajos",
       headerName: "Número de Legajos",
       flex: 1,
@@ -142,7 +142,7 @@ export function Portada_Registro(): JSX.Element {
       flex: 1.2,
       minWidth: 150,
       headerClassName: "table-header",
-    },
+    },*/
     {
       field: "fecha_apertura",
       headerName: "Fecha de Apertura",
@@ -157,21 +157,8 @@ export function Portada_Registro(): JSX.Element {
       minWidth: 150,
       headerClassName: "table-header",
     },
-    /*  {
-      field: "archivo_tramite",
-      headerName: "Estancia en Archivo de Trámite",
-      flex: 1.5,
-      minWidth: 200,
-      headerClassName: "table-header",
-    },
-    {
-      field: "archivo_concentracion",
-      headerName: "Estancia en Archivo de Concentración",
-      flex: 1.5,
-      minWidth: 200,
-      headerClassName: "table-header",
-    },*/
-    {
+
+    /* {
       field: "seccion",
       headerName: "Sección",
       flex: 1,

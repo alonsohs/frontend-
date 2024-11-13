@@ -116,6 +116,13 @@ export function Ficha_Registro() {
       headerClassName: "table-header",
     },
     {
+      field: "descripcion",
+      headerName: "Descripción",
+      flex: 1.5,
+      minWidth: 200,
+      headerClassName: "table-header",
+    },
+    {
       field: "area_resguardante",
       headerName: "Área Resguardante",
       flex: 1.2,
@@ -129,21 +136,15 @@ export function Ficha_Registro() {
       minWidth: 150,
       headerClassName: "table-header",
     },
-    {
+    /*  {
       field: "soporte_docu",
       headerName: "Soporte Documental (Formato)",
       flex: 1.5,
       minWidth: 200,
       headerClassName: "table-header",
-    },
-    {
-      field: "descripcion",
-      headerName: "Descripción",
-      flex: 1.5,
-      minWidth: 200,
-      headerClassName: "table-header",
-    },
-    {
+    },*/
+
+    /* {
       field: "id_seccion",
       headerName: "Sección a la que pertenece",
       flex: 1.2,
@@ -163,7 +164,7 @@ export function Ficha_Registro() {
       flex: 1.2,
       minWidth: 150,
       headerClassName: "table-header",
-    },
+    }, */
   ];
 
   return (
