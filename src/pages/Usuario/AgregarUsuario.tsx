@@ -48,7 +48,6 @@ export function AgregarUsuario() {
       !user.cargo.trim() ||
       user.roles.length === 0 ||
       user.roles[0].trim() === "" ||
-      !user.id_seccion.trim() ||
       !user.password.trim() ||
       !Repass.trim()
     ) {
@@ -209,7 +208,7 @@ export function AgregarUsuario() {
                         </div>
 
                         <div className="row mb-3">
-                          <div className="col-md-6">
+                          <div className="col">
                             <div className="form-floating">
                               <select
                                 className="multisteps-form_input form-select"
@@ -226,24 +225,6 @@ export function AgregarUsuario() {
                                   Jefe de Area
                                 </option>
                                 <option value={Roles.Personal}>Personal</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <select
-                                className="multisteps-form_input form-select"
-                                id="seccion"
-                                value={user.id_seccion}
-                                onChange={handleInputChange}
-                                name="id_seccion"
-                              >
-                                <option value="">Seleccione la Seccion</option>
-                                {secciones.map((seccion) => (
-                                  <option value={seccion.id_seccion}>
-                                    {seccion.id_seccion}
-                                  </option>
-                                ))}
                               </select>
                             </div>
                           </div>

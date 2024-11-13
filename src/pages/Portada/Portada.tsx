@@ -296,6 +296,7 @@ export function PortadaComponent() {
                               type="text"
                               placeholder="Seccion"
                               value={portada.seccion}
+                              disabled
                               readOnly
                             />
                           </div>

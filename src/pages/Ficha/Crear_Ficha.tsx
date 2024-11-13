@@ -210,6 +210,7 @@ export function Ficha() {
                                 type="text"
                                 placeholder="Seccion"
                                 value={id_seccion}
+                                disabled
                                 readOnly
                               />
                               <label htmlFor="inputSeccion">ID Sección</label>
