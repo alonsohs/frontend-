@@ -10,6 +10,9 @@ import {
 import { Boton } from "../../components/Botones/Botones";
 import { destino, type, valor } from "../../services/var.catalogo";
 import Swal from "sweetalert2";
+import LogoImg from "../../assets/Tlaxcala.png";
+import "../../Styles/Styles.css";
+import "sweetalert2/src/sweetalert2.scss";
 
 interface CatalogoBase {
   catalogo: string;
@@ -306,105 +309,117 @@ export const EditarCatalogo: React.FC = () => {
   }
 
   return (
-    <div className="layoutAuthentication">
-      <div className="layoutAuthentication_content">
-        <main>
-          <div className="container-fluid">
-            <div className="row justify-content-center">
-              <div className="col-lg-7">
-                <div className="card shadow-lg border-0 rounded-lg mt-5">
-                  <div className="card-header">
-                    <h3 className="text-center font-weight-light my-4">
-                      Editar Catálogo de Disposición Documental
-                    </h3>
-                  </div>
-                  <div className="card-body">
-                    <form onSubmit={handleSubmit}>
-                      <div className="row mb-3">
-                        <div className="col-md-6">
-                          {renderFormField("catalogo", "ID Catálogo")}
+    <body>
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossOrigin="anonymous"
+      />
+      <img className="Logo_imgRU" src={LogoImg} alt="" width="25%" />
+      <div className="layoutAuthentication">
+        <div className="layoutAuthentication_content">
+          <main>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-lg-7">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">
+                        Editar Catálogo de Disposición Documental
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            {renderFormField("catalogo", "ID Catálogo")}
+                          </div>
+                          <div className="col-md-6">
+                            {renderFormField(
+                              "valores_documentales",
+                              "Valores Documentales",
+                              "select",
+                              valores.map((v) => ({
+                                id: v.id_valores,
+                                value: v.valores,
+                              }))
+                            )}
+                          </div>
                         </div>
-                        <div className="col-md-6">
-                          {renderFormField(
-                            "valores_documentales",
-                            "Valores Documentales",
-                            "select",
-                            valores.map((v) => ({
-                              id: v.id_valores,
-                              value: v.valores,
-                            }))
-                          )}
-                        </div>
-                      </div>
 
-                      <div className="form-floating mb-3">
-                        {renderFormField("observaciones", "Observaciones")}
-                      </div>
+                        <div className="form-floating mb-3">
+                          {renderFormField("observaciones", "Observaciones")}
+                        </div>
 
-                      <div className="row mb-3">
-                        <div className="col-md-6">
-                          {renderFormField(
-                            "archivo_tramite",
-                            "Archivo de Trámite"
-                          )}
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            {renderFormField(
+                              "archivo_tramite",
+                              "Archivo de Trámite"
+                            )}
+                          </div>
+                          <div className="col-md-6">
+                            {renderFormField(
+                              "archivo_concentracion",
+                              "Archivo de Concentración"
+                            )}
+                          </div>
                         </div>
-                        <div className="col-md-6">
-                          {renderFormField(
-                            "archivo_concentracion",
-                            "Archivo de Concentración"
-                          )}
-                        </div>
-                      </div>
 
-                      <div className="row mb-3">
-                        <div className="col-md-6">
-                          {renderFormField(
-                            "type_access",
-                            "Tipo de Acceso",
-                            "select",
-                            tipos.map((t) => ({ id: t.id_type, value: t.type }))
-                          )}
+                        <div className="row mb-3">
+                          <div className="col-md-6">
+                            {renderFormField(
+                              "type_access",
+                              "Tipo de Acceso",
+                              "select",
+                              tipos.map((t) => ({
+                                id: t.id_type,
+                                value: t.type,
+                              }))
+                            )}
+                          </div>
+                          <div className="col-md-6">
+                            {renderFormField(
+                              "destino_expe",
+                              "Destino del expediente",
+                              "select",
+                              destinos.map((d) => ({
+                                id: d.id_destino,
+                                value: d.destino,
+                              }))
+                            )}
+                          </div>
                         </div>
-                        <div className="col-md-6">
-                          {renderFormField(
-                            "destino_expe",
-                            "Destino del expediente",
-                            "select",
-                            destinos.map((d) => ({
-                              id: d.id_destino,
-                              value: d.destino,
-                            }))
-                          )}
-                        </div>
-                      </div>
 
-                      <div className="row mb-3">
-                        <div className="col-md-4">
-                          {renderFormField("id_seccion", "ID Sección")}
+                        <div className="row mb-3">
+                          <div className="col-md-4">
+                            {renderFormField("id_seccion", "ID Sección")}
+                          </div>
+                          <div className="col-md-4">
+                            {renderFormField("id_serie", "ID Serie")}
+                          </div>
+                          <div className="col-md-4">
+                            {renderFormField("id_subserie", "ID Subserie")}
+                          </div>
                         </div>
-                        <div className="col-md-4">
-                          {renderFormField("id_serie", "ID Serie")}
-                        </div>
-                        <div className="col-md-4">
-                          {renderFormField("id_subserie", "ID Subserie")}
-                        </div>
-                      </div>
 
-                      <div className="mt-4 mb-0">
-                        <div className="d-grid">
-                          <Boton type="submit" disabled={isLoading}>
-                            {isLoading ? "Actualizando..." : "Actualizar"}
-                          </Boton>
+                        <div className="mt-4 mb-0">
+                          <div className="d-grid">
+                            <Boton type="submit" disabled={isLoading}>
+                              {isLoading ? "Actualizando..." : "Actualizar"}
+                            </Boton>
+                          </div>
                         </div>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
-    </div>
+    </body>
   );
 };
