@@ -20,8 +20,8 @@ import { Inventory } from "../pages/Inventario/inventario";
 import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
 import { hasRole } from "../services/auth.service";
 import { Roles } from "../models/enums/roles_enum";
-
 import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
+import { EditarCatalogo } from "../pages/Catálogo/EditarCatalogo";
 
 export function Rutas() {
   return (
@@ -201,6 +201,16 @@ export function Rutas() {
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <Subir_Documentos />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Editar_Catálogo/:id"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <EditarCatalogo />
           ) : (
             <Navigate to="/Home" />
           )

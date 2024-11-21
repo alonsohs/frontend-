@@ -249,7 +249,7 @@ export function Catálogo() {
                             <div className="form-floating">
                               <input
                                 className="form-control"
-                                type="text"
+                                type="number"
                                 value={archivo_concentracion}
                                 onChange={(e) =>
                                   setArchivoConcentracion(e.target.value)
