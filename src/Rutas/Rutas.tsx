@@ -20,6 +20,8 @@ import { Inventory } from "../pages/Inventario/inventario";
 import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
 import { hasRole } from "../services/auth.service";
 import { Roles } from "../models/enums/roles_enum";
+import { TableInventory } from "../pages/Inventario/TableInventario";
+import { MiComponente } from "../pages/Inventario/test";
 
 import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
 
@@ -201,6 +203,28 @@ export function Rutas() {
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <Subir_Documentos />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+
+      <Route
+        path="/TableInventario"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <TableInventory />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+
+      <Route
+        path="/Test"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <MiComponente />
           ) : (
             <Navigate to="/Home" />
           )

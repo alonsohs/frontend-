@@ -171,8 +171,8 @@ export function Inventory() {
                               <input
                                 className="form-control"
                                 id="inputEmail"
-                                type="email"
-                                placeholder="name@example.com"
+                                type="text"
+                                placeholder="Observaciones"
                                 value={inventario.observaciones}
                                 onChange={handleInputChange}
                                 name="observaciones"

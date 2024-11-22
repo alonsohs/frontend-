@@ -7,6 +7,7 @@ interface guia {
   volumen: string;
   ubicacion_fisica: string;
   num_expediente: string;
+  inventario: string;
 }
 
 export const guia_post = async (data: guia) => {
@@ -51,7 +52,6 @@ export const guia_get = async () => {
   }
 };
 
-
 export const guia_put = async (id: string, data: guia) => {
   try {
     const response = await api.put(`/guia_docu/guia_doc/${id}/`, data);
@@ -71,7 +71,6 @@ export const guia_put = async (id: string, data: guia) => {
   }
 };
 
-
 export const guia_delete = async (id: string) => {
   try {
     const response = await api.delete(`/guia_docu/guia_doc/${id}/`);
@@ -90,5 +89,3 @@ export const guia_delete = async (id: string) => {
     return false;
   }
 };
-
-
