@@ -24,6 +24,7 @@ import { TableInventory } from "../pages/Inventario/TableInventario";
 import { MiComponente } from "../pages/Inventario/test";
 
 import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
+import { EditarCatalogo } from "../pages/Catálogo/EditarCatalogo";
 
 export function Rutas() {
   return (
@@ -225,6 +226,16 @@ export function Rutas() {
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <MiComponente />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Editar_Catálogo/:id"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <EditarCatalogo />
           ) : (
             <Navigate to="/Home" />
           )
