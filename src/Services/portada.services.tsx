@@ -1,6 +1,5 @@
 import axios from "axios";
-import api from '../api_axios';
-
+import api from "../api_axios";
 
 interface portada {
   num_expediente: string;
@@ -15,14 +14,11 @@ interface portada {
   subserie: string;
   ficha: string;
   catalogo: string;
-  
 }
 
 export const portada_post = async (data: portada) => {
   try {
-    const response = await api.post("/portada/portada/",
-      data
-    );
+    const response = await api.post("/portada/portada/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -43,8 +39,7 @@ export const portada_post = async (data: portada) => {
 
 export const portada_get = async () => {
   try {
-    const response =  await api.get( "/portada/portada/"
-    );
+    const response = await api.get("/portada/portada/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -62,7 +57,6 @@ export const portada_get = async () => {
     return null;
   }
 };
-
 
 export const portada_put = async (id: string, data: portada) => {
   try {
@@ -82,7 +76,6 @@ export const portada_put = async (id: string, data: portada) => {
     return null;
   }
 };
-
 
 export const portada_delete = async (id: string) => {
   try {
