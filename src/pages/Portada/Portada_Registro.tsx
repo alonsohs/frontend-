@@ -1,11 +1,7 @@
 import { Logo } from "../../components/Logo";
 import { iPortada } from "../../services/var.portada";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import {
-  portada_get,
-  portada_delete,
-  portada_put,
-} from "../../services/portada.services";
+import { portada_get, portada_delete } from "../../services/portada.services";
 import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";

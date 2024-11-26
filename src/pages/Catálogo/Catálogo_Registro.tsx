@@ -248,6 +248,27 @@ export function Catálogo_Registro(): JSX.Element {
       minWidth: 150,
       headerClassName: "table-header",
     },
+    {
+      field: "id_seccion",
+      headerName: "Sección",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "id_serie",
+      headerName: "Serie",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "id_subserie",
+      headerName: "Subserie",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
   ];
 
   return (

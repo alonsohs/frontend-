@@ -2,7 +2,7 @@ import { Logo } from "../../components/Logo";
 import { ficha } from "../../services/var.ficha";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import { ficha_get, ficha_delete } from "../../services/ficha.services";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -10,41 +10,93 @@ import SearchFilter_Ficha from "./SearchFilter_Ficha";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 
-export function Ficha_Registro() {
+export function Ficha_Registro(): JSX.Element {
   const navigate = useNavigate();
   const [ficha, setFicha] = useState<ficha[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
   const [filteredFicha, setFilteredFicha] = useState<ficha[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const fetchFicha = async () => {
-    const items = await ficha_get();
-    setFicha(items);
-  };
   useEffect(() => {
-    const fetchFicha = async () => {
+    setIsDataLoaded(true);
+  }, []);
+
+  const fetchFicha = async (): Promise<void> => {
+    try {
       const items = await ficha_get();
       setFicha(items);
       setFilteredFicha(items);
-    };
-    fetchFicha();
-  }, []);
-
-  const handleFilterChange = (filteredData: ficha[]) => {
-    setFilteredFicha(filteredData);
+    } catch (error) {
+      console.error("Error fetching portada", error);
+    }
   };
 
-  const handleView = () => {
+  useEffect(() => {
+    if (isDataLoaded) {
+      fetchFicha();
+    }
+  }, [isDataLoaded]);
+
+  const handleFilterChange = useCallback((filteredData: ficha[]): void => {
+    setFilteredFicha(filteredData);
+  }, []);
+
+  const handleView = (): void => {
     const selectedId = selectedRows[0];
     console.log("Viewing item:", selectedId);
   };
 
-  const handleEdit = () => {
-    const selectedId = selectedRows[0];
-    console.log("Editing item:", selectedId);
+  const handleEdit = async (): Promise<void> => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para editar",
+      });
+      return;
+    }
+    const selectedId = selectedRows[0] as string;
+    const itemToEdit = filteredFicha.find(
+      (item) => item.id_ficha === selectedId
+    );
+
+    if (!itemToEdit) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se encontró el elemento seleccionado",
+      });
+      return;
+    }
+
+    try {
+      const result = await Swal.fire({
+        title: "Editar Ficha",
+        text: `¿Desea editar la ficha del expediente ${itemToEdit.id_ficha}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, editar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (result.isConfirmed) {
+        localStorage.setItem("fichaEditar", JSON.stringify(itemToEdit));
+        navigate(`/Editar_Ficha/${selectedId}`);
+      }
+    } catch (error) {
+      console.error("Error al preparar la edición", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al preparar la edición de la ficha",
+      });
+    }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (): Promise<void> => {
     if (!selectedRows || selectedRows.length === 0) {
       Swal.fire({
         icon: "warning",
@@ -130,7 +182,7 @@ export function Ficha_Registro() {
       headerClassName: "table-header",
     },
     {
-      field: "area_interviene",
+      field: "area_intervienen",
       headerName: "Áreas que Intervienen",
       flex: 1.2,
       minWidth: 150,
@@ -222,6 +274,7 @@ export function Ficha_Registro() {
               variant="contained"
               startIcon={<Plus className="h-4 w-4" />}
               onClick={handleCreate}
+              disabled={isLoading}
               sx={{
                 backgroundColor: "#441853",
                 "&:hover": {

@@ -1,55 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { portada_get, portada_put } from "../../services/portada.services";
+import { ficha_get, ficha_put } from "../../services/ficha.services";
 import { Boton } from "../../components/Botones/Botones";
 import Swal from "sweetalert2";
 import LogoImg from "../../assets/Tlaxcala.png";
 import "../../Styles/Styles.css";
 import "sweetalert2/src/sweetalert2.scss";
 
-interface Portada {
-  num_expediente: string;
-  asunto: string;
-  num_legajos: string;
-  num_fojas: string;
-  valores_secundarios: string;
-  fecha_apertura: string;
-  fecha_cierre: string;
-  seccion: string;
-  serie: string;
-  subserie: string;
-  ficha: string;
-  catalogo: string;
-  id_expediente?: string;
+interface Ficha {
+  id_ficha: string;
+  area_resguardante: string;
+  area_intervienen: string;
+  descripcion: string;
+  soporte_docu: string;
+  id_seccion: string;
+  id_serie: string;
+  id_subserie: string;
 }
 
-const INITIAL_PORTADA: Portada = {
-  num_expediente: "",
-  asunto: "",
-  num_legajos: "",
-  num_fojas: "",
-  valores_secundarios: "",
-  fecha_apertura: "",
-  fecha_cierre: "",
-  seccion: "",
-  serie: "",
-  subserie: "",
-  ficha: "",
-  catalogo: "",
+const INITIAL_FICHA: Ficha = {
+  id_ficha: "",
+  area_resguardante: "",
+  area_intervienen: "",
+  descripcion: "",
+  soporte_docu: "",
+  id_seccion: "",
+  id_serie: "",
+  id_subserie: "",
 };
 
-export const EditarPortada: React.FC = () => {
+export const EditarFicha: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [portada, setPortada] = useState<Portada>(INITIAL_PORTADA);
+  const [ficha, setFicha] = useState<Ficha>(INITIAL_FICHA);
   const [error, setError] = useState<string | null>(null);
   const [availableIds, setAvailableIds] = useState<string[]>([]);
 
   useEffect(() => {
-    const loadPortadaData = async () => {
+    const loadFichaData = async () => {
       if (!id) {
-        navigate("/Portada");
+        navigate("/Ficha");
         return;
       }
 
@@ -57,32 +48,32 @@ export const EditarPortada: React.FC = () => {
         setIsLoading(true);
         setError(null);
 
-        const response = await portada_get();
+        const response = await ficha_get();
 
         if (!response || response.length === 0) {
-          throw new Error("No se encontraron portadas");
+          throw new Error("No se encontraron fichas");
         }
 
-        const ids = response.map((port: Portada) => String(port.id_expediente));
+        const ids = response.map((ficha: Ficha) => String(ficha.id_ficha));
         setAvailableIds(ids);
 
         const item = response.find(
-          (port: Portada) => String(port.id_expediente) === String(id)
+          (ficha: Ficha) => String(ficha.id_ficha) === String(id)
         );
 
         if (!item) {
           await Swal.fire({
             icon: "error",
-            title: "Portada No Encontrada",
-            text: `No se encontró la portada con ID ${id}`,
+            title: "Ficha No Encontrada",
+            text: `No se encontró la ficha con ID ${id}`,
             footer: `IDs disponibles: ${ids.join(", ")}`,
-            confirmButtonText: "Volver a Portadas",
+            confirmButtonText: "Volver a Fichas",
           });
-          navigate("/Portada");
+          navigate("/Ficha");
           return;
         }
 
-        setPortada(item);
+        setFicha(item);
       } catch (error) {
         const errorMessage =
           error instanceof Error
@@ -96,47 +87,48 @@ export const EditarPortada: React.FC = () => {
           icon: "error",
           title: "Error de Carga",
           text: errorMessage,
-          confirmButtonText: "Volver a Portadas",
+          confirmButtonText: "Volver a Fichas",
         });
 
-        navigate("/Portada");
+        navigate("/Ficha");
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadPortadaData();
+    loadFichaData();
   }, [id, navigate]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    // Prevent changes to seccion, serie, and subserie
-    if (name === "seccion" || name === "serie" || name === "subserie") {
+    // Prevent changes to seccion, serie, and subserie IDs
+    if (
+      name === "id_seccion" ||
+      name === "id_serie" ||
+      name === "id_subserie" ||
+      name === "id_ficha"
+    ) {
       return;
     }
-    setPortada((prev) => ({
+    setFicha((prev) => ({
       ...prev,
-      [name]: value, // Removed trim() to allow spaces
+      [name]: value, // Allow spaces during editing
     }));
   };
 
   const validateForm = (): boolean => {
-    const requiredFields: (keyof Portada)[] = [
-      "num_expediente",
-      "asunto",
-      "fecha_apertura",
-      "fecha_cierre",
-      "ficha",
-      "catalogo",
-      "num_legajos",
-      "num_fojas",
-      "valores_secundarios",
+    const requiredFields: (keyof Ficha)[] = [
+      "id_ficha",
+      "area_resguardante",
+      "area_intervienen",
+      "descripcion",
+      "soporte_docu",
     ];
 
     const emptyFields = requiredFields.filter((field) => {
-      const value = portada[field];
+      const value = ficha[field];
       return (
         value === undefined || value === null || String(value).trim() === ""
       );
@@ -163,9 +155,9 @@ export const EditarPortada: React.FC = () => {
       await Swal.fire({
         icon: "error",
         title: "Error",
-        text: "ID de la portada no encontrado",
+        text: "ID de la ficha no encontrado",
       });
-      navigate("/Portada");
+      navigate("/Ficha");
       return;
     }
 
@@ -178,27 +170,27 @@ export const EditarPortada: React.FC = () => {
       setError(null);
 
       // Trim values only when submitting
-      const trimmedPortada = Object.fromEntries(
-        Object.entries(portada).map(([key, value]) => [
+      const trimmedFicha = Object.fromEntries(
+        Object.entries(ficha).map(([key, value]) => [
           key,
           typeof value === "string" ? value.trim() : value,
         ])
-      ) as Portada;
+      ) as Ficha;
 
-      const result = await portada_put(id, trimmedPortada);
+      const result = await ficha_put(id, trimmedFicha);
 
       if (result) {
         await Swal.fire({
           icon: "success",
           title: "Éxito",
-          text: "Portada actualizada correctamente",
+          text: "Ficha actualizada correctamente",
           timer: 1500,
           showConfirmButton: false,
         });
 
-        navigate("/Portada");
+        navigate("/Ficha");
       } else {
-        throw new Error("No se pudo actualizar la portada");
+        throw new Error("No se pudo actualizar la ficha");
       }
     } catch (error) {
       const errorMessage =
@@ -210,7 +202,7 @@ export const EditarPortada: React.FC = () => {
       await Swal.fire({
         icon: "error",
         title: "Error",
-        text: `Error al actualizar la portada: ${errorMessage}`,
+        text: `Error al actualizar la ficha: ${errorMessage}`,
       });
     } finally {
       setIsLoading(false);
@@ -218,21 +210,40 @@ export const EditarPortada: React.FC = () => {
   };
 
   const renderFormField = (
-    name: keyof Portada,
+    name: keyof Ficha,
     label: string,
-    type: "text" | "date" = "text"
+    type: "text" | "textarea" = "text"
   ) => {
     // Check if field should be read-only
     const isReadOnly =
-      name === "seccion" || name === "serie" || name === "subserie";
+      name === "id_seccion" ||
+      name === "id_serie" ||
+      name === "id_subserie" ||
+      name === "id_ficha";
+
+    if (type === "textarea") {
+      return (
+        <div className="form-floating mb-3">
+          <textarea
+            className={`form-control ${isReadOnly ? "bg-light" : ""}`}
+            name={name}
+            value={ficha[name] ?? ""}
+            onChange={handleInputChange}
+            placeholder={label}
+            readOnly={isReadOnly}
+          />
+          <label>{label}</label>
+        </div>
+      );
+    }
 
     return (
       <div className="form-floating mb-3">
         <input
           className={`form-control ${isReadOnly ? "bg-light" : ""}`}
-          type={type}
+          type="text"
           name={name}
-          value={portada[name] ?? ""}
+          value={ficha[name] ?? ""}
           onChange={handleInputChange}
           placeholder={label}
           readOnly={isReadOnly}
@@ -241,9 +252,6 @@ export const EditarPortada: React.FC = () => {
       </div>
     );
   };
-
-  // Rest of the component remains the same...
-  // (Return JSX and other UI elements)
 
   return (
     <div>
@@ -263,79 +271,42 @@ export const EditarPortada: React.FC = () => {
                   <div className="card shadow-lg border-0 rounded-lg mt-5">
                     <div className="card-header">
                       <h3 className="text-center font-weight-light my-4">
-                        Editar Portada de Expediente
+                        Editar Ficha Técnica
                       </h3>
                     </div>
                     <div className="card-body">
                       <form onSubmit={handleSubmit}>
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            {renderFormField(
-                              "num_expediente",
-                              "No. Expediente"
-                            )}
-                          </div>
-                          <div className="col-md-6">
-                            {renderFormField("ficha", "Ficha")}
-                          </div>
-                        </div>
+                        {renderFormField("id_ficha", "ID Ficha")}
 
-                        <div className="form-floating mb-3">
-                          <textarea
-                            className="form-control"
-                            name="asunto"
-                            value={portada.asunto ?? ""}
-                            onChange={handleInputChange}
-                            placeholder="Asunto"
-                          />
-                          <label>Asunto</label>
-                        </div>
+                        {renderFormField(
+                          "area_resguardante",
+                          "Área Resguardante",
+                          "textarea"
+                        )}
 
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            {renderFormField(
-                              "fecha_apertura",
-                              "Fecha de Apertura",
-                              "date"
-                            )}
-                          </div>
-                          <div className="col-md-6">
-                            {renderFormField(
-                              "fecha_cierre",
-                              "Fecha de Cierre",
-                              "date"
-                            )}
-                          </div>
-                        </div>
+                        {renderFormField(
+                          "area_intervienen",
+                          "Áreas que Intervienen",
+                          "textarea"
+                        )}
 
-                        <div className="form-floating mb-3">
-                          {renderFormField("catalogo", "Catálogo")}
-                        </div>
+                        {renderFormField(
+                          "descripcion",
+                          "Descripción",
+                          "textarea"
+                        )}
+
+                        {renderFormField("soporte_docu", "Soporte Documental")}
 
                         <div className="row mb-3">
                           <div className="col-md-4">
-                            {renderFormField("num_legajos", "No. Legajos")}
+                            {renderFormField("id_seccion", "ID Sección")}
                           </div>
                           <div className="col-md-4">
-                            {renderFormField("num_fojas", "No. Fojas")}
+                            {renderFormField("id_serie", "ID Serie")}
                           </div>
                           <div className="col-md-4">
-                            {renderFormField(
-                              "valores_secundarios",
-                              "Valores Secundarios"
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="row mb-3">
-                          <div className="col-md-4">
-                            {renderFormField("seccion", "Sección")}
-                          </div>
-                          <div className="col-md-4">
-                            {renderFormField("serie", "Serie")}
-                          </div>
-                          <div className="col-md-4">
-                            {renderFormField("subserie", "Subserie")}
+                            {renderFormField("id_subserie", "ID Subserie")}
                           </div>
                         </div>
 
@@ -359,4 +330,4 @@ export const EditarPortada: React.FC = () => {
   );
 };
 
-export default EditarPortada;
+export default EditarFicha;

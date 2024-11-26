@@ -65,8 +65,7 @@ export function Ficha() {
       !descripcion.trim() ||
       !soporte_docu.trim() ||
       !id_seccion.trim() ||
-      !id_serie.trim() ||
-      !id_subserie.trim()
+      !id_serie.trim()
     ) {
       Swal.fire({
         icon: "warning",
