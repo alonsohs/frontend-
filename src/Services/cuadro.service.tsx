@@ -145,22 +145,3 @@ export const subserie_get = async () => {
     return null;
   }
 };
-
-export const seccion_delete = async (id: string) => {
-  try {
-    const response = await api.delete(`/cuadro/seccion/${id}/`);
-    if (response.status === 204) {
-      console.log("Sección eliminada con éxito");
-      return true;
-    } else {
-      throw new Error("Error al eliminar seccion" + response.statusText);
-    }
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      console.error("Error de Axios:", error.message);
-    } else {
-      console.error("Error inesperado", error);
-    }
-    return false;
-  }
-};

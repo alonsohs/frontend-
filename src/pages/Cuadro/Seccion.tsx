@@ -4,11 +4,7 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import {
-  seccion_post,
-  Seccion_get,
-  seccion_delete,
-} from "../../services/cuadro.service";
+import { seccion_post, Seccion_get } from "../../services/cuadro.service";
 import { seccion } from "../../Producto";
 import Swal from "sweetalert2";
 
@@ -41,65 +37,6 @@ export function Seccion() {
   const handleEdit = () => {
     const selectedId = selectedRows[0];
     console.log("Editing item", selectedId);
-  };
-
-  const handleDelete = async () => {
-    if (!selectedRows || selectedRows.length === 0) {
-      Swal.fire({
-        icon: "warning",
-        title: "Error",
-        text: "Por favor, seleccione un elemento para eliminar",
-      });
-      return;
-    }
-
-    const selectedId = selectedRows[0] as string;
-
-    const result = await Swal.fire({
-      title: "¿Estás seguro de eliminar este elemento?",
-      text: "No se podra revertir esta acción",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    });
-
-    if (result.isConfirmed) {
-      setIsLoading(true);
-      try {
-        const success = await seccion_delete(selectedId);
-
-        if (success) {
-          Swal.fire({
-            icon: "success",
-            title: "Eliminado",
-            text: "Se ha eliminado el elemento correctamente",
-            timer: 1500,
-            showConfirmButton: false,
-          }).then(() => {
-            fetchSeccion();
-            setSelectedRows([]);
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Ha ocurrido un error al eliminar este elemento",
-          });
-        }
-      } catch (error) {
-        console.error("Error al eliminar:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Ha ocurrido un error al eliminar este elemento",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    }
   };
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
@@ -286,21 +223,6 @@ export function Seccion() {
                                 }
                               >
                                 <Pencil className="h-5 w-5" />
-                              </IconButton>
-                            </span>
-                          </Tooltip>
-
-                          <Tooltip title="Eliminar">
-                            <span>
-                              <IconButton
-                                onClick={handleDelete}
-                                size="small"
-                                className="text-red-600 hover:text-red-800"
-                                disabled={
-                                  selectedRows.length !== 1 || isLoading
-                                }
-                              >
-                                <Trash2 className="h-5 w-5" />
                               </IconButton>
                             </span>
                           </Tooltip>
