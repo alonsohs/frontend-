@@ -22,10 +22,10 @@ import { hasRole } from "../services/auth.service";
 import { Roles } from "../models/enums/roles_enum";
 import { TableInventory } from "../pages/Inventario/TableInventario";
 import { MiComponente } from "../pages/Inventario/test";
-
 import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
 import { EditarCatalogo } from "../pages/Catálogo/EditarCatalogo";
 import { EditarPortada } from "../pages/Portada/EditarPortada";
+import { EditarFicha } from "../pages/Ficha/EditarFicha";
 
 export function Rutas() {
   return (
@@ -247,6 +247,16 @@ export function Rutas() {
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <EditarPortada />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/Editar_Ficha/:id"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <EditarFicha />
           ) : (
             <Navigate to="/Home" />
           )

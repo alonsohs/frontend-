@@ -23,10 +23,7 @@ interface SubSerie {
 
 export const seccion_post = async (data: Seccion) => {
   try {
-    const response = await api.post(
-        "/cuadro/seccion/",
-      data
-    );
+    const response = await api.post("/cuadro/seccion/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -47,9 +44,7 @@ export const seccion_post = async (data: Seccion) => {
 
 export const serie_post = async (data: Serie) => {
   try {
-    const response = await api.post( "/cuadro/serie/",
-      data
-    );
+    const response = await api.post("/cuadro/serie/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -70,10 +65,7 @@ export const serie_post = async (data: Serie) => {
 
 export const subserie_post = async (data: SubSerie) => {
   try {
-    const response = await api.post(
-      "/cuadro/subserie/",
-      data
-    );
+    const response = await api.post("/cuadro/subserie/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -94,9 +86,7 @@ export const subserie_post = async (data: SubSerie) => {
 
 export const Seccion_get = async () => {
   try {
-    const response = await api.get(
-    "/cuadro/seccion/"
-    );
+    const response = await api.get("/cuadro/seccion/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -117,9 +107,7 @@ export const Seccion_get = async () => {
 
 export const serie_get = async () => {
   try {
-    const response = await api.get(
- "/cuadro/serie/"
-    );
+    const response = await api.get("/cuadro/serie/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -138,11 +126,9 @@ export const serie_get = async () => {
   }
 };
 
-
 export const subserie_get = async () => {
   try {
-    const response = await api.get( "/cuadro/subserie/"
-    );
+    const response = await api.get("/cuadro/subserie/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
