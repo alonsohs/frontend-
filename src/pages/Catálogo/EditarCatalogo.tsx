@@ -71,7 +71,6 @@ export const EditarCatalogo: React.FC = () => {
         console.log("ID del catálogo buscado:", id);
         console.log("Tipo de ID:", typeof id);
 
-        // Obtener lista completa de catálogos
         const response = await catalogo_get();
 
         if (!response) {
@@ -83,18 +82,16 @@ export const EditarCatalogo: React.FC = () => {
           JSON.stringify(response, null, 2)
         );
 
-        // Log de todos los IDs disponibles para depuración
         const availableIds = response.map(
           (cat: CatalogoWithId) => cat.id_catalogo
         );
         console.log("IDs disponibles:", availableIds);
 
-        // Búsqueda por ID con múltiples estrategias
         const item = response.find(
           (cat: CatalogoWithId) =>
             cat.id_catalogo === id ||
             cat.id_catalogo === String(id) ||
-            cat.id_catalogo == id // Comparación más flexible
+            cat.id_catalogo == id
         );
 
         if (!item) {
@@ -107,12 +104,10 @@ export const EditarCatalogo: React.FC = () => {
 
         console.log("Catálogo encontrado:", JSON.stringify(item, null, 2));
 
-        // Extraer datos base del catálogo
         const { id_catalogo, ...catalogoBase } = item;
         setCatalogo(catalogoBase);
         setFullCatalogoList(response);
 
-        // Cargar datos adicionales
         const [destinosData, tiposData, valoresData] = await Promise.all([
           destino_get(),
           type_get(),
@@ -154,7 +149,7 @@ export const EditarCatalogo: React.FC = () => {
     const { name, value } = e.target;
     setCatalogo((prev) => ({
       ...prev,
-      [name]: value.trim(),
+      [name]: value, // Eliminado .trim()
     }));
   };
 
@@ -266,7 +261,8 @@ export const EditarCatalogo: React.FC = () => {
           disabled={
             name === "id_seccion" ||
             name === "id_serie" ||
-            name === "id_subserie"
+            name === "id_subserie" ||
+            name === "catalogo"
           }
         />
       ) : (

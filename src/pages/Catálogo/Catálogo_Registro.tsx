@@ -7,7 +7,6 @@ import {
   destino_get,
   type_get,
   valor_get,
-  catalogo_put,
 } from "../../services/catalogo.service";
 import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";

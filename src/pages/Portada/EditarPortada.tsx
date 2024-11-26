@@ -112,13 +112,13 @@ export const EditarPortada: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    // Prevent changes to seccion, serie, and subserie
+
     if (name === "seccion" || name === "serie" || name === "subserie") {
       return;
     }
     setPortada((prev) => ({
       ...prev,
-      [name]: value, // Removed trim() to allow spaces
+      [name]: value,
     }));
   };
 
@@ -222,9 +222,15 @@ export const EditarPortada: React.FC = () => {
     label: string,
     type: "text" | "date" = "text"
   ) => {
-    // Check if field should be read-only
     const isReadOnly =
-      name === "seccion" || name === "serie" || name === "subserie";
+      name === "seccion" ||
+      name === "serie" ||
+      name === "subserie" ||
+      name === "num_expediente" ||
+      name === "ficha" ||
+      name === "fecha_apertura" ||
+      name === "catalogo" ||
+      name === "valores_secundarios";
 
     return (
       <div className="form-floating mb-3">
@@ -241,9 +247,6 @@ export const EditarPortada: React.FC = () => {
       </div>
     );
   };
-
-  // Rest of the component remains the same...
-  // (Return JSX and other UI elements)
 
   return (
     <div>
