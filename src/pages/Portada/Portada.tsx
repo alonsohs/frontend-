@@ -314,7 +314,7 @@ export function PortadaComponent() {
                             >
                               <option value="">Seleccione una opción</option>
                               {id_serie.map((serie) => (
-                                <option value={serie.id_Serie}>
+                                <option value={serie.serie}>
                                   {serie.serie}
                                 </option>
                               ))}

@@ -12,13 +12,12 @@ import { seccion, serie } from "../../Producto";
 import Swal from "sweetalert2";
 
 export function Serie() {
-  const [ID, setID] = useState("");
   const [Serie, setSerie] = useState("");
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [ID_seccion, setId_seccion] = useState("");
   const [secciones, setSeccion] = useState<seccion[]>([]);
-  const [series, setSerieGet] = useState<serie[]>([]);
+  const [SerieGet, setSerieGet] = useState<serie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -35,8 +34,8 @@ export function Serie() {
 
   useEffect(() => {
     const fetchSerie = async () => {
-      const serie = await serie_get();
-      setSerieGet(serie);
+      const SerieGet = await serie_get();
+      setSerieGet(SerieGet);
     };
     fetchSerie();
   }, []);
@@ -45,7 +44,6 @@ export function Serie() {
     event.preventDefault();
 
     if (
-      !ID.trim() ||
       !Serie.trim() ||
       !Codigo.trim() ||
       !Descripcion.trim() ||
@@ -61,7 +59,6 @@ export function Serie() {
     setIsLoading(true);
 
     const serie = {
-      id_serie: ID,
       serie: Serie,
       codigo_serie: Codigo,
       descripcion: Descripcion,
@@ -78,7 +75,6 @@ export function Serie() {
         text: "Se ha creado la serie con exito",
       });
 
-      setID("");
       setSerie("");
       setCode("");
       setDescripcion("");
@@ -100,30 +96,16 @@ export function Serie() {
   };
 
   const columns: GridColDef[] = [
-    /* {
-      field: "id_serie",
-      headerName: "Serie Código",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },*/
     {
-      field: "serie",
-      headerName: "Nombre de la Serie",
-      flex: 1.5,
+      field: "codigo_serie",
+      headerName: "Código de la Serie",
+      flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
     },
-    /* {
-      field: "codigo_serie",
-      headerName: "Código",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },*/
     {
       field: "descripcion",
-      headerName: "Descripción",
+      headerName: "Nombre de la Serie",
       flex: 2,
       minWidth: 250,
       headerClassName: "table-header",
@@ -161,7 +143,7 @@ export function Serie() {
                     <div className="card-body">
                       <form onSubmit={handleSubmit}>
                         <div className="row mb-3">
-                          <div className="col-md-6">
+                          <div className="col">
                             <div className="form-floating">
                               <select
                                 className="form-select"
@@ -182,19 +164,6 @@ export function Serie() {
                               <label htmlFor="inputSeccion">Sección</label>
                             </div>
                           </div>
-                          <div className="col-md-6">
-                            <div className="form-floating">
-                              <input
-                                className="form-control"
-                                id="inputID"
-                                type="text"
-                                placeholder="ID Serie"
-                                value={ID}
-                                onChange={(e) => setID(e.target.value)}
-                              />
-                              <label htmlFor="inputID">ID Serie</label>
-                            </div>
-                          </div>
                         </div>
 
                         <div className="row mb-3">
@@ -208,7 +177,9 @@ export function Serie() {
                                 value={Serie}
                                 onChange={(e) => setSerie(e.target.value)}
                               />
-                              <label htmlFor="inputSerie">Serie</label>
+                              <label htmlFor="inputSerie">
+                                Nombre de la serie
+                              </label>
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -221,7 +192,9 @@ export function Serie() {
                                 value={Codigo}
                                 onChange={(e) => setCode(e.target.value)}
                               />
-                              <label htmlFor="inputCodigo">Código</label>
+                              <label htmlFor="inputCodigo">
+                                Código de la serie
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -281,9 +254,9 @@ export function Serie() {
                         }}
                       >
                         <DataGrid
-                          rows={series}
+                          rows={SerieGet}
                           columns={columns}
-                          getRowId={(x) => x.id_serie}
+                          getRowId={(x) => x.serie}
                           disableRowSelectionOnClick
                           density="comfortable"
                           initialState={{

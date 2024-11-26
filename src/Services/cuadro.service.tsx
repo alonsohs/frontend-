@@ -8,7 +8,6 @@ interface Seccion {
 }
 
 interface Serie {
-  id_serie: string;
   serie: string;
   codigo_serie: string;
   descripcion: string;
@@ -18,15 +17,12 @@ interface Serie {
 interface SubSerie {
   SubSerie: string;
   descripcion: string;
-  serie: string;
+  id_serie: string;
 }
 
 export const seccion_post = async (data: Seccion) => {
   try {
-    const response = await api.post(
-        "/cuadro/seccion/",
-      data
-    );
+    const response = await api.post("/cuadro/seccion/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -47,9 +43,7 @@ export const seccion_post = async (data: Seccion) => {
 
 export const serie_post = async (data: Serie) => {
   try {
-    const response = await api.post( "/cuadro/serie/",
-      data
-    );
+    const response = await api.post("/cuadro/serie/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -70,10 +64,7 @@ export const serie_post = async (data: Serie) => {
 
 export const subserie_post = async (data: SubSerie) => {
   try {
-    const response = await api.post(
-      "/cuadro/subserie/",
-      data
-    );
+    const response = await api.post("/cuadro/subserie/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -94,9 +85,7 @@ export const subserie_post = async (data: SubSerie) => {
 
 export const Seccion_get = async () => {
   try {
-    const response = await api.get(
-    "/cuadro/seccion/"
-    );
+    const response = await api.get("/cuadro/seccion/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -117,13 +106,11 @@ export const Seccion_get = async () => {
 
 export const serie_get = async () => {
   try {
-    const response = await api.get(
- "/cuadro/serie/"
-    );
+    const response = await api.get("/cuadro/serie/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
-      console.log("series", response.data);
+      console.log("serie", response.data);
       return response.data;
     } else {
       throw new Error("no consultado" + response.statusText);
@@ -138,11 +125,9 @@ export const serie_get = async () => {
   }
 };
 
-
 export const subserie_get = async () => {
   try {
-    const response = await api.get( "/cuadro/subserie/"
-    );
+    const response = await api.get("/cuadro/subserie/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -158,5 +143,24 @@ export const subserie_get = async () => {
       console.error("Error inesperado:", error);
     }
     return null;
+  }
+};
+
+export const seccion_delete = async (id: string) => {
+  try {
+    const response = await api.delete(`/cuadro/seccion/${id}/`);
+    if (response.status === 204) {
+      console.log("Sección eliminada con éxito");
+      return true;
+    } else {
+      throw new Error("Error al eliminar seccion" + response.statusText);
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error de Axios:", error.message);
+    } else {
+      console.error("Error inesperado", error);
+    }
+    return false;
   }
 };

@@ -23,7 +23,7 @@ export function Catálogo() {
   const navigate = useNavigate();
   const [id_catalogo] = useState("");
   const [catalogo, setCatalogo] = useState("");
-  const [archivo_tramite, setArchivoTramite] = useState("");
+  const [archivo_tramite, setArchivoTramite] = useState("Durante su Vigencia");
   const [archivo_concentracion, setArchivoConcentracion] = useState("");
   const [destino_expe, setDestinoExpe] = useState("");
   const [type_access, setTypeAccess] = useState("");
@@ -113,8 +113,7 @@ export function Catálogo() {
       !valores_documentales.trim() ||
       !observaciones.trim() ||
       !id_seccion.trim() ||
-      !id_serie.trim() ||
-      !id_subserie.trim()
+      !id_serie.trim()
     ) {
       Swal.fire({
         icon: "warning",
@@ -238,6 +237,8 @@ export function Catálogo() {
                                 className="form-control"
                                 type="text"
                                 value={archivo_tramite}
+                                readOnly
+                                disabled
                                 onChange={(e) =>
                                   setArchivoTramite(e.target.value)
                                 }

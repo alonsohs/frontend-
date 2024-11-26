@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
+import { Box, IconButton, Tooltip } from "@mui/material";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
-import { seccion_post, Seccion_get } from "../../services/cuadro.service";
+import {
+  seccion_post,
+  Seccion_get,
+  seccion_delete,
+} from "../../services/cuadro.service";
 import { seccion } from "../../Producto";
 import Swal from "sweetalert2";
 
@@ -12,7 +17,13 @@ export function Seccion() {
   const [Codigo, setCode] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
   const [seccion, setSeccion] = useState<seccion[]>([]);
+
+  const fetchSeccion = async () => {
+    const items = await Seccion_get();
+    setSeccion(items);
+  };
 
   useEffect(() => {
     const fetchSeccion = async () => {
@@ -21,6 +32,75 @@ export function Seccion() {
     };
     fetchSeccion();
   }, []);
+
+  const handleView = () => {
+    const selectedId = selectedRows[0];
+    console.log("Viewing item", selectedId);
+  };
+
+  const handleEdit = () => {
+    const selectedId = selectedRows[0];
+    console.log("Editing item", selectedId);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para eliminar",
+      });
+      return;
+    }
+
+    const selectedId = selectedRows[0] as string;
+
+    const result = await Swal.fire({
+      title: "¿Estás seguro de eliminar este elemento?",
+      text: "No se podra revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      setIsLoading(true);
+      try {
+        const success = await seccion_delete(selectedId);
+
+        if (success) {
+          Swal.fire({
+            icon: "success",
+            title: "Eliminado",
+            text: "Se ha eliminado el elemento correctamente",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            fetchSeccion();
+            setSelectedRows([]);
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Ha ocurrido un error al eliminar este elemento",
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Ha ocurrido un error al eliminar este elemento",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -71,7 +151,7 @@ export function Seccion() {
   };
 
   const columns: GridColDef[] = [
-    /* {
+    /*{
       field: "id_seccion",
       headerName: "Código de la Sección ",
       flex: 1,
@@ -177,6 +257,56 @@ export function Seccion() {
                 <div className="col-lg-7">
                   <div className="card shadow-lg border-0 rounded-lg">
                     <div className="card-body">
+                      {/* Toolbar */}
+                      <div className="p-4 border-b flex justify-between items-center bg-white-50">
+                        <div className="flex gap-2">
+                          <Tooltip title="Ver detalles">
+                            <span>
+                              <IconButton
+                                onClick={handleView}
+                                size="small"
+                                className="text-blue-600 hover:text-blue-800"
+                                disabled={
+                                  selectedRows.length !== 1 || isLoading
+                                }
+                              >
+                                <Eye className="h-5 w-5" />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
+
+                          <Tooltip title="Editar">
+                            <span>
+                              <IconButton
+                                onClick={handleEdit}
+                                size="small"
+                                className="text-green-600 hover:text-green-800"
+                                disabled={
+                                  selectedRows.length !== 1 || isLoading
+                                }
+                              >
+                                <Pencil className="h-5 w-5" />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
+
+                          <Tooltip title="Eliminar">
+                            <span>
+                              <IconButton
+                                onClick={handleDelete}
+                                size="small"
+                                className="text-red-600 hover:text-red-800"
+                                disabled={
+                                  selectedRows.length !== 1 || isLoading
+                                }
+                              >
+                                <Trash2 className="h-5 w-5" />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
+                        </div>
+                      </div>
+
                       <Box
                         sx={{
                           height: 400,
@@ -204,14 +334,18 @@ export function Seccion() {
                           rows={seccion}
                           columns={columns}
                           getRowId={(x) => x.id_seccion}
-                          disableRowSelectionOnClick
+                          onRowSelectionModelChange={(newSelection) => {
+                            setSelectedRows(newSelection);
+                          }}
                           density="comfortable"
                           initialState={{
                             pagination: {
-                              paginationModel: { pageSize: 5 },
+                              paginationModel: { pageSize: 10 },
                             },
                           }}
                           pageSizeOptions={[5, 10, 25]}
+                          className="w-full"
+                          checkboxSelection
                         />
                       </Box>
                     </div>
