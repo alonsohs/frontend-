@@ -8,7 +8,6 @@ interface Seccion {
 }
 
 interface Serie {
-  id_serie: string;
   serie: string;
   codigo_serie: string;
   descripcion: string;
@@ -18,7 +17,7 @@ interface Serie {
 interface SubSerie {
   SubSerie: string;
   descripcion: string;
-  serie: string;
+  id_serie: string;
 }
 
 export const seccion_post = async (data: Seccion) => {
@@ -111,7 +110,7 @@ export const serie_get = async () => {
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
-      console.log("series", response.data);
+      console.log("serie", response.data);
       return response.data;
     } else {
       throw new Error("no consultado" + response.statusText);
