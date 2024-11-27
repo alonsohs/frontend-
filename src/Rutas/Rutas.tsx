@@ -18,7 +18,7 @@ import { DatosCatalogo } from "../pages/Configuración/DatosCatalogo";
 import { Portada_Registro } from "../pages/Portada/Portada_Registro";
 import { Inventory } from "../pages/Inventario/inventario";
 import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
-import { hasRole } from "../services/auth.service";
+import { hasRole } from "@services/auth.service.ts";
 import { Roles } from "../models/enums/roles_enum";
 import { PDFUpload } from "../carga";
 import { DocumentoList } from "../show.data"; 
