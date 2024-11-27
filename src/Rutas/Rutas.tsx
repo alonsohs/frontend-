@@ -20,7 +20,9 @@ import { Inventory } from "../pages/Inventario/inventario";
 import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
 import { hasRole } from "../services/auth.service";
 import { Roles } from "../models/enums/roles_enum";
-
+import { PDFUpload } from "../carga";
+import { DocumentoList } from "../show.data";
+ 
 import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
 
 export function Rutas() {
@@ -206,6 +208,30 @@ export function Rutas() {
           )
         }
       />
+
+      <Route
+        path="/Carga"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <PDFUpload />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+
+      <Route
+        path="/ShowData"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <DocumentoList />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      
+
     </Routes>
   );
 }

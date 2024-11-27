@@ -224,7 +224,10 @@ export function AgregarUsuario() {
                                 <option value={Roles.JefeArea}>
                                   Jefe de Area
                                 </option>
-                                <option value={Roles.Personal}>Personal</option>
+                                <option value={Roles.Personal}>
+                                  Personal</option>
+                                <option value={Roles.Lectura}>
+                                  Lectura</option>
                               </select>
                             </div>
                           </div>

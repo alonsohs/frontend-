@@ -30,7 +30,7 @@ export function Catálogo() {
   const [valores_documentales, setValoresDocumentales] = useState("");
   const [observaciones, setObservaciones] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [setUserInfo] = useState<any>(null);
 
   const [id_seccion, setIdSeccion] = useState("");
   const [id_serie, setIdSerie] = useState("");
