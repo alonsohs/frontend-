@@ -1,6 +1,6 @@
 // App.tsx
 import { useState } from "react";
-import { Rutas } from "./Rutas/Rutas";
+import { Rutas } from "./Rutas/Rutas.tsx";
 import styled from "styled-components";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar/Sidebar";

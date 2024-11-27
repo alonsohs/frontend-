@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   rollupOptions: {
-    external: ["@services/auth.service.ts"]
+    external: ["@services/auth.ts"]
   }
 })

@@ -3,7 +3,7 @@ import Logo from "../../assets/Tlaxcala.png";
 import Usuarios from "../../assets/Usuarios.png";
 import { Boton } from "../../components/Botones/Botones";
 import "../../../node_modules/remixicon/fonts/remixicon.css";
-import { getUser } from "../../services/auth.service";
+import { getUser } from "../../services/auth.ts";
 
 export enum Roles {
   Admin = 1,

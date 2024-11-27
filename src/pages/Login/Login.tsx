@@ -5,7 +5,7 @@ import Logo_Tlaxcala from "../../assets/Tlaxcala.png";
 import Icono_Usuario from "../../assets/Usuario.png";
 import Icono_Contraseña from "../../assets/Contraseña.png";
 import { Boton } from "../../components/Botones/Botones";
-import { login } from "../../services/auth.service"; // Importa la función de login
+import { login } from "../../services/auth.ts"; // Importa la función de login
 import Swal from "sweetalert2";
 
 export function Login() {

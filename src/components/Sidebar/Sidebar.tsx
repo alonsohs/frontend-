@@ -18,8 +18,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { RiTableLine } from "react-icons/ri";
 import { RiArchiveStackLine } from "react-icons/ri";
-import { logout } from "../../services/auth.service";
-import { hasRole } from "../../services/auth.service";
+import { logout } from "../../services/auth.ts";
+import { hasRole } from "../../services/auth.ts";
 import { Roles } from "../../models/enums/roles_enum";
 import Icono from "../../assets/right-arrow.png";
 
