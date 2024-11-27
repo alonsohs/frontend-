@@ -8,33 +8,34 @@ import {
   subserie_get,
   subserie_post,
 } from "../../services/cuadro.service";
-import { SubSerie } from "../../Producto";
+import { serie, SubSerie } from "../../Producto";
 import Swal from "sweetalert2";
 
 export function Subserie() {
-  const [subserie, setsubserie] = useState("");
   const [Descripcion, setDescripcion] = useState("");
-  const [serie, setserie] = useState("");
+  const [Serie, setSerie] = useState("");
+  const [SerieGet, setSerieGet] = useState<serie[]>([]);
+  const [subserie, setsubserie] = useState("");
+  const [SubSerie, setSubSerie] = useState<SubSerie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [Subserie, setSubserie] = useState<SubSerie[]>([]);
 
   useEffect(() => {
     const fetchSerie = async () => {
       const items = await serie_get();
-      setSubserie(items);
+      setSerieGet(items);
     };
     fetchSerie();
   }, []);
 
   useEffect(() => {
     const fetchSubserie = async () => {
-      const subserie = await subserie_get();
-      setSubserie(subserie);
+      const SubSerie = await subserie_get();
+      setSubSerie(SubSerie);
     };
     fetchSubserie();
   }, []);
 
-  const rowsWithIds = Subserie.map((row, index) => ({
+  const rowsWithIds = SubSerie.map((row, index) => ({
     ...row,
     id: index, // Añade un id único basado en el índice
   }));
@@ -42,7 +43,7 @@ export function Subserie() {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    if (!subserie.trim() || !Descripcion.trim() || !serie.trim()) {
+    if (!subserie.trim() || !Descripcion.trim() || !Serie.trim()) {
       Swal.fire({
         icon: "warning",
         title: "Error",
@@ -55,7 +56,7 @@ export function Subserie() {
     const SubserieData = {
       SubSerie: subserie,
       descripcion: Descripcion,
-      serie: serie,
+      serie: Serie,
     };
 
     try {
@@ -70,10 +71,10 @@ export function Subserie() {
 
       setsubserie("");
       setDescripcion("");
-      setserie("");
+      setSerie("");
 
       const updatedSubserie = await subserie_get();
-      setSubserie(updatedSubserie);
+      setSubSerie(updatedSubserie);
     } catch (error) {
       console.error("Error:", error);
 
@@ -89,16 +90,16 @@ export function Subserie() {
 
   const columns: GridColDef[] = [
     {
-      field: "SubSerie",
+      field: "descripcion",
       headerName: "Código de la Sub-serie",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
     },
     {
-      field: "descripcion",
-      headerName: "Nombre de la Sub-serie",
-      flex: 1.5,
+      field: "SubSerie",
+      headerName: "Nombre de la subserie",
+      flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
     },
@@ -140,16 +141,13 @@ export function Subserie() {
                               <select
                                 className="form-select"
                                 id="inputSerie"
-                                value={serie}
-                                onChange={(e) => setserie(e.target.value)}
+                                value={Serie}
+                                onChange={(e) => setSerie(e.target.value)}
                               >
                                 <option value="">Seleccione una opción</option>
-                                {Subserie.map((subserie) => (
-                                  <option
-                                    key={subserie.serie}
-                                    value={subserie.serie}
-                                  >
-                                    {subserie.serie}
+                                {SerieGet.map((serie) => (
+                                  <option value={serie.serie}>
+                                    {serie.serie}
                                   </option>
                                 ))}
                               </select>
@@ -163,10 +161,12 @@ export function Subserie() {
                                 id="inputSubserie"
                                 type="text"
                                 placeholder="ID Subserie"
-                                value={subserie}
-                                onChange={(e) => setsubserie(e.target.value)}
+                                value={Descripcion}
+                                onChange={(e) => setDescripcion(e.target.value)}
                               />
-                              <label htmlFor="inputSubserie">ID Subserie</label>
+                              <label htmlFor="inputSubserie">
+                                Codigo de la Sub-serie
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -177,8 +177,8 @@ export function Subserie() {
                             id="inputDescripcion"
                             type="text"
                             placeholder="Nombre Sub-Serie"
-                            value={Descripcion}
-                            onChange={(e) => setDescripcion(e.target.value)}
+                            value={subserie}
+                            onChange={(e) => setsubserie(e.target.value)}
                           />
                           <label htmlFor="inputDescripcion">
                             Nombre Sub-Serie

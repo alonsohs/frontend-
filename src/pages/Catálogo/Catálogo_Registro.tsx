@@ -1,7 +1,13 @@
 import { Logo } from "../../components/Logo";
 import { catalogo, destino, type, valor } from "../../services/var.catalogo";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
-import { catalogo_get, catalogo_delete,destino_get,type_get,valor_get } from "../../services/catalogo.service";
+import {
+  catalogo_get,
+  catalogo_delete,
+  destino_get,
+  type_get,
+  valor_get,
+} from "../../services/catalogo.service";
 import { useEffect, useState, useCallback } from "react";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { Eye, Pencil, Trash2, Plus } from "lucide-react";
@@ -19,11 +25,9 @@ export function Catálogo_Registro(): JSX.Element {
   const [valores, setValores] = useState<valor[]>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false); 
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    // Fetch destinos, types y valores
     const fetchRelatedData = async () => {
       try {
         const [destinosData, typesData, valoresData] = await Promise.all([
@@ -34,31 +38,36 @@ export function Catálogo_Registro(): JSX.Element {
         setDestinos(destinosData);
         setTypes(typesData);
         setValores(valoresData);
-        setIsDataLoaded(true); // Marcar como cargado
+        setIsDataLoaded(true);
       } catch (error) {
         console.error("Error fetching related data:", error);
       }
     };
-  
+
     fetchRelatedData();
   }, []);
 
-
   useEffect(() => {
-    // Solo mapear el catálogo cuando los datos de destinos, types y valores estén cargados
     if (isDataLoaded) {
       fetchCatalogo();
     }
-  }, [isDataLoaded]); // Ejecutar fetchCatalogo cuando los datos estén cargados
-  
+  }, [isDataLoaded]);
+
   const fetchCatalogo = async (): Promise<void> => {
     try {
       const items = await catalogo_get();
       const mappedItems: catalogo[] = items.map((item: catalogo) => ({
         ...item,
-        destino_expe: destinos.find((dest) => dest.id_destino === item.destino_expe)?.destino || item.destino_expe,
-        type_access: types.find((type) => type.id_type === item.type_access)?.type || item.type_access,
-        valores_documentales: valores.find((valor) => valor.id_valores === item.valores_documentales)?.valores || item.valores_documentales,
+        destino_expe:
+          destinos.find((dest) => dest.id_destino === item.destino_expe)
+            ?.destino || item.destino_expe,
+        type_access:
+          types.find((type) => type.id_type === item.type_access)?.type ||
+          item.type_access,
+        valores_documentales:
+          valores.find(
+            (valor) => valor.id_valores === item.valores_documentales
+          )?.valores || item.valores_documentales,
       }));
       setCatalogo(mappedItems);
       setFilteredCatalogo(mappedItems);
@@ -76,9 +85,54 @@ export function Catálogo_Registro(): JSX.Element {
     console.log("Viewing item:", selectedId);
   };
 
-  const handleEdit = (): void => {
-    const selectedId = selectedRows[0];
-    console.log("Editing item:", selectedId);
+  const handleEdit = async (): Promise<void> => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para editar",
+      });
+      return;
+    }
+
+    const selectedId = selectedRows[0] as string;
+    const itemToEdit = filteredCatalogo.find(
+      (item) => item.id_catalogo === selectedId
+    );
+
+    if (!itemToEdit) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se encontró el elemento seleccionado",
+      });
+      return;
+    }
+
+    try {
+      const result = await Swal.fire({
+        title: "Editar Catálogo",
+        text: `¿Desea editar el catálogo ${itemToEdit.catalogo}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, editar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (result.isConfirmed) {
+        localStorage.setItem("catalogoEditar", JSON.stringify(itemToEdit));
+        navigate(`/Editar_Catálogo/${selectedId}`);
+      }
+    } catch (error) {
+      console.error("Error al preparar la edición:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al preparar la edición del catálogo",
+      });
+    }
   };
 
   const handleDelete = async (): Promise<void> => {
@@ -118,7 +172,7 @@ export function Catálogo_Registro(): JSX.Element {
             showConfirmButton: false,
           });
           await fetchCatalogo();
-          setSelectedRows([]); // Resetear la selección después de eliminar
+          setSelectedRows([]); // Reset selection after deletion
         } else {
           Swal.fire({
             icon: "error",
@@ -151,7 +205,6 @@ export function Catálogo_Registro(): JSX.Element {
       minWidth: 150,
       headerClassName: "table-header",
     },
-
     {
       field: "observaciones",
       headerName: "Observaciones",
@@ -190,6 +243,27 @@ export function Catálogo_Registro(): JSX.Element {
     {
       field: "archivo_concentracion",
       headerName: "Tiempo en Archivo de Concentración",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "id_seccion",
+      headerName: "Sección",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "id_serie",
+      headerName: "Serie",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "id_subserie",
+      headerName: "Subserie",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",

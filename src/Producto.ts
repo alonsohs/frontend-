@@ -5,10 +5,10 @@ export interface seccion{
 }
 
 export interface serie {
-    id_Serie: string;
     serie: string;
     descripcion: string;
     codigo_serie: string;
+    id_seccion: string;
 }
 
 export interface SubSerie{

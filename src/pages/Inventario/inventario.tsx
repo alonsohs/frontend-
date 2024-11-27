@@ -8,6 +8,7 @@ import { serie_get } from "../../services/cuadro.service";
 import Swal from "sweetalert2";
 import { Boton } from "../../components/Botones/Botones";
 import Logo from "../../assets/Tlaxcala.png";
+import { TableInventory } from "../Inventario/TableInventario";
 
 export function Inventory() {
   const initialUserState = new Inventario();
@@ -171,8 +172,8 @@ export function Inventory() {
                               <input
                                 className="form-control"
                                 id="inputEmail"
-                                type="email"
-                                placeholder="name@example.com"
+                                type="text"
+                                placeholder="Observaciones"
                                 value={inventario.observaciones}
                                 onChange={handleInputChange}
                                 name="observaciones"
@@ -217,6 +218,7 @@ export function Inventory() {
                   </div>
                 </div>
               </div>
+              <TableInventory></TableInventory>
             </div>
           </main>
         </div>

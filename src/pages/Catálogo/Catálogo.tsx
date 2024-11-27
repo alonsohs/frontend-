@@ -24,7 +24,9 @@ export function Catálogo() {
   const [id_catalogo] = useState("");
   const [catalogo, setCatalogo] = useState("");
   const [archivo_tramite, setArchivoTramite] = useState("");
-  const [archivo_concentracion, setArchivoConcentracion] = useState("");
+  const [archivo_concentracion, setArchivoConcentracion] = useState(
+    "Durante su vigencia"
+  );
   const [destino_expe, setDestinoExpe] = useState("");
   const [type_access, setTypeAccess] = useState("");
   const [valores_documentales, setValoresDocumentales] = useState("");
@@ -113,8 +115,7 @@ export function Catálogo() {
       !valores_documentales.trim() ||
       !observaciones.trim() ||
       !id_seccion.trim() ||
-      !id_serie.trim() ||
-      !id_subserie.trim()
+      !id_serie.trim()
     ) {
       Swal.fire({
         icon: "warning",
@@ -237,19 +238,21 @@ export function Catálogo() {
                               <input
                                 className="form-control"
                                 type="text"
-                                value={archivo_tramite}
+                                value="Durante su vigencia"
                                 onChange={(e) =>
-                                  setArchivoTramite(e.target.value)
+                                  setArchivoTramite("Durante su vigencia")
                                 }
+                                readOnly
                               />
                               <label>Archivo de Trámite</label>
                             </div>
                           </div>
+
                           <div className="col-md-6">
                             <div className="form-floating">
                               <input
                                 className="form-control"
-                                type="text"
+                                type="number"
                                 value={archivo_concentracion}
                                 onChange={(e) =>
                                   setArchivoConcentracion(e.target.value)

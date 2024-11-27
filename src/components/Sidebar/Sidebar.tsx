@@ -8,6 +8,8 @@ import {
   AiOutlineUser,
   AiOutlineFolderOpen,
   AiOutlineFile,
+  AiOutlineDown,
+  AiOutlineRight,
 } from "react-icons/ai";
 import { SiInternetarchive } from "react-icons/si";
 import { LuSettings } from "react-icons/lu";
@@ -38,10 +40,17 @@ interface MenuItem {
 interface MenuItemProps extends MenuItem {
   sidebarOpen: boolean;
   handleLogout?: () => void;
+  onMenuClick?: () => void;
 }
 
 export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const navigate = useNavigate();
+
+  const handleMenuClick = () => {
+    if (!sidebarOpen) {
+      setSidebarOpen(true);
+    }
+  };
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -71,6 +80,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
             {...item}
             sidebarOpen={sidebarOpen}
             handleLogout={handleLogout}
+            onMenuClick={handleMenuClick}
           />
         )
       )}
@@ -85,6 +95,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
             {...item}
             sidebarOpen={sidebarOpen}
             handleLogout={handleLogout}
+            onMenuClick={handleMenuClick}
           />
         ))}
     </Container>
@@ -220,20 +231,40 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
   sidebarOpen,
   onClick,
   handleLogout,
+  onMenuClick,
   requiredRoles,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    onMenuClick?.();
+    if (subMenu) {
+      setIsOpen(!isOpen);
+    }
+  };
 
   if (subMenu) {
     return (
       <div className="Contenedor_Links">
         <div
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleClick}
           className="Links"
-          style={{ cursor: "pointer" }}
+          style={{
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          <div className="Iconos_Links">{icon}</div>
-          {sidebarOpen && <span>{label}</span>}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div className="Iconos_Links">{icon}</div>
+            {sidebarOpen && <span>{label}</span>}
+          </div>
+          {sidebarOpen && (
+            <div className="Dropdown_Indicator">
+              {isOpen ? <AiOutlineDown /> : <AiOutlineRight />}
+            </div>
+          )}
         </div>
         {isOpen && sidebarOpen && (
           <ul className="Submenu">
@@ -241,7 +272,11 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
               .filter((item) => hasRole(item.requiredRoles || []))
               .map((item) => (
                 <li key={item.label}>
-                  <NavLink to={item.to} className="Links SubmenuItem">
+                  <NavLink
+                    to={item.to}
+                    className="Links SubmenuItem"
+                    onClick={onMenuClick}
+                  >
                     <div className="Iconos_Links">{item.icon}</div>
                     <span>{item.label}</span>
                   </NavLink>
@@ -257,7 +292,10 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
     return (
       <div className="Contenedor_Links">
         <div
-          onClick={handleLogout}
+          onClick={() => {
+            onMenuClick?.();
+            handleLogout?.();
+          }}
           className="Links"
           style={{ cursor: "pointer" }}
         >
@@ -272,6 +310,7 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
     <div className="Contenedor_Links">
       <NavLink
         to={to}
+        onClick={onMenuClick}
         className={({ isActive }) => `Links${isActive ? " active" : ""}`}
       >
         <div className="Iconos_Links">{icon}</div>

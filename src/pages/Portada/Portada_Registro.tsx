@@ -16,6 +16,11 @@ export function Portada_Registro(): JSX.Element {
   const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
   const [filteredIPortada, setFilteredIPortada] = useState<iPortada[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsDataLoaded(true);
+  }, []);
 
   const fetchIPortada = async (): Promise<void> => {
     try {
@@ -28,8 +33,10 @@ export function Portada_Registro(): JSX.Element {
   };
 
   useEffect(() => {
-    fetchIPortada();
-  }, []);
+    if (isDataLoaded) {
+      fetchIPortada();
+    }
+  }, [isDataLoaded]);
 
   const handleFilterChange = useCallback((filteredData: iPortada[]): void => {
     setFilteredIPortada(filteredData);
@@ -40,9 +47,54 @@ export function Portada_Registro(): JSX.Element {
     console.log("Viewing item:", selectedId);
   };
 
-  const handleEdit = (): void => {
-    const selectedId = selectedRows[0];
-    console.log("Editing item:", selectedId);
+  const handleEdit = async (): Promise<void> => {
+    if (!selectedRows || selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Por favor, seleccione un elemento para editar",
+      });
+      return;
+    }
+
+    const selectedId = selectedRows[0] as string;
+    const itemToEdit = filteredIPortada.find(
+      (item) => item.id_expediente === selectedId
+    );
+
+    if (!itemToEdit) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se encontró el elemento seleccionado",
+      });
+      return;
+    }
+
+    try {
+      const result = await Swal.fire({
+        title: "Editar Portada",
+        text: `¿Desea editar la portada del expediente ${itemToEdit.num_expediente}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, editar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (result.isConfirmed) {
+        localStorage.setItem("portadaEditar", JSON.stringify(itemToEdit));
+        navigate(`/Editar_Portada/${selectedId}`);
+      }
+    } catch (error) {
+      console.error("Error al preparar la edición:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al preparar la edición de la portada",
+      });
+    }
   };
 
   const handleDelete = async (): Promise<void> => {
@@ -58,7 +110,7 @@ export function Portada_Registro(): JSX.Element {
     const selectedId = selectedRows[0] as string;
 
     const result = await Swal.fire({
-      title: "¿Estas seguro?",
+      title: "¿Está seguro?",
       text: "No podrá revertir esta acción",
       icon: "warning",
       showCancelButton: true,
@@ -122,27 +174,6 @@ export function Portada_Registro(): JSX.Element {
       minWidth: 150,
       headerClassName: "table-header",
     },
-    /* {
-      field: "num_legajos",
-      headerName: "Número de Legajos",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "num_fojas",
-      headerName: "Número de Fojas",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "valores_secundarios",
-      headerName: "Valores Secundarios",
-      flex: 1.2,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },*/
     {
       field: "fecha_apertura",
       headerName: "Fecha de Apertura",
@@ -157,28 +188,6 @@ export function Portada_Registro(): JSX.Element {
       minWidth: 150,
       headerClassName: "table-header",
     },
-
-    /* {
-      field: "seccion",
-      headerName: "Sección",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    {
-      field: "serie",
-      headerName: "Serie",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    },
-    /*  {
-      field: "subserie",
-      headerName: "Subserie",
-      flex: 1,
-      minWidth: 150,
-      headerClassName: "table-header",
-    }, */
     {
       field: "ficha",
       headerName: "Ficha",
@@ -203,7 +212,6 @@ export function Portada_Registro(): JSX.Element {
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          {/* Toolbar */}
           <div className="p-4 border-b flex justify-between items-center bg-gray-50">
             <div className="flex gap-2">
               <Tooltip title="Ver detalles">
@@ -250,6 +258,7 @@ export function Portada_Registro(): JSX.Element {
               variant="contained"
               startIcon={<Plus className="h-4 w-4" />}
               onClick={handleCreate}
+              disabled={isLoading}
               sx={{
                 backgroundColor: "#441853",
                 "&:hover": {
@@ -296,6 +305,7 @@ export function Portada_Registro(): JSX.Element {
               onRowSelectionModelChange={(newSelection) => {
                 setSelectedRows(newSelection);
               }}
+              rowSelectionModel={selectedRows}
               density="comfortable"
               initialState={{
                 pagination: {

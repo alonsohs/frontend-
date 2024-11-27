@@ -1,6 +1,5 @@
 import axios from "axios";
-import api from '../api_axios';
-
+import api from "../api_axios";
 
 interface catalogo {
   id_catalogo: string;
@@ -30,9 +29,7 @@ interface valor {
 
 export const catalogo_post = async (data: catalogo) => {
   try {
-    const response = await api.post( "/catalogo/Catalogo/",
-      data
-    );
+    const response = await api.post("/catalogo/Catalogo/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -70,7 +67,6 @@ export const catalogo_put = async (id: string, data: catalogo) => {
   }
 };
 
-
 export const catalogo_delete = async (id: string) => {
   try {
     const response = await api.delete(`/catalogo/Catalogo/${id}/`);
@@ -90,12 +86,9 @@ export const catalogo_delete = async (id: string) => {
   }
 };
 
-
 export const destino_post = async (data: destino) => {
   try {
-    const response = await api.post( "/catalogo/Destino/",
-      data
-    );
+    const response = await api.post("/catalogo/Destino/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -116,9 +109,7 @@ export const destino_post = async (data: destino) => {
 
 export const type_post = async (data: type) => {
   try {
-    const response =await api.post( "/catalogo/Type/",
-      data
-    );
+    const response = await api.post("/catalogo/Type/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -139,9 +130,7 @@ export const type_post = async (data: type) => {
 
 export const valor_post = async (data: valor) => {
   try {
-    const response = await api.post("/catalogo/Valores/",
-      data
-    );
+    const response = await api.post("/catalogo/Valores/", data);
 
     if (response.status === 201) {
       // Asume que se devuelve un 201 Created
@@ -162,9 +151,7 @@ export const valor_post = async (data: valor) => {
 
 export const catalogo_get = async () => {
   try {
-    const response =  await api.get(
-      "/catalogo/Catalogo/"
-    );
+    const response = await api.get("/catalogo/Catalogo/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -185,8 +172,7 @@ export const catalogo_get = async () => {
 
 export const destino_get = async () => {
   try {
-    const response =  await api.get( "/catalogo/Destino/"
-    );
+    const response = await api.get("/catalogo/Destino/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -207,8 +193,7 @@ export const destino_get = async () => {
 
 export const type_get = async () => {
   try {
-    const response =  await api.get( "/catalogo/Type/"
-    );
+    const response = await api.get("/catalogo/Type/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
@@ -229,8 +214,7 @@ export const type_get = async () => {
 
 export const valor_get = async () => {
   try {
-    const response = await  await api.get( "/catalogo/Valores/"
-    );
+    const response = await await api.get("/catalogo/Valores/");
 
     if (response.status === 200) {
       // Asume que se devuelve la consulta
