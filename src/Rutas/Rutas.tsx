@@ -20,14 +20,8 @@ import { Inventory } from "../pages/Inventario/inventario";
 import { GuiaDocu } from "../pages/Guia_Documental/GuiaDocu";
 import { hasRole } from "../services/auth.service";
 import { Roles } from "../models/enums/roles_enum";
-<<<<<<< HEAD
 import { PDFUpload } from "../carga";
-import { DocumentoList } from "../show.data";
- 
-=======
-import { TableInventory } from "../pages/Inventario/TableInventario";
-import { MiComponente } from "../pages/Inventario/test";
->>>>>>> 1a74d299b6527e118faf7377731764f0c913ec03
+import { DocumentoList } from "../show.data"; 
 import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
 import { EditarCatalogo } from "../pages/Catálogo/EditarCatalogo";
 import { EditarPortada } from "../pages/Portada/EditarPortada";
@@ -219,17 +213,10 @@ export function Rutas() {
       />
 
       <Route
-<<<<<<< HEAD
         path="/Carga"
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <PDFUpload />
-=======
-        path="/TableInventario"
-        element={
-          hasRole([Roles.Admin, Roles.JefeArea]) ? (
-            <TableInventory />
->>>>>>> 1a74d299b6527e118faf7377731764f0c913ec03
           ) : (
             <Navigate to="/Home" />
           )
@@ -237,67 +224,16 @@ export function Rutas() {
       />
 
       <Route
-<<<<<<< HEAD
         path="/ShowData"
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <DocumentoList />
-=======
-        path="/Test"
-        element={
-          hasRole([Roles.Admin, Roles.JefeArea]) ? (
-            <MiComponente />
           ) : (
             <Navigate to="/Home" />
           )
         }
       />
-      <Route
-        path="/Editar_Catálogo/:id"
-        element={
-          hasRole([Roles.Admin, Roles.JefeArea]) ? (
-            <EditarCatalogo />
-          ) : (
-            <Navigate to="/Home" />
-          )
-        }
-      />
-      <Route
-        path="/Editar_Portada/:id"
-        element={
-          hasRole([Roles.Admin, Roles.JefeArea]) ? (
-            <EditarPortada />
-          ) : (
-            <Navigate to="/Home" />
-          )
-        }
-      />
-      <Route
-        path="/Editar_Ficha/:id"
-        element={
-          hasRole([Roles.Admin, Roles.JefeArea]) ? (
-            <EditarFicha />
-          ) : (
-            <Navigate to="/Home" />
-          )
-        }
-      />
-      <Route
-        path="/TableGuia"
-        element={
-          hasRole([Roles.Admin, Roles.JefeArea]) ? (
-            <TableGuia />
->>>>>>> 1a74d299b6527e118faf7377731764f0c913ec03
-          ) : (
-            <Navigate to="/Home" />
-          )
-        }
-      />
-<<<<<<< HEAD
       
-
-=======
->>>>>>> 1a74d299b6527e118faf7377731764f0c913ec03
     </Routes>
   );
 }
