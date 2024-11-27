@@ -17,7 +17,7 @@ interface Serie {
 interface SubSerie {
   SubSerie: string;
   descripcion: string;
-  id_serie: string;
+  serie: string;
 }
 
 export const seccion_post = async (data: Seccion) => {

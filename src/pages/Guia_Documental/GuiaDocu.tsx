@@ -1,11 +1,14 @@
 import { Guia } from "../../services/var.guia";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { Portada } from "../../services/var.portada";
 import { portada_get } from "../../services/portada.services";
 import Swal from "sweetalert2";
 import { guia_post } from "../../services/gui.service";
 import Logo from "../../assets/Tlaxcala.png";
 import { Boton } from "../../components/Botones/Botones";
+import { serie, seccion } from "../../Producto";
+import { serie_get, Seccion_get } from "../../services/cuadro.service";
+import { TableGuia } from "../Guia_Documental/TableGuia";
 
 export function GuiaDocu() {
   const initialUserState = new Guia();
@@ -24,6 +27,8 @@ export function GuiaDocu() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [Portada, setPortada] = useState<Portada[]>([]);
+  const [Serie, setSerie] = useState<serie[]>([]);
+  const [Seccion, setSeccion] = useState<seccion[]>([]);
 
   useEffect(() => {
     const fetchPortada = async () => {
@@ -31,6 +36,22 @@ export function GuiaDocu() {
       setPortada(items);
     };
     fetchPortada();
+  }, []);
+
+  useEffect(() => {
+    const fetchSerie = async () => {
+      const items = await serie_get();
+      setSerie(items);
+    };
+    fetchSerie();
+  }, []);
+
+  useEffect(() => {
+    const fetchSeccion = async () => {
+      const items = await Seccion_get();
+      setSeccion(items);
+    };
+    fetchSeccion();
   }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -122,6 +143,7 @@ export function GuiaDocu() {
                               </select>
                             </div>
                           </div>
+
                           <div className="col-md-6">
                             <div className="form-floating">
                               <input
@@ -172,7 +194,6 @@ export function GuiaDocu() {
                             </div>
                           </div>
                         </div>
-
                         <div className="">
                           <div className="">
                             <Boton disabled={isLoading}>
@@ -185,6 +206,7 @@ export function GuiaDocu() {
                   </div>
                 </div>
               </div>
+              <TableGuia></TableGuia>
             </div>
           </main>
         </div>

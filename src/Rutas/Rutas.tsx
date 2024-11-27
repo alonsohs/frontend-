@@ -26,6 +26,7 @@ import { Subir_Documentos } from "../pages/Subir_Documentos/Subir_Documentos";
 import { EditarCatalogo } from "../pages/Catálogo/EditarCatalogo";
 import { EditarPortada } from "../pages/Portada/EditarPortada";
 import { EditarFicha } from "../pages/Ficha/EditarFicha";
+import { TableGuia } from "../pages/Guia_Documental/TableGuia";
 
 export function Rutas() {
   return (
@@ -257,6 +258,16 @@ export function Rutas() {
         element={
           hasRole([Roles.Admin, Roles.JefeArea]) ? (
             <EditarFicha />
+          ) : (
+            <Navigate to="/Home" />
+          )
+        }
+      />
+      <Route
+        path="/TableGuia"
+        element={
+          hasRole([Roles.Admin, Roles.JefeArea]) ? (
+            <TableGuia />
           ) : (
             <Navigate to="/Home" />
           )

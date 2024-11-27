@@ -14,5 +14,5 @@ export interface serie {
 export interface SubSerie{
     SubSerie: string;
     descripcion: string;
-    id_serie: string;
+    serie: string;
 }

@@ -56,7 +56,7 @@ export function Subserie() {
     const SubserieData = {
       SubSerie: subserie,
       descripcion: Descripcion,
-      id_serie: Serie,
+      serie: Serie,
     };
 
     try {
@@ -90,8 +90,15 @@ export function Subserie() {
 
   const columns: GridColDef[] = [
     {
-      field: "SubSerie",
+      field: "descripcion",
       headerName: "Código de la Sub-serie",
+      flex: 1,
+      minWidth: 150,
+      headerClassName: "table-header",
+    },
+    {
+      field: "SubSerie",
+      headerName: "Nombre de la subserie",
       flex: 1,
       minWidth: 150,
       headerClassName: "table-header",
